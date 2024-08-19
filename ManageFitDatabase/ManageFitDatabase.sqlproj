@@ -58,14 +58,29 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Tables" />
+    <Folder Include="ManageFit" />
+    <Folder Include="ManageFit\Client" />
+    <Folder Include="ManageFit\Trainer" />
+    <Folder Include="ManageFit\TrainerClient" />
+    <Folder Include="ManageFit\Exercise" />
+    <Folder Include="ManageFit\Meal" />
+    <Folder Include="ManageFit\NutritionPlan" />
+    <Folder Include="ManageFit\WorkoutPlan" />
+    <Folder Include="ManageFit\WorkoutPlanExercise" />
+    <Folder Include="ManageFit\NutritionPlanMeal" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ManageFitDatabase.publish.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Trainer.sql" />
-    <Build Include="Tables\Client.sql" />
-    <Build Include="Tables\TrainerClient.sql" />
+    <Build Include="ManageFit\Client\Client.sql" />
+    <Build Include="ManageFit\Trainer\Trainer.sql" />
+    <Build Include="ManageFit\TrainerClient\TrainerClient.sql" />
+    <Build Include="ManageFit\Exercise\Exercise.sql" />
+    <Build Include="ManageFit\Meal\Meal.sql" />
+    <Build Include="ManageFit\NutritionPlan\NutritionPlan.sql" />
+    <Build Include="ManageFit\WorkoutPlan\WorkoutPlan.sql" />
+    <Build Include="ManageFit\WorkoutPlanExercise\WorkoutPlanExercise.sql" />
+    <Build Include="ManageFit\NutritionPlanMeal\NutritionPlanMeal.sql" />
   </ItemGroup>
 </Project>
