@@ -2,6 +2,5 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY,
 	[Name] NVARCHAR(100) NOT NULL,
-	[Email] NVARCHAR(320) NOT NULL,
-	[Weight] 
+	[Email] NVARCHAR(320) NOT NULL
 )
