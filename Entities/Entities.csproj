@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Client\Validation\" />
+    <Folder Include="Exercise\Validation\" />
+    <Folder Include="Meal\Validation\" />
+    <Folder Include="NutritionPlan\Validation\" />
+    <Folder Include="Trainer\Validation\" />
+    <Folder Include="WorkoutPlan\Validation\" />
+  </ItemGroup>
+
 </Project>
