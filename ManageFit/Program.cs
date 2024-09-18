@@ -1,9 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
+using Entities.Client.Model;
+using ManageFit;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using Services;
 using Storage.DatabaseContext;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +16,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
+// Databse setup
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ManageFitDbContext>(options => options.UseSqlServer(connectionString));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
     c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -52,6 +58,10 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
+
+//MediatR setup
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(EntitiesMediatR).GetTypeInfo().Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(ServicesMediatR).GetTypeInfo().Assembly));
 
 var app = builder.Build();
 
