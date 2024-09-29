@@ -8,16 +8,23 @@
 
   <ItemGroup>
     <Compile Remove="Client\Validation\**" />
+    <Compile Remove="Exercise\Validation\**" />
+    <Compile Remove="Meal\Validation\**" />
+    <Compile Remove="NutritionPlan\Validation\**" />
+    <Compile Remove="Trainer\Validation\**" />
+    <Compile Remove="WorkoutPlan\Validation\**" />
     <EmbeddedResource Remove="Client\Validation\**" />
+    <EmbeddedResource Remove="Exercise\Validation\**" />
+    <EmbeddedResource Remove="Meal\Validation\**" />
+    <EmbeddedResource Remove="NutritionPlan\Validation\**" />
+    <EmbeddedResource Remove="Trainer\Validation\**" />
+    <EmbeddedResource Remove="WorkoutPlan\Validation\**" />
     <None Remove="Client\Validation\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Exercise\Validation\" />
-    <Folder Include="Meal\Validation\" />
-    <Folder Include="NutritionPlan\Validation\" />
-    <Folder Include="Trainer\Validation\" />
-    <Folder Include="WorkoutPlan\Validation\" />
+    <None Remove="Exercise\Validation\**" />
+    <None Remove="Meal\Validation\**" />
+    <None Remove="NutritionPlan\Validation\**" />
+    <None Remove="Trainer\Validation\**" />
+    <None Remove="WorkoutPlan\Validation\**" />
   </ItemGroup>
 
   <ItemGroup>

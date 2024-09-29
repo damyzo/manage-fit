@@ -1,4 +1,4 @@
-﻿using Contracts.Requests;
+﻿using Contracts.Requests.Client;
 using Entities.Client.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -49,15 +49,24 @@ namespace ManageFit.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{uid}")]
+        public async Task<Result<Client>> Put(Guid uid, [FromBody] EditClientRequest client)
         {
+            Result<Client> result = await mediator.Send(request: new EditClientCommand(
+                name: client.Name,
+                weight: client.Weight,
+                height: client.Height,
+                email: client.Email,
+                uid: uid));
+
+            return result;
         }
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{uid}")]
+        public void Delete(Guid uid)
         {
+
         }
     }
 }
