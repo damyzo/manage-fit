@@ -1,15 +1,10 @@
-﻿using Entities.Client.Model;
-using MediatR;
-using Services.Common;
-using Storage.DatabaseContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Commands
+﻿namespace Services.Commands.Client
 {
+    using Entities.Client.Model;
+    using MediatR;
+    using Services.Common;
+    using Storage.DatabaseContext;
+
     public class AddClientCommand(
         string name,
         float weight,

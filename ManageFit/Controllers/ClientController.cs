@@ -2,8 +2,9 @@
 using Entities.Client.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Commands;
+using Services.Commands.Client;
 using Services.Common;
+using Services.Queries.Client;
 using Storage.DatabaseContext;
 
 
@@ -14,37 +15,35 @@ namespace ManageFit.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController(
-        ManageFitDbContext manageFitDbContext,
         IMediator mediator) : ControllerBase
     {
         // GET: api/<ValuesController>
         [HttpGet]
-        public async Task<IEnumerable<string>> GetAsync()
+        public async Task<Result<IEnumerable<Client>>> GetAsync()
         {
-            Client client = new Client { Email = "asd", Uid = Guid.NewGuid(), Height = 12, Weight = 13, Name = "asd" };
-            manageFitDbContext.Client.Add(client);
-            await manageFitDbContext.SaveChangesAsync();
+            Result<IEnumerable<Client>> result = await mediator.Send(request: new GetClientsQuery());
 
-
-            return new List<string>() { "asdasd" };
+            return result;
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{uid}")]
+        public async Task<Result<Client>> Get(Guid uid)
         {
-            return "value";
+            Result<Client> reuslt = await mediator.Send(request: new GetClientQuery(clientUid: uid));
+
+            return reuslt;
         }
 
         // POST api/<ValuesController>
         [HttpPost]
-        public async Task<Result<Client>> Post([FromBody] AddClientRequest value)
+        public async Task<Result<Client>> Post([FromBody] AddClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new AddClientCommand(
-                name: value.Name,
-                weight: value.Weight,
-                height: value.Height,
-                email: value.Email));
+                name: client.Name,
+                weight: client.Weight,
+                height: client.Height,
+                email: client.Email));
 
             return result;
         }

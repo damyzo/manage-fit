@@ -1,10 +1,5 @@
 ﻿using Entities.Client.Model;
 using Services.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Validators
 {
@@ -17,7 +12,7 @@ namespace Services.Validators
                 || string.IsNullOrEmpty(client.Email))
             {
                 return new Result<Client>(
-                    value: client,
+                    value: client ?? new Client() { Email = "" , Name = "", Height = 0, Uid = Guid.Empty, Weight = 0},
                     isSuccess: false, 
                     message: "Client info is required.");
             }

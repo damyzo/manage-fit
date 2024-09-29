@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Client\Validation\" />
+    <Compile Remove="Client\Validation\**" />
+    <EmbeddedResource Remove="Client\Validation\**" />
+    <None Remove="Client\Validation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Exercise\Validation\" />
     <Folder Include="Meal\Validation\" />
     <Folder Include="NutritionPlan\Validation\" />
