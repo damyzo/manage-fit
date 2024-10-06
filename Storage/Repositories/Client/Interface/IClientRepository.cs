@@ -5,8 +5,11 @@
 
     public interface IClientRepository
     {
-        public Task<Result<Client>> GetClient(Guid clientUid);
-        public Task<Result<IEnumerable<Client>>> GetClients();
+        public Task<Result<Client>> GetClient(Guid clientUid, CancellationToken cancellationToken);
+        public Task<Result<IEnumerable<Client>>> GetClients(CancellationToken cancellationToken);
 
+        public Task<Result<Client>> AddClient(Client client, CancellationToken cancellationToken);
+
+        public Task<Result<Client>> UpdateClient(Client client, CancellationToken cancellationToken);
     }
 }

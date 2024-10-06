@@ -4,6 +4,7 @@
     using MediatR;
     using Services.Common;
     using Storage.DatabaseContext;
+    using Storage.Repositories.Client.Interface;
 
     public class EditClientCommand(
         string name,
@@ -23,7 +24,7 @@
         public Guid Uid { get; set; } = uid;
     }
 
-    public class EditClientCommandHandler(ManageFitDbContext manageFitDbContext) : IRequestHandler<EditClientCommand, Result<Client>>
+    public class EditClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<EditClientCommand, Result<Client>>
     {
         public async Task<Result<Client>> Handle(EditClientCommand request, CancellationToken cancellationToken)
         {
@@ -43,9 +44,7 @@
                 return await Task.FromResult(clientResult);
             }
 
-            manageFitDbContext.Client.Update(clientResult.Value);
-
-            await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            clientResult = await clientRepository.UpdateClient(client, cancellationToken);
 
             return clientResult;
         }

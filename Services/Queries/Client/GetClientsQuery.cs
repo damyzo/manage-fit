@@ -16,7 +16,7 @@ namespace Services.Queries.Client
     {
         public async Task<Result<IEnumerable<Client>>> Handle(GetClientsQuery request, CancellationToken cancellationToken)
         {
-            return await clientRepository.GetClients();
+            return await clientRepository.GetClients(cancellationToken);
         }
     }
 

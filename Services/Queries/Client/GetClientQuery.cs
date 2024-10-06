@@ -18,7 +18,7 @@
     {
         public async Task<Result<Client>> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
-            return await clientRepository.GetClient(request.ClientUid);
+            return await clientRepository.GetClient(request.ClientUid, cancellationToken);
         }
     }
 }

@@ -4,6 +4,7 @@
     using MediatR;
     using Services.Common;
     using Storage.DatabaseContext;
+    using Storage.Repositories.Client.Interface;
 
     public class AddClientCommand(
         string name,
@@ -20,7 +21,7 @@
         public string Email { get; set; } = email;
     }
 
-    public class AddClientCommandHandler(ManageFitDbContext manageFitDbContext) : IRequestHandler<AddClientCommand, Result<Client>>
+    public class AddClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<AddClientCommand, Result<Client>>
     {
         public async Task<Result<Client>> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
@@ -40,9 +41,7 @@
                 return await Task.FromResult(clientResult);
             }
 
-            manageFitDbContext.Client.Add(clientResult.Value);
-
-            await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            clientResult = await clientRepository.AddClient(client, cancellationToken);
 
             return clientResult;
         }

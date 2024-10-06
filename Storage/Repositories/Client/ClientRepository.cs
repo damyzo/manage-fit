@@ -7,13 +7,62 @@
     using Storage.Repositories.Client.Interface;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class ClientRepository(ManageFitDbContext manageFitDbContext) : IClientRepository
     {
-        public async Task<Result<Client>> GetClient(Guid clientUid)
+        public async Task<Result<Client>> AddClient(Client client, CancellationToken cancellationToken)
         {
-            Client? client = await manageFitDbContext.Client.Where(client => client.Uid == clientUid).FirstOrDefaultAsync();
+            manageFitDbContext.Client.Add(client);
+
+            try
+            {
+                await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Result<Client> clientError = new(
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    isSuccess: false,
+                    message: e.Message);
+
+                return clientError;
+            }
+
+            return new Result<Client>(
+                value: client,
+                isSuccess: true,
+                message: "Valid Data");
+        }
+
+        public async Task<Result<Client>> UpdateClient(Client client, CancellationToken cancellationToken)
+        {
+            manageFitDbContext.Client.Update(client);
+
+            try
+            {
+                await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Result<Client> clientError = new(
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    isSuccess: false,
+                    message: e.Message);
+
+                return clientError;
+            }
+
+            return new Result<Client>(
+                value: client,
+                isSuccess: true,
+                message: "Valid Data");
+        }
+
+        public async Task<Result<Client>> GetClient(Guid clientUid, CancellationToken cancellationToken)
+        {
+            Client? client = await manageFitDbContext.Client.Where(client => client.Uid == clientUid).FirstOrDefaultAsync(cancellationToken);
 
             if (client == null)
             {
@@ -31,9 +80,9 @@
                 message: "Valid Data");
         }
 
-        public async Task<Result<IEnumerable<Client>>> GetClients()
+        public async Task<Result<IEnumerable<Client>>> GetClients(CancellationToken cancellationToken)
         {
-            IEnumerable<Client> clients = await manageFitDbContext.Client.ToListAsync();
+            IEnumerable<Client> clients = await manageFitDbContext.Client.ToListAsync(cancellationToken);
 
             return new Result<IEnumerable<Client>>(value: clients, isSuccess: true, message: "Valid Data");
         }
