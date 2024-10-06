@@ -1,7 +1,7 @@
 ﻿namespace Storage.Repositories.Client.Interface
 {
     using Entities.Client.Model;
-    using Services.Common;
+    using Entities.Common;
 
     public interface IClientRepository
     {

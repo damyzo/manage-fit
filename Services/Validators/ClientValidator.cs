@@ -1,5 +1,5 @@
 ﻿using Entities.Client.Model;
-using Services.Common;
+using Entities.Common;
 
 namespace Services.Validators
 {

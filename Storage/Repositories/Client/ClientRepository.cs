@@ -1,8 +1,8 @@
 ﻿namespace Storage.Repositories.Client
 {
     using Entities.Client.Model;
+    using Entities.Common;
     using Microsoft.EntityFrameworkCore;
-    using Services.Common;
     using Storage.DatabaseContext;
     using Storage.Repositories.Client.Interface;
     using System;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Common
+﻿namespace Entities.Common
 {
     public class Result<TEntity>(TEntity value, bool isSuccess, string message)
     {

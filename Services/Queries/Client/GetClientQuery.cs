@@ -1,13 +1,11 @@
 ﻿namespace Services.Queries.Client
 {
     using MediatR;
-    using Services.Common;
+    using Entities.Common;
     using System;
     using Entities.Client.Model;
     using System.Threading.Tasks;
     using System.Threading;
-    using Storage.DatabaseContext;
-    using Microsoft.EntityFrameworkCore;
     using Storage.Repositories.Client.Interface;
 
     public class GetClientQuery(Guid clientUid) : IRequest<Result<Client>>

@@ -2,8 +2,7 @@
 {
     using Entities.Client.Model;
     using MediatR;
-    using Services.Common;
-    using Storage.DatabaseContext;
+    using Entities.Common;
     using Storage.Repositories.Client.Interface;
 
     public class AddClientCommand(

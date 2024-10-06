@@ -3,9 +3,8 @@ using Entities.Client.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Services.Commands.Client;
-using Services.Common;
+using Entities.Common;
 using Services.Queries.Client;
-using Storage.DatabaseContext;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

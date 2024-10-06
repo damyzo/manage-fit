@@ -2,8 +2,8 @@
 namespace Services.Queries.Client
 {
     using Entities.Client.Model;
+    using Entities.Common;
     using MediatR;
-    using Services.Common;
     using Storage.Repositories.Client.Interface;
     using System.Collections.Generic;
 
