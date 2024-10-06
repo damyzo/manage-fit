@@ -11,7 +11,7 @@ using Services.Queries.Client;
 
 namespace ManageFit.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clients")]
     [ApiController]
     public class ClientController(
         IMediator mediator) : ControllerBase
