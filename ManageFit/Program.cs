@@ -1,12 +1,12 @@
-using Entities.Client.Model;
-using ManageFit;
-using MediatR;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using Services;
 using Storage.DatabaseContext;
+using Storage.Repositories.Client;
+using Storage.Repositories.Client.Interface;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Register repositories
+builder.Services.AddTransient<IClientRepository, ClientRepository>();
 
 // Databse setup
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
