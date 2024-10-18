@@ -1,1 +1,16 @@
-<p>clients works!</p>
+<mat-form-field class="search">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search" [formControl]="searchFormControl">
+</mat-form-field>
+
+@for (client of filteredClients; track $index) {
+    <mat-card appearance="outlined" class="card">
+        <mat-card-content>{{ client.name }} </mat-card-content>
+        <mat-card-content>{{ client.weight }} </mat-card-content>
+        <mat-card-content>{{ client.height }} </mat-card-content>
+        <mat-card-content>{{ client.email }} </mat-card-content>
+        <mat-card-content>{{ client.uid }} </mat-card-content>
+    </mat-card>
+}@empty {
+    <h1>There are no clients. Add clients to display them.</h1>
+}

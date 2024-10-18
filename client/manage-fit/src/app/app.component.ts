@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -28,7 +29,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
   toggle(){
-    this.http.get('https://localhost:7003/api/clients').subscribe((data) => {console.log(data)});
     console.log("sadas");
   }
 }

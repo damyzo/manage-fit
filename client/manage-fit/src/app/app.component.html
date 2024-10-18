@@ -1,16 +1,19 @@
-<nav class="nav" mat-primary>
+<div class="container">
+    <nav class="nav" mat-primary>
 
-    <button mat-raised-button routerLink="/clients">
-        Clients
-    </button>    
-    <button mat-raised-button routerLink="/nutritions">
-        Nutrition
-    </button>
-    <button mat-raised-button routerLink="/workouts">
-        Workouts
-    </button>
-</nav>
+        <button mat-raised-button routerLink="/clients">
+            Clients
+        </button>    
+        <button mat-raised-button routerLink="/nutritions">
+            Nutrition
+        </button>
+        <button mat-raised-button routerLink="/workouts">
+            Workouts
+        </button>
+    </nav>
 
+    <div class="router-outlet">
+        <router-outlet />
+    </div>
 
-
-<router-outlet />
+</div>
