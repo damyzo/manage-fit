@@ -86,5 +86,41 @@
 
             return new Result<IEnumerable<Client>>(value: clients, isSuccess: true, message: "Valid Data");
         }
+
+        public async Task<Result<Client>> DeleteClient(Guid clientUid, CancellationToken cancellationToken)
+        {
+            Client? client = await manageFitDbContext.Client.Where(client => client.Uid == clientUid).FirstOrDefaultAsync(cancellationToken);
+
+            if (client == null)
+            {
+                Result<Client> clientError = new(
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    isSuccess: false,
+                    message: "User Not Found");
+
+                return clientError;
+            }
+
+            manageFitDbContext.Client.Remove(client);
+
+            try
+            {
+                await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Result<Client> clientError = new(
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    isSuccess: false,
+                    message: e.Message);
+
+                return clientError;
+            }
+
+            return new Result<Client>(
+                value: client,
+                isSuccess: true,
+                message: "Client deleted");
+        }
     }
 }

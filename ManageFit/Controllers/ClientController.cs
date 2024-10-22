@@ -63,9 +63,11 @@ namespace ManageFit.Controllers
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{uid}")]
-        public void Delete(Guid uid)
+        public async Task<Result<Client>> Delete(Guid uid)
         {
+            Result<Client> result = await mediator.Send(request: new DeleteClientCommand(uid: uid));
 
+            return result;
         }
     }
 }

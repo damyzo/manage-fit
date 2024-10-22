@@ -7,6 +7,8 @@ using Services;
 using Storage.DatabaseContext;
 using Storage.Repositories.Client;
 using Storage.Repositories.Client.Interface;
+using Storage.Repositories.Trainer;
+using Storage.Repositories.Trainer.Interface;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Register repositories
 builder.Services.AddTransient<IClientRepository, ClientRepository>();
+builder.Services.AddTransient<ITrainerRepository, TrainerRepository>();
 
 // Databse setup
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

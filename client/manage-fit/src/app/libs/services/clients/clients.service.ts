@@ -13,4 +13,8 @@ export class ClientsService {
   public getClients(): Observable<GetClientResult>{
     return this.http.get<GetClientResult>('https://localhost:7003/api/clients')
   }
+
+  public deleteClient(uid: string): Observable<GetClientResult>{
+    return this.http.delete<GetClientResult>(`https://localhost:7003/api/clients/${uid}`)
+  }
 }

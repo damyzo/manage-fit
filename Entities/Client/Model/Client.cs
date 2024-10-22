@@ -1,7 +1,8 @@
-﻿using Entities.Common;
-
-namespace Entities.Client.Model
+﻿namespace Entities.Client.Model
 {
+    using Entities.Common;
+    using Entities.Trainer.Model;
+
     public class Client() : Entity
     {
         public required string Name { get; set; }
@@ -11,5 +12,7 @@ namespace Entities.Client.Model
         public float Height { get; set; }
 
         public required string Email { get; set; }
+
+        public IEnumerable<Trainer> Trainers { get; set; } = new List<Trainer>();
     }
 }

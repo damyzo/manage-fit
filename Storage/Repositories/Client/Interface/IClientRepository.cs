@@ -11,5 +11,7 @@
         public Task<Result<Client>> AddClient(Client client, CancellationToken cancellationToken);
 
         public Task<Result<Client>> UpdateClient(Client client, CancellationToken cancellationToken);
+
+        public Task<Result<Client>> DeleteClient(Guid clientUid, CancellationToken cancellationToken);
     }
 }
