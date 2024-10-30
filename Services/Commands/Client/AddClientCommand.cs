@@ -4,12 +4,15 @@
     using MediatR;
     using Entities.Common;
     using Storage.Repositories.Client.Interface;
+    using Storage.Repositories.Trainer.Interface;
+    using Entities.Trainer.Model;
 
     public class AddClientCommand(
         string name,
         float weight,
         float height,
-        string email) : IRequest<Result<Client>>
+        string email,
+        Guid trainerGuid) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
 
@@ -18,12 +21,26 @@
         public float Height { get; set; } = height;
 
         public string Email { get; set; } = email;
+
+        public Guid TrainerGuid { get; set; } = trainerGuid;
     }
 
-    public class AddClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<AddClientCommand, Result<Client>>
+    public class AddClientCommandHandler(
+        IClientRepository clientRepository,
+        ITrainerRepository trainerRepository) : IRequestHandler<AddClientCommand, Result<Client>>
     {
         public async Task<Result<Client>> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainer(request.TrainerGuid, cancellationToken);
+
+            if (!trainerResult.IsSuccess)
+            {
+                return new Result<Client>(
+                    value: new Client() { Name = "", Email = "", Height = 0, Weight = 0, Uid = Guid.Empty},
+                    isSuccess: false,
+                    message: trainerResult.Message); ;
+            }
+
             Client client = new()
             {
                 Name = request.Name,
@@ -32,6 +49,8 @@
                 Email = request.Email,
                 Uid = Guid.NewGuid()
             };
+
+            client.Trainers.Add(trainerResult.Value);
 
             Result<Client> clientResult = Validators.ClientValidator.Validate(client);
 

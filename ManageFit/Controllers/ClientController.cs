@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Commands.Client;
 using Entities.Common;
 using Services.Queries.Client;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,17 +18,20 @@ namespace ManageFit.Controllers
         IMediator mediator) : ControllerBase
     {
         // GET: api/<ValuesController>
-        [HttpGet]
-        public async Task<Result<IEnumerable<Client>>> GetAsync()
+        [Authorize]
+        [HttpGet("/trainer/{trainerGuid}")]
+        public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerGuid)
         {
-            Result<IEnumerable<Client>> result = await mediator.Send(request: new GetClientsQuery());
+            Result<IEnumerable<Client>> result = await mediator.Send(request: 
+                new GetClientsQuery(
+                    trainerGuid: trainerGuid));
 
             return result;
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{uid}")]
-        public async Task<Result<Client>> Get(Guid uid)
+        public async Task<Result<Client>> GetClient(Guid uid)
         {
             Result<Client> reuslt = await mediator.Send(request: new GetClientQuery(clientUid: uid));
 
@@ -35,21 +39,24 @@ namespace ManageFit.Controllers
         }
 
         // POST api/<ValuesController>
+        [Authorize]
         [HttpPost]
-        public async Task<Result<Client>> Post([FromBody] AddClientRequest client)
+        public async Task<Result<Client>> AddClient([FromBody] AddClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new AddClientCommand(
                 name: client.Name,
                 weight: client.Weight,
                 height: client.Height,
-                email: client.Email));
+                email: client.Email,
+                trainerGuid: client.TrainerGuid));
 
             return result;
         }
 
         // PUT api/<ValuesController>/5
+        [Authorize]
         [HttpPut("{uid}")]
-        public async Task<Result<Client>> Put(Guid uid, [FromBody] EditClientRequest client)
+        public async Task<Result<Client>> EditClient(Guid uid, [FromBody] EditClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new EditClientCommand(
                 name: client.Name,
@@ -63,7 +70,7 @@ namespace ManageFit.Controllers
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{uid}")]
-        public async Task<Result<Client>> Delete(Guid uid)
+        public async Task<Result<Client>> DeleteClient(Guid uid)
         {
             Result<Client> result = await mediator.Send(request: new DeleteClientCommand(uid: uid));
 

@@ -80,9 +80,11 @@
                 message: "Valid Data");
         }
 
-        public async Task<Result<IEnumerable<Client>>> GetClients(CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerGuid, CancellationToken cancellationToken)
         {
-            IEnumerable<Client> clients = await manageFitDbContext.Client.ToListAsync(cancellationToken);
+            IEnumerable<Client> clients = await manageFitDbContext.Client
+                .Where(client => client.Trainers.Any(trainer => trainer.Uid == trainerGuid))
+                .ToListAsync(cancellationToken);
 
             return new Result<IEnumerable<Client>>(value: clients, isSuccess: true, message: "Valid Data");
         }

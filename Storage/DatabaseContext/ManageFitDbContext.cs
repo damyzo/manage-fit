@@ -17,7 +17,7 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ClientModelConfiguration());
-            modelBuilder.ApplyConfiguration(new  TrainerModelConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainerModelConfiguration());
         }
     }
 

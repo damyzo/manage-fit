@@ -2,13 +2,15 @@
 {
     using Entities.Client.Model;
     using Entities.Common;
+    using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Trainer : Entity
+    public class Trainer() : Entity
     {
         public required string Name { get; set; }
 
         public required string Email { get; set; }
 
-        public IEnumerable<Client> Clients { get; set; } = new List<Client>();
+        [Column("ClientUid")]
+        public List<Client> Clients { get; set; } = new List<Client>();
     }
 }

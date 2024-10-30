@@ -1,6 +1,7 @@
 ﻿namespace Storage.Configuration
 {
     using Entities.Client.Model;
+    using Entities.Trainer.Model;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,7 +20,12 @@
 
             builder
                 .HasMany(x => x.Trainers)
-                .WithMany(x => x.Clients);
+                .WithMany(x => x.Clients)
+                .UsingEntity(
+                    "TrainerClient",
+                    l => l.HasOne(typeof(Trainer)).WithMany().HasForeignKey("TrainerUid").HasPrincipalKey(nameof(Trainer.Uid)),
+                    r => r.HasOne(typeof(Client)).WithMany().HasForeignKey("ClientUid").HasPrincipalKey(nameof(Client.Uid)),
+                    j => j.HasKey("ClientUid", "TrainerUid"));
         }
     }
 }

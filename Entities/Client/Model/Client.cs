@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.Trainer.Model;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Client() : Entity
     {
@@ -13,6 +14,7 @@
 
         public required string Email { get; set; }
 
-        public IEnumerable<Trainer> Trainers { get; set; } = new List<Trainer>();
+        [Column("TrainerUid")]
+        public List<Trainer> Trainers { get; set; } = [];
     }
 }
