@@ -1,0 +1,25 @@
+<div class="container">
+    <h1>Client details</h1>
+    <form class="form">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter a name." value="{{client?.name}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Ex: asd@example.com" value="{{client?.email}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Weight</mat-label>
+            <input type="number" matInput placeholder="Ex: 80.23" min="0" value="{{client?.weight}}">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Height</mat-label>
+            <input type="number" matInput placeholder="Ex: 180.20" min="0" value="{{client?.height}}">
+        </mat-form-field>
+        <button mat-fab extended>
+            <mat-icon>save</mat-icon>
+            Save
+        </button>
+    </form>
+</div>

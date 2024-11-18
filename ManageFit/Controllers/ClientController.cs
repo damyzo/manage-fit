@@ -6,40 +6,50 @@ using Services.Commands.Client;
 using Entities.Common;
 using Services.Queries.Client;
 using Microsoft.AspNetCore.Authorization;
+using Contracts.Responses.Client;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ManageFit.Controllers
 {
-    [Route("api/clients")]
     [ApiController]
+    [Route("api/clients")]
     public class ClientController(
         IMediator mediator) : ControllerBase
     {
         // GET: api/<ValuesController>
-        [Authorize]
-        [HttpGet("/trainer/{trainerGuid}")]
-        public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerGuid)
+        [HttpGet("trainer/{trainerGuid}")]
+        public async Task<IEnumerable<GetClientsResponse>> GetClients(Guid trainerGuid)
         {
             Result<IEnumerable<Client>> result = await mediator.Send(request: 
                 new GetClientsQuery(
                     trainerGuid: trainerGuid));
 
-            return result;
+            return result.Value.Select(x => 
+                new GetClientsResponse(
+                    name: x.Name,
+                    weight: x.Weight,
+                    height: x.Height,
+                    email: x.Email,
+                    uid: x.Uid));;
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{uid}")]
-        public async Task<Result<Client>> GetClient(Guid uid)
+        public async Task<GetClientsResponse> GetClient(Guid uid)
         {
-            Result<Client> reuslt = await mediator.Send(request: new GetClientQuery(clientUid: uid));
+            Result<Client> result = await mediator.Send(request: new GetClientQuery(clientUid: uid));
 
-            return reuslt;
+            return new GetClientsResponse(
+                name: result.Value.Name,
+                weight: result.Value.Weight,
+                height: result.Value.Height,
+                email: result.Value.Email,
+                uid: result.Value.Uid);
         }
 
         // POST api/<ValuesController>
-        [Authorize]
         [HttpPost]
         public async Task<Result<Client>> AddClient([FromBody] AddClientRequest client)
         {
@@ -54,7 +64,6 @@ namespace ManageFit.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [Authorize]
         [HttpPut("{uid}")]
         public async Task<Result<Client>> EditClient(Guid uid, [FromBody] EditClientRequest client)
         {

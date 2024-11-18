@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { GetClientResponse } from '../entites/responses/client-response';
 import {MatCardModule} from '@angular/material/card';
@@ -14,11 +13,13 @@ import { ClientsService } from '../services/clients/clients.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { switchMap } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
   imports: [
+    RouterLink,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
@@ -37,14 +38,13 @@ export class ClientsComponent implements OnInit {
 
   searchFormControl = new FormControl('', []);
 
-  constructor(public http: HttpClient,
-    public clientsService: ClientsService
-  ){}
+  constructor(public clientsService: ClientsService){}
   
   ngOnInit(): void {
-    this.clientsService.getClients().subscribe((data) => {
-      this.clients = data.value;
-      this.filteredClients = data.value;
+    this.clientsService.getClients('9D517E75-6A62-4477-AF98-0F1C4FA06761')
+    .subscribe((data) => {
+      this.clients = data;
+      this.filteredClients = data;
     });
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
@@ -59,13 +59,13 @@ export class ClientsComponent implements OnInit {
   }
 
   public deleteClientDialog(uid: string){
-    console.log(uid);
-    this.clientsService.deleteClient(uid)
+    this.clientsService
+    .deleteClient(uid)
       .pipe(switchMap(() => {
-        return this.clientsService.getClients();
+        return this.clientsService.getClients('9D517E75-6A62-4477-AF98-0F1C4FA06761');
       })).subscribe((data) => {
-        this.clients = data.value;
-        this.filteredClients = data.value;
+        this.clients = data;
+        this.filteredClients = data;
       });
   }
 }

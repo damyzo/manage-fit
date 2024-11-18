@@ -1,1 +1,28 @@
-<p>workouts works!</p>
+<mat-form-field class="search">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Search" [formControl]="searchFormControl">
+</mat-form-field>
+<div class="cards">
+@for (workout of filteredWorkouts; track $index) {
+    <mat-card appearance="outlined" class="card">
+        <mat-card-header>
+            <mat-card-title>{{ workout }}</mat-card-title>
+            <mat-card-subtitle>{{ workout }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            {{ workout }}
+            {{ workout }}
+            {{ workout }} 
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/workouts', workout]"><mat-icon>edit</mat-icon>Edit</button>
+            <button mat-button (click)="deleteWorkoutDialog(workout)"><mat-icon>delete</mat-icon>Remove</button>
+        </mat-card-actions>
+    </mat-card>
+}@empty {
+    <h1>There are no workouts. Add workouts to display them.</h1>
+}
+</div>
+<button class="floating" mat-fab aria-label="Add workout button" (click)="openAddWorkoutDialog()">
+   <mat-icon>add</mat-icon>
+</button>
