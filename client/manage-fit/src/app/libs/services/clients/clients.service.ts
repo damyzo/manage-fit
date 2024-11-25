@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GetClientResponse } from '../../entites/responses/client-response';
+import { DeleteClientResponse, GetClientResponse } from '../../entites/responses/client-response';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ClientsService {
     return this.http.get<GetClientResponse>(`https://localhost:7003/api/clients/${clientUid}`)
   }
 
-  public deleteClient(uid: string): Observable<GetClientResponse>{
+  public deleteClient(uid: string): Observable<DeleteClientResponse>{
     return this.http.delete<GetClientResponse>(`https://localhost:7003/api/clients/${uid}`)
   }
 }

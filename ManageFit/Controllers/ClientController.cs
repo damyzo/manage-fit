@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Commands.Client;
 using Entities.Common;
 using Services.Queries.Client;
-using Microsoft.AspNetCore.Authorization;
 using Contracts.Responses.Client;
 
 
@@ -37,11 +36,11 @@ namespace ManageFit.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{uid}")]
-        public async Task<GetClientsResponse> GetClient(Guid uid)
+        public async Task<GetClientResponse> GetClient(Guid uid)
         {
             Result<Client> result = await mediator.Send(request: new GetClientQuery(clientUid: uid));
 
-            return new GetClientsResponse(
+            return new GetClientResponse(
                 name: result.Value.Name,
                 weight: result.Value.Weight,
                 height: result.Value.Height,
@@ -51,7 +50,7 @@ namespace ManageFit.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public async Task<Result<Client>> AddClient([FromBody] AddClientRequest client)
+        public async Task<AddClientResponse> AddClient([FromBody] AddClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new AddClientCommand(
                 name: client.Name,
@@ -60,12 +59,16 @@ namespace ManageFit.Controllers
                 email: client.Email,
                 trainerGuid: client.TrainerGuid));
 
-            return result;
+            return new AddClientResponse(
+                name: result.Value.Name,
+                weight: result.Value.Weight,
+                height: result.Value.Height,
+                email: result.Value.Email);
         }
 
         // PUT api/<ValuesController>/5
         [HttpPut("{uid}")]
-        public async Task<Result<Client>> EditClient(Guid uid, [FromBody] EditClientRequest client)
+        public async Task<EditClientResponse> EditClient(Guid uid, [FromBody] EditClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new EditClientCommand(
                 name: client.Name,
@@ -74,16 +77,24 @@ namespace ManageFit.Controllers
                 email: client.Email,
                 uid: uid));
 
-            return result;
+            return new EditClientResponse(
+                name: result.Value.Name,
+                weight: result.Value.Weight,
+                height: result.Value.Height,
+                email: result.Value.Email);
         }
 
         // DELETE api/<ValuesController>/5
         [HttpDelete("{uid}")]
-        public async Task<Result<Client>> DeleteClient(Guid uid)
+        public async Task<DeleteClientResponse> DeleteClient(Guid uid)
         {
             Result<Client> result = await mediator.Send(request: new DeleteClientCommand(uid: uid));
 
-            return result;
+            return new DeleteClientResponse(
+                name: result.Value.Name,
+                weight: result.Value.Weight,
+                height: result.Value.Height,
+                email: result.Value.Email);
         }
     }
 }
