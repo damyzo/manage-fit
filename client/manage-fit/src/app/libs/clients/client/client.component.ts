@@ -25,8 +25,8 @@ export class ClientComponent implements OnInit {
   public client: GetClientResponse | undefined;
 
   @Input()
-  set id(clientUid: string) {
-    this.clientsService.getClient(clientUid)
+  set id(clientId: string) {
+    this.clientsService.getClient(clientId)
     .subscribe(client =>{
       this.client = client;
     });

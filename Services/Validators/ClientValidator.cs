@@ -12,7 +12,7 @@ namespace Services.Validators
                 || string.IsNullOrEmpty(client.Email))
             {
                 return new Result<Client>(
-                    value: client ?? new Client() { Email = "" , Name = "", Height = 0, Uid = Guid.Empty, Weight = 0},
+                    value: client ?? new Client() { Email = "" , Name = "", Height = 0, Id = Guid.Empty, Weight = 0},
                     isSuccess: false, 
                     message: "Client info is required.");
             }

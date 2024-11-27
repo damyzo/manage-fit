@@ -11,8 +11,8 @@
         {
             builder.ToTable("Client");
 
-            builder.HasKey(x => x.Uid);
-            builder.Property(x => x.Uid).HasColumnName("Uid").HasColumnType("uniqueidentifier").IsRequired();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).HasColumnName("Id").HasColumnType("uniqueidentifier").IsRequired();
             builder.Property(x => x.Name).HasColumnName("Name").HasColumnType("nvarchar(100)").IsRequired();
             builder.Property(x => x.Email).HasColumnName("Email").HasColumnType("nvarchar(320)").IsRequired();
             builder.Property(x => x.Weight).HasColumnName("Weight").HasColumnType("float").IsRequired();
@@ -23,9 +23,9 @@
                 .WithMany(x => x.Clients)
                 .UsingEntity(
                     "TrainerClient",
-                    l => l.HasOne(typeof(Trainer)).WithMany().HasForeignKey("TrainerUid").HasPrincipalKey(nameof(Trainer.Uid)),
-                    r => r.HasOne(typeof(Client)).WithMany().HasForeignKey("ClientUid").HasPrincipalKey(nameof(Client.Uid)),
-                    j => j.HasKey("ClientUid", "TrainerUid"));
+                    l => l.HasOne(typeof(Trainer)).WithMany().HasForeignKey("TrainerId").HasPrincipalKey(nameof(Trainer.Id)),
+                    r => r.HasOne(typeof(Client)).WithMany().HasForeignKey("ClientId").HasPrincipalKey(nameof(Client.Id)),
+                    j => j.HasKey("ClientId", "TrainerId"));
         }
     }
 }

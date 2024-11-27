@@ -23,7 +23,7 @@
             catch (Exception e)
             {
                 Result<Client> clientError = new(
-                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -47,7 +47,7 @@
             catch (Exception e)
             {
                 Result<Client> clientError = new(
-                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -60,14 +60,14 @@
                 message: "Valid Data");
         }
 
-        public async Task<Result<Client>> GetClient(Guid clientUid, CancellationToken cancellationToken)
+        public async Task<Result<Client>> GetClient(Guid clientId, CancellationToken cancellationToken)
         {
-            Client? client = await manageFitDbContext.Client.Where(client => client.Uid == clientUid).FirstOrDefaultAsync(cancellationToken);
+            Client? client = await manageFitDbContext.Client.Where(client => client.Id == clientId).FirstOrDefaultAsync(cancellationToken);
 
             if (client == null)
             {
                 Result<Client> clientError = new(
-                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: "User Not Found");
 
@@ -80,23 +80,23 @@
                 message: "Valid Data");
         }
 
-        public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerGuid, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<Client> clients = await manageFitDbContext.Client
-                .Where(client => client.Trainers.Any(trainer => trainer.Uid == trainerGuid))
+                .Where(client => client.Trainers.Any(trainer => trainer.Id == trainerId))
                 .ToListAsync(cancellationToken);
 
             return new Result<IEnumerable<Client>>(value: clients, isSuccess: true, message: "Valid Data");
         }
 
-        public async Task<Result<Client>> DeleteClient(Guid clientUid, CancellationToken cancellationToken)
+        public async Task<Result<Client>> DeleteClient(Guid clientId, CancellationToken cancellationToken)
         {
-            Client? client = await manageFitDbContext.Client.Where(client => client.Uid == clientUid).FirstOrDefaultAsync(cancellationToken);
+            Client? client = await manageFitDbContext.Client.Where(client => client.Id == clientId).FirstOrDefaultAsync(cancellationToken);
 
             if (client == null)
             {
                 Result<Client> clientError = new(
-                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: "User Not Found");
 
@@ -112,7 +112,7 @@
             catch (Exception e)
             {
                 Result<Client> clientError = new(
-                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Uid = Guid.Empty },
+                    value: new Client { Name = "", Height = 0, Weight = 0, Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 

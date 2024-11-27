@@ -5,6 +5,6 @@ namespace Entities.Common
     public class Entity
     {
         [Key]
-        public Guid Uid { get; set; }
+        public Guid Id { get; set; }
     }
 }

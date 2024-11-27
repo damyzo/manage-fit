@@ -8,15 +8,15 @@
     using System.Threading;
     using Storage.Repositories.Client.Interface;
 
-    public class GetClientQuery(Guid clientUid) : IRequest<Result<Client>>
+    public class GetClientQuery(Guid clientId) : IRequest<Result<Client>>
     {
-        public Guid ClientUid { get; set; } = clientUid;
+        public Guid ClientId { get; set; } = clientId;
     }
     public class GetClientQueryHandler(IClientRepository clientRepository) : IRequestHandler<GetClientQuery, Result<Client>>
     {
         public async Task<Result<Client>> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
-            return await clientRepository.GetClient(request.ClientUid, cancellationToken);
+            return await clientRepository.GetClient(request.ClientId, cancellationToken);
         }
     }
 }

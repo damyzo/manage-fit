@@ -3,7 +3,7 @@ export interface GetClientResponse{
     weight: number,
     height: number,
     email: string,
-    uid: string
+    id: string
 }
 
 export interface GetClientsResponse{
@@ -11,7 +11,7 @@ export interface GetClientsResponse{
     weight: number,
     height: number,
     email: string,
-    uid: string
+    id: string
 }
 
 export interface AddClientResponse{

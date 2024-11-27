@@ -1,4 +1,7 @@
 ﻿CREATE TABLE [dbo].[Exercise]
 (
-	[Id] INT NOT NULL PRIMARY KEY
+    [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    [Name] NVARCHAR(300),
+    [Description] NVARCHAR(500),
+    [VideoUrl] NVARCHAR(MAX),
 )

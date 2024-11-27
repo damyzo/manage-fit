@@ -7,16 +7,16 @@
     using System.Threading.Tasks;
     using System.Threading;
 
-    public class DeleteClientCommand(Guid uid) : IRequest<Result<Client>>
+    public class DeleteClientCommand(Guid id) : IRequest<Result<Client>>
     {
-        public Guid Uid { get; set; } = uid;
+        public Guid Id { get; set; } = id;
     }
 
     public class DeleteClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<DeleteClientCommand, Result<Client>>
     {
         public async Task<Result<Client>> Handle(DeleteClientCommand request, CancellationToken cancellationToken)
         {
-            Result<Client> reuslt = await clientRepository.DeleteClient(request.Uid, cancellationToken);
+            Result<Client> reuslt = await clientRepository.DeleteClient(request.Id, cancellationToken);
 
             if (!reuslt.IsSuccess)
             {

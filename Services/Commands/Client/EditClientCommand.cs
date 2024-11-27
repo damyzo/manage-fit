@@ -10,7 +10,7 @@
         float weight,
         float height,
         string email,
-        Guid uid) : IRequest<Result<Client>>
+        Guid id) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
 
@@ -20,7 +20,7 @@
 
         public string Email { get; set; } = email;
         
-        public Guid Uid { get; set; } = uid;
+        public Guid Id { get; set; } = id;
     }
 
     public class EditClientCommandHandler(IClientRepository clientRepository) : IRequestHandler<EditClientCommand, Result<Client>>
@@ -33,7 +33,7 @@
                 Weight = request.Weight,
                 Height = request.Height,
                 Email = request.Email,
-                Uid = request.Uid
+                Id = request.Id
             };
 
             Result<Client> clientResult = Validators.ClientValidator.Validate(client);

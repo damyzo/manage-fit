@@ -18,12 +18,12 @@ namespace ManageFit.Controllers
         IMediator mediator) : ControllerBase
     {
         // GET: api/<ValuesController>
-        [HttpGet("trainer/{trainerGuid}")]
-        public async Task<IEnumerable<GetClientsResponse>> GetClients(Guid trainerGuid)
+        [HttpGet("trainer/{trainerId}")]
+        public async Task<IEnumerable<GetClientsResponse>> GetClients(Guid trainerId)
         {
             Result<IEnumerable<Client>> result = await mediator.Send(request: 
                 new GetClientsQuery(
-                    trainerGuid: trainerGuid));
+                    trainerId: trainerId));
 
             return result.Value.Select(x => 
                 new GetClientsResponse(
@@ -31,21 +31,21 @@ namespace ManageFit.Controllers
                     weight: x.Weight,
                     height: x.Height,
                     email: x.Email,
-                    uid: x.Uid));;
+                    id: x.Id));;
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{uid}")]
-        public async Task<GetClientResponse> GetClient(Guid uid)
+        [HttpGet("{id}")]
+        public async Task<GetClientResponse> GetClient(Guid id)
         {
-            Result<Client> result = await mediator.Send(request: new GetClientQuery(clientUid: uid));
+            Result<Client> result = await mediator.Send(request: new GetClientQuery(clientId: id));
 
             return new GetClientResponse(
                 name: result.Value.Name,
                 weight: result.Value.Weight,
                 height: result.Value.Height,
                 email: result.Value.Email,
-                uid: result.Value.Uid);
+                id: result.Value.Id);
         }
 
         // POST api/<ValuesController>
@@ -57,7 +57,7 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
-                trainerGuid: client.TrainerGuid));
+                trainerId: client.TrainerId));
 
             return new AddClientResponse(
                 name: result.Value.Name,
@@ -67,15 +67,15 @@ namespace ManageFit.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{uid}")]
-        public async Task<EditClientResponse> EditClient(Guid uid, [FromBody] EditClientRequest client)
+        [HttpPut("{id}")]
+        public async Task<EditClientResponse> EditClient(Guid id, [FromBody] EditClientRequest client)
         {
             Result<Client> result = await mediator.Send(request: new EditClientCommand(
                 name: client.Name,
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
-                uid: uid));
+                id: id));
 
             return new EditClientResponse(
                 name: result.Value.Name,
@@ -85,10 +85,10 @@ namespace ManageFit.Controllers
         }
 
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{uid}")]
-        public async Task<DeleteClientResponse> DeleteClient(Guid uid)
+        [HttpDelete("{id}")]
+        public async Task<DeleteClientResponse> DeleteClient(Guid id)
         {
-            Result<Client> result = await mediator.Send(request: new DeleteClientCommand(uid: uid));
+            Result<Client> result = await mediator.Send(request: new DeleteClientCommand(id: id));
 
             return new DeleteClientResponse(
                 name: result.Value.Name,

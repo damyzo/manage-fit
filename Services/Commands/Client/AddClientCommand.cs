@@ -12,7 +12,7 @@
         float weight,
         float height,
         string email,
-        Guid trainerGuid) : IRequest<Result<Client>>
+        Guid trainerId) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
 
@@ -22,7 +22,7 @@
 
         public string Email { get; set; } = email;
 
-        public Guid TrainerGuid { get; set; } = trainerGuid;
+        public Guid TrainerId { get; set; } = trainerId;
     }
 
     public class AddClientCommandHandler(
@@ -31,12 +31,12 @@
     {
         public async Task<Result<Client>> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
-            Result<Trainer> trainerResult = await trainerRepository.GetTrainer(request.TrainerGuid, cancellationToken);
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainer(request.TrainerId, cancellationToken);
 
             if (!trainerResult.IsSuccess)
             {
                 return new Result<Client>(
-                    value: new Client() { Name = "", Email = "", Height = 0, Weight = 0, Uid = Guid.Empty},
+                    value: new Client() { Name = "", Email = "", Height = 0, Weight = 0, Id = Guid.Empty},
                     isSuccess: false,
                     message: trainerResult.Message); ;
             }
@@ -47,7 +47,7 @@
                 Weight = request.Weight,
                 Height = request.Height,
                 Email = request.Email,
-                Uid = Guid.NewGuid()
+                Id = Guid.NewGuid()
             };
 
             client.Trainers.Add(trainerResult.Value);

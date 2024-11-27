@@ -14,7 +14,7 @@
 
         public required string Email { get; set; }
 
-        [Column("TrainerUid")]
+        [Column("TrainerId")]
         public List<Trainer> Trainers { get; set; } = [];
     }
 }

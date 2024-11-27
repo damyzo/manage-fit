@@ -5,6 +5,6 @@
 
     public interface ITrainerRepository
     {
-        public Task<Result<Trainer>> GetTrainer(Guid trainerGuid, CancellationToken cancellationToken);
+        public Task<Result<Trainer>> GetTrainer(Guid trainerId, CancellationToken cancellationToken);
     }
 }

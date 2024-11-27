@@ -2,10 +2,8 @@
 {
     public class TrainerClient
     {
-        Guid TrainerUid { get; set; }
+        Guid TrainerId { get; set; }
 
-        Guid ClientUid { get; set; }
-
-
+        Guid ClientId { get; set; }
     }   
 }

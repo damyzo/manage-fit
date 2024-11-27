@@ -1,6 +1,10 @@
 ﻿namespace Entities.WorkoutPlan.Model
 {
-    public class WorkoutPlan
+    using Entities.Common;
+    using Entities.WorkoutPlanExercise.Model;
+
+    public class WorkoutPlan : Entity
     {
+        public List<WorkoutPlanExercise> WorkoutPlanExercises { get; } = [];
     }
 }

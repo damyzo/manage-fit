@@ -27,7 +27,7 @@ export class NutritionsComponent {
   searchFormControl = new FormControl('', []);
   public filteredNutritions: [] = [];
 
-  public deleteNutritionDialog(uid: string){}
+  public deleteNutritionDialog(id: string){}
 
   public openAddNutritionDialog(){}
 }

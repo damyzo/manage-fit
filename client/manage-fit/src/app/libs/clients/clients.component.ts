@@ -41,7 +41,7 @@ export class ClientsComponent implements OnInit {
   constructor(public clientsService: ClientsService){}
   
   ngOnInit(): void {
-    this.clientsService.getClients('9D517E75-6A62-4477-AF98-0F1C4FA06761')
+    this.clientsService.getClients('3FA85F64-5717-4562-B3FC-2C963F66AFA6')
     .subscribe((data) => {
       this.clients = data;
       this.filteredClients = data;
@@ -58,11 +58,11 @@ export class ClientsComponent implements OnInit {
 
   }
 
-  public deleteClientDialog(uid: string){
+  public deleteClientDialog(id: string){
     this.clientsService
-    .deleteClient(uid)
+    .deleteClient(id)
       .pipe(switchMap(() => {
-        return this.clientsService.getClients('9D517E75-6A62-4477-AF98-0F1C4FA06761');
+        return this.clientsService.getClients('3FA85F64-5717-4562-B3FC-2C963F66AFA6');
       })).subscribe((data) => {
         this.clients = data;
         this.filteredClients = data;

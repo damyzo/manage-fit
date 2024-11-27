@@ -27,7 +27,7 @@ export class WorkoutsComponent {
   searchFormControl = new FormControl('', []);
   public filteredWorkouts: [] = [];
 
-  public deleteWorkoutDialog(uid: string){}
+  public deleteWorkoutDialog(id: string){}
 
   public openAddWorkoutDialog(){}
 }

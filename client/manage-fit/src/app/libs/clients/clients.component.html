@@ -12,11 +12,11 @@
         <mat-card-content>
             {{ client.weight }}
             {{ client.height }}
-            {{ client.uid }} 
+            {{ client.id }} 
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button [routerLink]="['/clients', client.uid]"><mat-icon>edit</mat-icon>Edit</button>
-            <button mat-button (click)="deleteClientDialog(client.uid)"><mat-icon>delete</mat-icon>Remove</button>
+            <button mat-button [routerLink]="['/clients', client.id]"><mat-icon>edit</mat-icon>Edit</button>
+            <button mat-button (click)="deleteClientDialog(client.id)"><mat-icon>delete</mat-icon>Remove</button>
         </mat-card-actions>
     </mat-card>
 }@empty {

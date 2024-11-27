@@ -5,12 +5,12 @@
         float weight,
         float height,
         string email,
-        Guid uid)
+        Guid id)
     {
         public string Name { get; } = name;
         public float Weight { get; } = weight;
         public float Height { get; } = height;
         public string Email { get; } = email;
-        public string Uid { get; } = uid.ToString();
+        public string Id { get; } = id.ToString();
     }
 }

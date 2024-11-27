@@ -10,7 +10,7 @@
 
         public required string Email { get; set; }
 
-        [Column("ClientUid")]
+        [Column("ClientId")]
         public List<Client> Clients { get; set; } = new List<Client>();
     }
 }

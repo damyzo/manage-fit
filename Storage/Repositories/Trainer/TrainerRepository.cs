@@ -11,16 +11,16 @@
 
     public class TrainerRepository(ManageFitDbContext manageFitDbContext) : ITrainerRepository
     {
-        public async Task<Result<Trainer>> GetTrainer(Guid trainerGuid, CancellationToken cancellationToken)
+        public async Task<Result<Trainer>> GetTrainer(Guid trainerId, CancellationToken cancellationToken)
         {
             Trainer? trainer = await manageFitDbContext
-                .Trainer.Where(trainer => trainer.Uid == trainerGuid)
+                .Trainer.Where(trainer => trainer.Id == trainerId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (trainer == null)
             {
                 Result<Trainer> trainerError = new(
-                    value: new Trainer { Name = "", Email = "", Uid = Guid.Empty },
+                    value: new Trainer { Name = "", Email = "", Id = Guid.Empty },
                     isSuccess: false,
                     message: "Trainer Not Found");
 

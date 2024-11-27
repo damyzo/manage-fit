@@ -10,15 +10,15 @@ export class ClientsService {
 
   constructor(public http: HttpClient) { }
 
-  public getClients(trainerUid: string): Observable<GetClientResponse[]>{
-    return this.http.get<GetClientResponse[]>(`https://localhost:7003/api/clients/trainer/${trainerUid}`)
+  public getClients(trainerId: string): Observable<GetClientResponse[]>{
+    return this.http.get<GetClientResponse[]>(`https://localhost:7003/api/clients/trainer/${trainerId}`)
   }
 
-  public getClient(clientUid: string): Observable<GetClientResponse>{
-    return this.http.get<GetClientResponse>(`https://localhost:7003/api/clients/${clientUid}`)
+  public getClient(clientId: string): Observable<GetClientResponse>{
+    return this.http.get<GetClientResponse>(`https://localhost:7003/api/clients/${clientId}`)
   }
 
-  public deleteClient(uid: string): Observable<DeleteClientResponse>{
-    return this.http.delete<GetClientResponse>(`https://localhost:7003/api/clients/${uid}`)
+  public deleteClient(id: string): Observable<DeleteClientResponse>{
+    return this.http.delete<GetClientResponse>(`https://localhost:7003/api/clients/${id}`)
   }
 }
