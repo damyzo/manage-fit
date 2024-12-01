@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Responses.Exercise
 {
-    public class DeleteExerciseRequest(
+    public class DeleteExerciseResponse(
         string name,
         string description,
         string videoUrl,

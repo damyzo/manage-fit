@@ -1,50 +1,90 @@
-﻿using Contracts.Responses.Exercise;
-using Entities.Common;
-using Entities.Exercise.Model;
-using Microsoft.AspNetCore.Mvc;
-using Storage.Repositories.Exercise.Interface;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace ManageFit.Controllers
+﻿namespace ManageFit.Controllers
 {
+    using Entities.Common;
+    using Contracts.Responses.Exercise;
+    using Entities.Exercise.Model;
+    using Microsoft.AspNetCore.Mvc;
+    using Contracts.Requests.Exercise;
+    using MediatR;
+    using Services.Commands.Exercise;
+    using Services.Queries.Exercise;
+
     [ApiController]
     [Route("api/exercises")]
-    public class ExerciseController(IExerciseRepository exerciseRepository) : ControllerBase
+    public class ExerciseController(IMediator mediator) : ControllerBase
     {
         // GET: api/<ExerciseController>
-        [HttpGet]
-        public IEnumerable<GetExercisesResponse> GetExercises()
+        [HttpGet("trainer/{trainerId}")]
+        public async Task<IEnumerable<GetExercisesResponse>> GetExercises(Guid trainerId)
         {
-            return new string[] { "value1", "value2" };
+            Result<IEnumerable<Exercise>> result = await mediator.Send(new GetExercisesQuery(trainerId));
+
+            return result.Value.Select(x => new GetExercisesResponse(
+                name: x.Name,
+                description: x.Description,
+                videoUrl: x.VideoUrl,
+                id: x.Id));
         }
 
         // GET api/<ExerciseController>/5
         [HttpGet("{id}")]
-        public async Task<Exercise> GetExercise(Guid id)
+        public async Task<GetExerciseResponse> GetExercise(Guid id)
         {
-            Result<Exercise> exercise = await exerciseRepository.GetExercise(id, default);
+            Result<Exercise> exercise = await mediator.Send(new GetExerciseQuery(id));
             
-            return exercise.Value;
+            return new GetExerciseResponse(
+                name: exercise.Value.Name,
+                description: exercise.Value.Description,
+                videoUrl: exercise.Value.VideoUrl,
+                id: exercise.Value.Id);
         }
 
         // POST api/<ExerciseController>
         [HttpPost]
-        public async Task AddExercise()
+        public async Task<AddExerciseResponse> AddExercise([FromBody] AddExerciseRequest exerciseRequest)
         {
-            await exerciseRepository.AddExercise(new Exercise() { Description = "Test", Name = "Test", VideoUrl = "Test", Id = Guid.NewGuid() }, default);
+            Result<Exercise> exercise = await mediator.Send(new AddExerciseCommand(
+                description: exerciseRequest.Description,
+                name: exerciseRequest.Name,
+                videoUrl: exerciseRequest.VideoUrl, 
+                trainerId: exerciseRequest.TrainerId
+            ), default);
+
+            return new AddExerciseResponse(
+                name: exercise.Value.Name,
+                description: exercise.Value.Description,
+                videoUrl: exercise.Value.VideoUrl,
+                id: exercise.Value.Id);
         }
 
         // PUT api/<ExerciseController>/5
         [HttpPut("{id}")]
-        public void EditExercise(Guid id, [FromBody] Exercise exercise)
+        public async Task<EditExerciseResponse> EditExercise(Guid id, [FromBody] EditExerciseRequest exerciseRequest)
         {
+            Result<Exercise> exercise = await mediator.Send(request: new EditExerciseCommand(
+                name: exerciseRequest.Name,
+                description: exerciseRequest.Description,
+                videoUrl: exerciseRequest.VideoUrl,
+                exerciseId: id));
+
+            return new EditExerciseResponse(
+                name: exercise.Value.Name,
+                description: exercise.Value.Description,
+                videoUrl: exercise.Value.VideoUrl,
+                id: exercise.Value.Id);
         }
 
         // DELETE api/<ExerciseController>/5
         [HttpDelete("{id}")]
-        public void DeleteExercise(Guid id)
+        public async Task<DeleteExerciseResponse> DeleteExerciseAsync(Guid id)
         {
+            Result<Exercise> result = await mediator.Send(new DeleteExerciseCommand(exerciseId: id), default);
+
+            return new DeleteExerciseResponse(
+                name: result.Value.Name,
+                description: result.Value.Description,
+                videoUrl: result.Value.VideoUrl,
+                id: result.Value.Id);
         }
     }
 }

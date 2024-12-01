@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Responses.Exercise
 {
-    public class GetExercisesRequest(
+    public class GetExercisesResponse(
         string name,
         string description,
         string videoUrl,

@@ -18,11 +18,6 @@
         {
             Result<Client> reuslt = await clientRepository.DeleteClient(request.Id, cancellationToken);
 
-            if (!reuslt.IsSuccess)
-            {
-                return reuslt;
-            }
-            
             return reuslt;
         }
     }

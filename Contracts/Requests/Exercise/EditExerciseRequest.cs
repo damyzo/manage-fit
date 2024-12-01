@@ -1,17 +1,14 @@
-﻿namespace Contracts.Responses.Exercise
+﻿namespace Contracts.Requests.Exercise
 {
     public class EditExerciseRequest(
         string name,
         string description,
-        string videoUrl,
-        Guid id)
+        string videoUrl)
     {
         public string Name { get; } = name;
 
         public string Description { get; } = description;
 
         public string VideoUrl { get; } = videoUrl;
-
-        public string Id { get; } = id.ToString();
     }
 }

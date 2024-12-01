@@ -1,10 +1,10 @@
-﻿namespace Contracts.Responses.Exercise
+﻿namespace Contracts.Requests.Exercise
 {
     public class AddExerciseRequest(
         string name,
         string description,
         string videoUrl,
-        Guid id)
+        Guid trainerId)
     {
         public string Name { get; } = name;
 
@@ -12,6 +12,6 @@
 
         public string VideoUrl { get; } = videoUrl;
 
-        public string Id { get; } = id.ToString();
+        public Guid TrainerId { get; } = trainerId;
     }
 }
