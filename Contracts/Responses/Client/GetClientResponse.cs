@@ -8,9 +8,13 @@
         Guid id)
     {
         public string Name { get; } = name;
+
         public float Weight { get; } = weight;
+
         public float Height { get; } = height;
+
         public string Email { get; } = email;
+
         public string Id { get; } = id.ToString();
     }
 }
