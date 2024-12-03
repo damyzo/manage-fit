@@ -8,11 +8,8 @@
     using Microsoft.EntityFrameworkCore;
     using Storage.Configuration;
 
-    public partial class ManageFitDbContext : DbContext, IDisposable
+    public partial class ManageFitDbContext(DbContextOptions<ManageFitDbContext> options) : DbContext(options), IDisposable
     {
-        public ManageFitDbContext(DbContextOptions<ManageFitDbContext> options) 
-            : base(options) { }
-
         public DbSet<Client> Client { get; set; }
 
         public DbSet<Trainer> Trainer { get; set; }
