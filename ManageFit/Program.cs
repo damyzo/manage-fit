@@ -11,6 +11,8 @@ using Storage.Repositories.Exercise;
 using Storage.Repositories.Exercise.Interface;
 using Storage.Repositories.Trainer;
 using Storage.Repositories.Trainer.Interface;
+using Storage.Repositories.WorkoutPlan;
+using Storage.Repositories.WorkoutPlan.Interface;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -28,6 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IClientRepository, ClientRepository>();
 builder.Services.AddTransient<ITrainerRepository, TrainerRepository>();
 builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddTransient<IWorkoutPlanRepository, WorkoutPlanRepository>();
 
 // Databse setup
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
