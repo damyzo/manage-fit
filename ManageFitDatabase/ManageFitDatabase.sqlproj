@@ -68,6 +68,8 @@
     <Folder Include="ManageFit\WorkoutPlan" />
     <Folder Include="ManageFit\WorkoutPlanExercise" />
     <Folder Include="ManageFit\NutritionPlanMeal" />
+    <Folder Include="ManageFit\Ingredient" />
+    <Folder Include="ManageFit\MealIngredient" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ManageFitDatabase.publish.xml" />
@@ -82,5 +84,7 @@
     <Build Include="ManageFit\WorkoutPlan\WorkoutPlan.sql" />
     <Build Include="ManageFit\WorkoutPlanExercise\WorkoutPlanExercise.sql" />
     <Build Include="ManageFit\NutritionPlanMeal\NutritionPlanMeal.sql" />
+    <Build Include="ManageFit\Ingredient\Ingredient.sql" />
+    <Build Include="ManageFit\MealIngredient\MealIngredient.sql" />
   </ItemGroup>
 </Project>
