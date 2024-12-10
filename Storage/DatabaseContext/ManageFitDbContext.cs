@@ -2,6 +2,9 @@
 {
     using Entities.Client.Model;
     using Entities.Exercise.Model;
+    using Entities.Ingredient.Model;
+    using Entities.Meal.Model;
+    using Entities.MealIngredient.Model;
     using Entities.Trainer.Model;
     using Entities.WorkoutPlan.Model;
     using Entities.WorkoutPlanExercise.Model;
@@ -19,6 +22,12 @@
         public DbSet<WorkoutPlan> WorkoutPlan { get; set; }
 
         public DbSet<WorkoutPlanExercise> WorkoutPlanExercises { get; set; }
+
+        public DbSet<Meal> Meal { get; set; }
+
+        public DbSet<Ingredient> Ingredient { get; set; }
+
+        public DbSet<MealIngredient> MealIngredient { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,6 +9,10 @@ using Storage.Repositories.Client;
 using Storage.Repositories.Client.Interface;
 using Storage.Repositories.Exercise;
 using Storage.Repositories.Exercise.Interface;
+using Storage.Repositories.Ingredient;
+using Storage.Repositories.Ingredient.Interface;
+using Storage.Repositories.Meal;
+using Storage.Repositories.Meal.Interface;
 using Storage.Repositories.Trainer;
 using Storage.Repositories.Trainer.Interface;
 using Storage.Repositories.WorkoutPlan;
@@ -31,6 +35,8 @@ builder.Services.AddTransient<IClientRepository, ClientRepository>();
 builder.Services.AddTransient<ITrainerRepository, TrainerRepository>();
 builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddTransient<IWorkoutPlanRepository, WorkoutPlanRepository>();
+builder.Services.AddTransient<IIngredientRepository, IngredientRepository>();
+builder.Services.AddTransient<IMealRepository, MealRepository>();
 
 // Databse setup
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
