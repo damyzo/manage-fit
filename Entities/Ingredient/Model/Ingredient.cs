@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.Meal.Model;
+    using Entities.Trainer.Model;
 
     public class Ingredient : Entity
     {
@@ -15,6 +16,10 @@
 
         public float Carbohydrate { get; set; }
 
+        public Guid TrainerId { get; set; }
+
         public IEnumerable<Meal> Meals { get; set; } = [];
+
+        public Trainer Trainer { get; set; } = null!;
     }
 }

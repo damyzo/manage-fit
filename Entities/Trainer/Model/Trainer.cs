@@ -3,6 +3,7 @@
     using Entities.Client.Model;
     using Entities.Common;
     using Entities.Exercise.Model;
+    using Entities.Ingredient.Model;
     using Entities.WorkoutPlan.Model;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,7 @@
         public IEnumerable<Exercise> Exercises { get; } = new List<Exercise>();
 
         public IEnumerable<WorkoutPlan> Workouts { get; set; } = new List<WorkoutPlan>();
+
+        public IEnumerable<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
     }
 }
