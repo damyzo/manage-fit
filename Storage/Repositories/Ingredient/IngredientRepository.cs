@@ -1,6 +1,5 @@
 ﻿namespace Storage.Repositories.Ingredient
 {
-    using Entities.Client.Model;
     using Entities.Common;
     using Entities.Ingredient.Model;
     using Microsoft.EntityFrameworkCore;
@@ -70,7 +69,7 @@
             return new Result<Ingredient>(
                 value: ingredient,
                 isSuccess: true,
-                message: "Client deleted");
+                message: "Ingredient deleted");
         }
 
         public async Task<Result<Ingredient>> GetIngredient(Guid ingredientId, CancellationToken cancellationToken)
@@ -82,7 +81,7 @@
                 Result<Ingredient> ingredientError = new(
                     value: new Ingredient { Name = "", Id = Guid.Empty },
                     isSuccess: false,
-                    message: "User Not Found");
+                    message: "Ingredient Not Found");
 
                 return ingredientError;
             }

@@ -18,8 +18,8 @@
 
         public Guid TrainerId { get; set; }
 
-        public IEnumerable<Meal> Meals { get; set; } = [];
-
         public Trainer Trainer { get; set; } = null!;
+
+        public IEnumerable<Meal> Meals { get; set; } = [];
     }
 }

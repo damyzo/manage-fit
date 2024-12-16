@@ -5,5 +5,6 @@
     [Calories] FLOAT,
     [Protein] FLOAT,
     [Fat] FLOAT,
-    [Carbohydrate] FLOAT
+    [Carbohydrate] FLOAT,
+	[TrainerId] UNIQUEIDENTIFIER NOT NULL
 )
