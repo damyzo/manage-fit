@@ -1,8 +1,8 @@
 ﻿namespace Entities.Meal.Model
 {
-    using Entities.Client.Model;
     using Entities.Common;
     using Entities.Ingredient.Model;
+    using Entities.NutritionPlanMeal.Model;
     using Entities.Trainer.Model;
 
     public class Meal : Entity
@@ -16,5 +16,7 @@
         public Trainer Trainer { get; set; } = null!;
 
         public IEnumerable<Ingredient> Ingredients { get; set; } = [];
+
+        public IEnumerable<NutritionPlanMeal> NutritionPlanMeal { get; set;} = [];
     }
 }

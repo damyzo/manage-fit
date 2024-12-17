@@ -7,9 +7,9 @@
     {
         public Guid MealsId { get; set; }
 
-        public Guid IngredientsId { get; set; }
-
         public Meal Meal { get; set; } = null!;
+
+        public Guid IngredientsId { get; set; }
 
         public Ingredient Ingredient { get; set; } = null!;
 
