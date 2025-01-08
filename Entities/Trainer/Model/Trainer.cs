@@ -15,14 +15,14 @@
         public required string Email { get; set; }
 
         [Column("ClientId")]
-        public IEnumerable<Client> Clients { get; set; } = new List<Client>();
+        public List<Client> Clients { get; set; } = [];
 
-        public IEnumerable<Exercise> Exercises { get; } = new List<Exercise>();
+        public List<Exercise> Exercises { get; } = [];
 
-        public IEnumerable<WorkoutPlan> Workouts { get; set; } = new List<WorkoutPlan>();
+        public List<WorkoutPlan> Workouts { get; set; } = [];
 
-        public IEnumerable<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        public List<Ingredient> Ingredients { get; set; } = [];
 
-        public IEnumerable<Meal> Meals { get; set; } = new List<Meal>();
+        public List<Meal> Meals { get; set; } = [];
     }
 }

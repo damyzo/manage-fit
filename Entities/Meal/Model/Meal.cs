@@ -15,8 +15,8 @@
 
         public Trainer Trainer { get; set; } = null!;
 
-        public IEnumerable<Ingredient> Ingredients { get; set; } = [];
+        public List<Ingredient> Ingredients { get; set; } = [];
 
-        public IEnumerable<NutritionPlanMeal> NutritionPlanMeal { get; set;} = [];
+        public List<NutritionPlanMeal> NutritionPlanMeal { get; set;} = [];
     }
 }

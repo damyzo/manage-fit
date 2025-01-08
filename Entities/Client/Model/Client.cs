@@ -17,8 +17,8 @@
         public required string Email { get; set; }
 
         [Column("TrainerId")]
-        public IEnumerable<Trainer> Trainers { get; set; } = [];
+        public List<Trainer> Trainers { get; set; } = [];
 
-        public IEnumerable<WorkoutPlan> Workouts { get; set; } = [];
+        public List<WorkoutPlan> Workouts { get; set; } = [];
     }
 }

@@ -20,6 +20,6 @@
 
         public Trainer Trainer { get; set; } = null!;
 
-        public IEnumerable<Meal> Meals { get; set; } = [];
+        public List<Meal> Meals { get; set; } = [];
     }
 }
