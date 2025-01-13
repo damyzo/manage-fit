@@ -6,5 +6,6 @@
     [Protein] FLOAT,
     [Fat] FLOAT,
     [Carbohydrate] FLOAT,
-	[TrainerId] UNIQUEIDENTIFIER NOT NULL
+	[TrainerId] UNIQUEIDENTIFIER NOT NULL,
+	CONSTRAINT [FK_Ingredient_TrainerId] FOREIGN KEY ([TrainerId]) REFERENCES [dbo].[Trainer] ([Id]) ON DELETE CASCADE
 )

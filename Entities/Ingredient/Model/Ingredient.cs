@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.Meal.Model;
+    using Entities.MealIngredient.Model;
     using Entities.Trainer.Model;
 
     public class Ingredient : Entity
@@ -20,6 +21,6 @@
 
         public Trainer Trainer { get; set; } = null!;
 
-        public List<Meal> Meals { get; set; } = [];
+        public List<MealIngredient> MealIngredients { get; set; } = [];
     }
 }

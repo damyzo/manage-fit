@@ -11,6 +11,31 @@
 
     public class TrainerRepository(ManageFitDbContext manageFitDbContext) : ITrainerRepository
     {
+        public async Task<Result<Trainer>> AddTrainer(Trainer trainer, CancellationToken cancellationToken)
+        {
+            manageFitDbContext.Trainer.Add(trainer);
+
+            try
+            {
+                await manageFitDbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Result<Trainer> trainerResult =
+                    new(
+                        value: trainer,
+                        isSuccess: false,
+                        message: e.Message);
+                
+                return trainerResult;
+            }
+
+            return new Result<Trainer>(
+                value: trainer,
+                isSuccess: true,
+                message: "Valid Data");
+        }
+
         public async Task<Result<Trainer>> GetTrainer(Guid trainerId, CancellationToken cancellationToken)
         {
             Trainer? trainer = await manageFitDbContext
