@@ -9,7 +9,6 @@
     using Entities.WorkoutPlan.Model;
     using Entities.WorkoutPlanExercise.Model;
     using Microsoft.EntityFrameworkCore;
-    using Storage.Configuration;
 
     public partial class ManageFitDbContext(DbContextOptions<ManageFitDbContext> options) : DbContext(options), IDisposable
     {
@@ -32,9 +31,6 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-/*            modelBuilder.ApplyConfiguration(new ClientModelConfiguration());
-            modelBuilder.ApplyConfiguration(new TrainerModelConfiguration());*/
         }
     }
 

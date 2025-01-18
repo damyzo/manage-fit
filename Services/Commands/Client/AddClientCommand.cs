@@ -50,7 +50,12 @@
                 Id = Guid.NewGuid()
             };
 
-            client.Trainers.Add(trainerResult.Value);
+            client.TrainerClients.Add(
+                new Entities.TrainerClient.Model.TrainerClient() { 
+                    Client = client,
+                    Trainer = trainerResult.Value,
+                    ClientId = client.Id,
+                    TrainerId = trainerResult.Value.Id });
 
             Result<Client> clientResult = Validators.ClientValidator.Validate(client);
 

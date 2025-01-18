@@ -19,13 +19,23 @@
     {
         public async Task<Result<Trainer>> Handle(AddTrainerCommand request, CancellationToken cancellationToken)
         {
+            Result<Trainer> trainerByEmailResult = await trainerRepository.GetTrainerByEmail(request.Email, cancellationToken);
+
+            if (trainerByEmailResult.IsSuccess)
+            {
+                return new Result<Trainer>(
+                    value: new Trainer() { Email = request.Email, Name = "" },
+                    isSuccess: false,
+                    message: "This email is already in use.");
+            }
+
             Trainer trainer = new()
             {
                 Name = request.Name,
                 Email = request.Email,
                 Id = Guid.NewGuid()
             };
-            
+
             Result<Trainer> trainerResult = await trainerRepository.AddTrainer(trainer, cancellationToken);
 
             if (!trainerResult.IsSuccess)

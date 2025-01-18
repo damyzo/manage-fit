@@ -1,9 +1,17 @@
 ﻿namespace Entities.TrainerClient.Model
 {
-    public class TrainerClient
-    {
-        Guid TrainerId { get; set; }
+    using Entities.Client.Model;
+    using Entities.Common;
+    using Entities.Trainer.Model;
 
-        Guid ClientId { get; set; }
+    public class TrainerClient : Entity
+    {
+        public Guid TrainerId { get; set; }
+
+        public Guid ClientId { get; set; }
+
+        public Trainer Trainer { get; set; } = null!;
+
+        public Client Client { get; set; } = null!;
     }   
 }

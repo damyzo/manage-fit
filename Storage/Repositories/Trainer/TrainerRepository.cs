@@ -57,5 +57,27 @@
                 isSuccess: true,
                 message: "Valid Data");
         }
+
+        public async Task<Result<Trainer>> GetTrainerByEmail(string email, CancellationToken cancellationToken)
+        {
+            Trainer? trainer = await manageFitDbContext
+                .Trainer.Where(trainer => trainer.Email == email)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (trainer == null)
+            {
+                Result<Trainer> trainerError = new(
+                    value: new Trainer { Name = "", Email = "", Id = Guid.Empty },
+                    isSuccess: false,
+                    message: "Trainer Not Found");
+
+                return trainerError;
+            }
+
+            return new Result<Trainer>(
+                value: trainer,
+                isSuccess: true,
+                message: "Valid Data");
+        }
     }
 }

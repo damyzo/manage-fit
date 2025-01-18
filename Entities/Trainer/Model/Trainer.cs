@@ -5,6 +5,7 @@
     using Entities.Exercise.Model;
     using Entities.Ingredient.Model;
     using Entities.Meal.Model;
+    using Entities.TrainerClient.Model;
     using Entities.WorkoutPlan.Model;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,8 +15,7 @@
 
         public required string Email { get; set; }
 
-        [Column("ClientId")]
-        public List<Client> Clients { get; set; } = [];
+        public List<TrainerClient> TrainerClients { get; set; } = [];
 
         public List<Exercise> Exercises { get; } = [];
 

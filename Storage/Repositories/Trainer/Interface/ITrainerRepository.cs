@@ -8,5 +8,7 @@
         public Task<Result<Trainer>> GetTrainer(Guid trainerId, CancellationToken cancellationToken);
 
         public Task<Result<Trainer>> AddTrainer(Trainer trainer, CancellationToken cancellationToken);
+
+        public Task<Result<Trainer>> GetTrainerByEmail(string email, CancellationToken cancellationToken);
     }
 }

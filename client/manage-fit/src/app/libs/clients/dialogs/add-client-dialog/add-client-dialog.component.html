@@ -1,0 +1,26 @@
+
+<h2 mat-dialog-title>Add Client</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" class="form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter a name." />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Ex: email@domain.com" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Weight (in kg)</mat-label>
+          <input type="number" matInput formControlName="weight" placeholder="Ex: 82 (in kg)" min="0" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Height (in cm)</mat-label>
+          <input type="number" matInput formControlName="height" placeholder="Ex: 182 (in cm)" min="0" />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-button (click)="save()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

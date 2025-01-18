@@ -2,16 +2,16 @@
 {
     public class GetClientResponse(
         string name,
-        float weight,
-        float height,
+        double weight,
+        double height,
         string email,
         Guid id)
     {
         public string Name { get; } = name;
 
-        public float Weight { get; } = weight;
+        public double Weight { get; } = weight;
 
-        public float Height { get; } = height;
+        public double Height { get; } = height;
 
         public string Email { get; } = email;
 

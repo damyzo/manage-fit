@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[TrainerClient]
 (
+	[Id] UNIQUEIDENTIFIER NOT NULL,
 	[TrainerId] UNIQUEIDENTIFIER NOT NULL,
 	[ClientId] UNIQUEIDENTIFIER NOT NULL,
 	CONSTRAINT PK_TrainerClient_Trainer_Client PRIMARY KEY ([TrainerId], [ClientId]),

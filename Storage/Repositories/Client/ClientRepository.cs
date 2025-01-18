@@ -83,7 +83,7 @@
         public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<Client> clients = await manageFitDbContext.Client
-                .Where(client => client.Trainers.Any(trainer => trainer.Id == trainerId))
+                .Where(client => client.TrainerClients.Any(trainerClient => trainerClient.Trainer.Id == trainerId))
                 .ToListAsync(cancellationToken);
 
             return new Result<IEnumerable<Client>>(value: clients, isSuccess: true, message: "Valid Data");
