@@ -53,9 +53,7 @@ export class AddClientDialogComponent implements OnInit {
       trainerId: '0D913FF2-7D78-4B07-993B-12D21D570A54'
     };
 
-    this.clientService.addClient(request)
-    .subscribe();
-    console.log(request);
+    this.dialogRef.close(request);
   }
 
   close(): void {
