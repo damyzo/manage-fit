@@ -6,3 +6,10 @@ export interface AddClientRequest
     email: string,
     trainerId: string
 }
+
+export interface EditClientRequest{
+    name: string;
+    weight: number,
+    height: number,
+    email: string
+}

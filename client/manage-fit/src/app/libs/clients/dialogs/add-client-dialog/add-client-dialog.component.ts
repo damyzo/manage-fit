@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AddClientDialogInterface } from '../../../entites/clients/add-client-dialog-interface';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -25,10 +25,9 @@ import { AddClientRequest } from '../../../entites/requests/client-request';
     MatButtonModule,
     MatButtonModule,
     MatDialogActions,
-    MatDialogClose,
     MatDialogContent,
     MatDialogTitle
-  ],
+],
   templateUrl: './add-client-dialog.component.html',
   styleUrl: './add-client-dialog.component.scss'
 })
@@ -37,11 +36,14 @@ export class AddClientDialogComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<AddClientDialogComponent>);
   readonly data = inject<AddClientDialogInterface>(MAT_DIALOG_DATA);
 
-  public form: FormGroup = new FormGroup({});
-
+  public form: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    email: new FormControl(''),
+    weight: new FormControl(''),
+    height: new FormControl('')
+  });
   constructor(
-    private fb: FormBuilder,
-    private clientService: ClientsService) {}
+    private fb: FormBuilder) {}
   
   save():void
   {

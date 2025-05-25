@@ -1,25 +1,32 @@
 <div class="container">
     <h1>Client details</h1>
-    <form class="form">
+    <form [formGroup]="form" class="form">
         <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Enter a name." value="{{client?.name}}">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter a name." />
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input type="email" matInput placeholder="Ex: asd@example.com" value="{{client?.email}}">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Ex: email@domain.com" />
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Weight</mat-label>
-            <input type="number" matInput placeholder="Ex: 80.23" min="0" value="{{client?.weight}}">
+          <mat-label>Weight (in kg)</mat-label>
+          <input type="number" matInput formControlName="weight" placeholder="Ex: 82 (in kg)" min="0" />
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Height</mat-label>
-            <input type="number" matInput placeholder="Ex: 180.20" min="0" value="{{client?.height}}">
+          <mat-label>Height (in cm)</mat-label>
+          <input type="number" matInput formControlName="height" placeholder="Ex: 182 (in cm)" min="0" />
         </mat-form-field>
-        <button mat-fab extended>
+    </form>
+    <div class="buttons">
+        <button mat-fab extended (click)="back()">
+            <mat-icon>arrow_back </mat-icon>
+            Back
+        </button>
+        <button mat-fab extended (click)="save()">
             <mat-icon>save</mat-icon>
             Save
         </button>
-    </form>
+    </div>
+
 </div>
