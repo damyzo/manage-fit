@@ -8,6 +8,8 @@ import { ClientsService } from '../../services/clients/clients.service';
 import { GetClientResponse } from '../../entites/responses/client-response';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
+import { NotificationService } from '../../services/notification/notification.service';
+import { ErrorMessages } from '../../statics/statics';
 
 @Component({
   selector: 'app-client',
@@ -35,7 +37,8 @@ export class ClientComponent implements OnInit {
   constructor(
     private clientsService: ClientsService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationService: NotificationService
   ){}
 
   ngOnInit(): void {
@@ -63,7 +66,9 @@ export class ClientComponent implements OnInit {
   
 
   save(): void {
-    if(this.form.valid){
+    const clinetId = this.form.get('id')?.value;
+
+    if(this.form.valid && clinetId){
       let request = {
         name: this.form.get('name')?.value,
         email: this.form.get('email')?.value,
@@ -71,7 +76,15 @@ export class ClientComponent implements OnInit {
         height: this.form.get('height')?.value
       };
 
-      this.clientsService.editClient(this.form.get('id')?.value, request).subscribe();
+      this.clientsService.editClient(clinetId, request)
+        .subscribe({
+          error: (err) => {
+            this.notificationService.error(ErrorMessages.UpdateError + err.message);
+          },
+          complete: () => {
+            this.notificationService.success(ErrorMessages.UpdateSuccess);
+          }
+        });
     }
   }
 

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AddClientResponse, GetClientResponse } from '../entites/responses/client-response';
+import { GetClientResponse } from '../entites/responses/client-response';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -16,7 +16,8 @@ import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddClientDialogComponent } from './dialogs/add-client-dialog/add-client-dialog.component';
-import { AddClientRequest } from '../entites/requests/client-request';
+import { DialogStatics, ErrorMessages } from '../statics/statics';
+import { NotificationService } from '../services/notification/notification.service';
 
 @Component({
   selector: 'app-clients',
@@ -44,7 +45,9 @@ export class ClientsComponent implements OnInit {
 
   searchFormControl = new FormControl('', []);
 
-  constructor(public clientsService: ClientsService){}
+  constructor(
+    public clientsService: ClientsService,
+    private notificationService: NotificationService){}
   
   ngOnInit(): void {
     this.subject
@@ -66,21 +69,26 @@ export class ClientsComponent implements OnInit {
 
   public openAddClientDialog(){
     this.dialogRef = this.dialog.open(AddClientDialogComponent, {});
+
     this.dialogRef.afterClosed()
-    .pipe(
-      switchMap((request: AddClientRequest) => {
-        return this.clientsService.addClient(request); 
-      }),
-      tap(() => {
+    .subscribe((message: string) => {
+      if(message === DialogStatics.SUCCESS)
+      {
         this.subject.next(null);
-      })).subscribe();
+      }
+    });
   }
 
   public deleteClientDialog(id: string){
-    this.clientsService
-    .deleteClient(id)
-      .pipe(tap(() => {
+    this.clientsService.deleteClient(id)
+    .subscribe({
+      error: (err) => {
+        this.notificationService.error(ErrorMessages.DeleteError + err.status);
+      },
+      next: () => {
+        this.notificationService.success(ErrorMessages.DeleteSuccess);
         this.subject.next(null);
-      })).subscribe();
+      }
+    });
   }
 }

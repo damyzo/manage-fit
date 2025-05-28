@@ -14,6 +14,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ClientsService } from '../../../services/clients/clients.service';
 import { AddClientRequest } from '../../../entites/requests/client-request';
+import { DialogStatics, ErrorMessages } from '../../../statics/statics';
+import { NotificationService } from '../../../services/notification/notification.service';
 @Component({
   selector: 'app-add-client-dialog',
   standalone: true,
@@ -43,7 +45,9 @@ export class AddClientDialogComponent implements OnInit {
     height: new FormControl('')
   });
   constructor(
-    private fb: FormBuilder) {}
+    private fb: FormBuilder,
+    public clientsService: ClientsService,
+    private notificationService: NotificationService) {}
   
   save():void
   {
@@ -55,11 +59,21 @@ export class AddClientDialogComponent implements OnInit {
       trainerId: '0D913FF2-7D78-4B07-993B-12D21D570A54'
     };
 
-    this.dialogRef.close(request);
+    this.clientsService.addClient(request).subscribe({
+        error: (err) => {
+          this.notificationService.error(ErrorMessages.InsertError + err.status);
+        },
+        next: () => {
+          this.notificationService.success(ErrorMessages.InsertSuccess);
+        },
+        complete: () => {
+          this.dialogRef.close(DialogStatics.SUCCESS);
+        }
+    }); 
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(DialogStatics.CLOSED);
   }
 
   ngOnInit(): void {
