@@ -11,10 +11,10 @@
 
         public Guid ClientId { get; set; }
 
-        public List<WorkoutPlanExercise> WorkoutPlanExercises { get; } = [];
+        public virtual ICollection<WorkoutPlanExercise> WorkoutPlanExercises { get; } = [];
 
-        public Trainer Trainer { get; set; } = null!;
+        public virtual Trainer Trainer { get; set; } = null!;
 
-        public Client Client { get; set; } = null!;
+        public virtual Client Client { get; set; } = null!;
     }
 }

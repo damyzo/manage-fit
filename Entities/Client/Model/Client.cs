@@ -4,7 +4,7 @@
     using Entities.TrainerClient.Model;
     using Entities.WorkoutPlan.Model;
 
-    public class Client() : Entity
+    public class Client : Entity
     {
         public required string Name { get; set; }
 
@@ -14,8 +14,8 @@
 
         public required string Email { get; set; }
 
-        public List<TrainerClient> TrainerClients { get; set; } = [];
+        public virtual ICollection<TrainerClient> TrainerClients { get; set; } = [];
 
-        public List<WorkoutPlan> Workouts { get; set; } = [];
+        public virtual ICollection<WorkoutPlan> Workouts { get; set; } = [];
     }
 }

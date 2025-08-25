@@ -10,9 +10,9 @@
 
         public Guid IngredientsId { get; set; }
 
-        public Meal Meal { get; set; } = null!;
+        public virtual Meal Meal { get; set; } = null!;
 
-        public Ingredient Ingredient { get; set; } = null!;
+        public virtual Ingredient Ingredient { get; set; } = null!;
 
         public float Grams { get; set; }
 

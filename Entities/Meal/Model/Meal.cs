@@ -7,16 +7,16 @@
 
     public class Meal : Entity
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         public Guid TrainerId { get; set; }
 
-        public Trainer Trainer { get; set; } = null!;
+        public virtual Trainer Trainer { get; set; } = null!;
 
-        public List<MealIngredient> MealIngredients { get; set; } = [];
+        public virtual ICollection<MealIngredient> MealIngredients { get; set; } = [];
 
-        public List<NutritionPlanMeal> NutritionPlanMeal { get; set;} = [];
+        public virtual ICollection<NutritionPlanMeal> NutritionPlanMeal { get; set;} = [];
     }
 }

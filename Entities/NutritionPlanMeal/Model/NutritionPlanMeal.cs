@@ -8,10 +8,10 @@
     {    
         public Guid MealId { get; set; }
 
-        public Meal Meal { get; set; } = null!;
+        public virtual Meal Meal { get; set; } = null!;
 
         public Guid NutritionPlanId { get; set; }
 
-        public NutritionPlan NutritionPlan { get; set; } = null!;
+        public virtual NutritionPlan NutritionPlan { get; set; } = null!;
     }
 }

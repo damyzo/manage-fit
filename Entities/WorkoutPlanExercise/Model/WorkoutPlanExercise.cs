@@ -10,9 +10,9 @@
         
         public Guid ExercisesId { get; set; }
 
-        public WorkoutPlan WorkoutPlan { get; set; } = null!;
+        public virtual WorkoutPlan WorkoutPlan { get; set; } = null!;
 
-        public Exercise Exercise { get; set; } = null!;
+        public virtual Exercise Exercise { get; set; } = null!;
 
         public int Set {  get; set; }
 

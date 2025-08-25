@@ -1,13 +1,12 @@
 ﻿namespace Entities.Ingredient.Model
 {
     using Entities.Common;
-    using Entities.Meal.Model;
     using Entities.MealIngredient.Model;
     using Entities.Trainer.Model;
 
     public class Ingredient : Entity
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         public float Calories { get; set; }
 
@@ -19,8 +18,8 @@
 
         public Guid TrainerId { get; set; }
 
-        public Trainer Trainer { get; set; } = null!;
+        public virtual Trainer Trainer { get; set; } = null!;
 
-        public List<MealIngredient> MealIngredients { get; set; } = [];
+        public virtual ICollection<MealIngredient> MealIngredients { get; set; } = [];
     }
 }

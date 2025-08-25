@@ -23,7 +23,7 @@
             catch (Exception e)
             {
                 Result<Ingredient> ingredientError = new(
-                    value: new Ingredient { Id = Guid.Empty },
+                    value: new Ingredient { Id = Guid.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: e.Message);
 

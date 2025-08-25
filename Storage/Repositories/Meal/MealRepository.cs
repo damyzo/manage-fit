@@ -23,7 +23,7 @@
             catch (Exception e)
             {
                 Result<Meal> mealError = new(
-                    value: new Meal { Id = Guid.Empty },
+                    value: new Meal { Id = Guid.Empty, Description = string.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -43,7 +43,7 @@
             if (meal == null)
             {
                 Result<Meal> mealError = new(
-                    value: new Meal { Id = Guid.Empty },
+                    value: new Meal { Id = Guid.Empty, Description = string.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: "Meal Not Found");
 
@@ -59,7 +59,7 @@
             catch (Exception e)
             {
                 Result<Meal> mealError = new(
-                    value: new Meal { Id = Guid.Empty },
+                    value: new Meal { Id = Guid.Empty, Description = string.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -79,7 +79,7 @@
             if (meal == null)
             {
                 Result<Meal> mealError = new(
-                    value: new Meal { Name = "", Id = Guid.Empty },
+                    value: new Meal { Id = Guid.Empty, Description = string.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: "Meal Not Found");
 
@@ -112,7 +112,7 @@
             catch (Exception e)
             {
                 Result<Meal> mealError = new(
-                    value: new Meal { Name = "", Id = Guid.Empty },
+                    value: new Meal { Id = Guid.Empty, Description = string.Empty, Name = string.Empty },
                     isSuccess: false,
                     message: e.Message);
 

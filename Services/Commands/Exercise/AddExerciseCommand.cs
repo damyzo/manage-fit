@@ -51,7 +51,6 @@
                 Name = request.Name,
                 VideoUrl = request.VideoUrl,
                 TrainerId = request.trainerId,
-                Trainer = trainerResult.Value,
                 Id = Guid.NewGuid()
             };
 

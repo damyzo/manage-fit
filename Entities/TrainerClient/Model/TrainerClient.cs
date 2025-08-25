@@ -10,8 +10,8 @@
 
         public Guid ClientId { get; set; }
 
-        public Trainer Trainer { get; set; } = null!;
+        public virtual Trainer Trainer { get; set; } = null!;
 
-        public Client Client { get; set; } = null!;
+        public virtual Client Client { get; set; } = null!;
     }   
 }

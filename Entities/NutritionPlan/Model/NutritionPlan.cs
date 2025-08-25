@@ -2,24 +2,23 @@
 {
     using Entities.Client.Model;
     using Entities.Common;
-    using Entities.Meal.Model;
     using Entities.NutritionPlanMeal.Model;
     using Entities.Trainer.Model;
 
     public class NutritionPlan : Entity
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         public Guid ClientId { get; set; }
 
-        public Client Client { get; set; } = null!;
+        public virtual Client Client { get; set; } = null!;
 
         public Guid TrainerId { get; set; }
 
-        public Trainer Trainer { get; set; } = null!;
+        public virtual Trainer Trainer { get; set; } = null!;
 
-        public List<NutritionPlanMeal> NutritionPlanMeal { get; set; } = [];
+        public virtual ICollection<NutritionPlanMeal> NutritionPlanMeal { get; set; } = [];
     }
 }
