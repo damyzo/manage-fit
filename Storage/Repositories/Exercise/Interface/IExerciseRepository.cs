@@ -12,6 +12,8 @@
 
         public Task<Result<Exercise>> AddExercise(Exercise exercise, CancellationToken cancellationToken);
 
+        public Task<Result<IEnumerable<Exercise>>> AddExercises(IEnumerable<Exercise> exercise, CancellationToken cancellationToken);
+
         public Task<Result<Exercise>> UpdateExercise(Exercise exercise, CancellationToken cancellationToken);
 
         public Task<Result<Exercise>> DeleteExercise(Guid exerciseId, CancellationToken cancellationToken);

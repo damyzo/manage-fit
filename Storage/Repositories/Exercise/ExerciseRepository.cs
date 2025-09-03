@@ -34,6 +34,28 @@
                     message: "Valid Data");
         }
 
+        public async Task<Result<IEnumerable<Exercise>>> AddExercises(IEnumerable<Exercise> exercise, CancellationToken cancellationToken)
+        {
+            manageFitDbContext.Exercise.AddRange(exercise);
+
+            try
+            {
+                await manageFitDbContext.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                return new(
+                    value: exercise,
+                    isSuccess: false,
+                    message: e.Message);
+            }
+
+            return new(
+                    value: exercise,
+                    isSuccess: true,
+                    message: "Valid Data");
+        }
+
         public async Task<Result<Exercise>> DeleteExercise(Guid exerciseId, CancellationToken cancellationToken)
         {
             Exercise? exercise = await manageFitDbContext.Exercise.Where(exercise => exercise.Id == exerciseId).FirstOrDefaultAsync(cancellationToken);

@@ -36,6 +36,11 @@
                 message: "Valid Data");
         }
 
+        public Task<bool> CheckIfTrainerExists(Guid trainerId, CancellationToken cancellationToken)
+        {
+            return manageFitDbContext.Trainer.AnyAsync(x => x.Id == trainerId);
+        }
+
         public async Task<Result<Trainer>> GetTrainer(Guid trainerId, CancellationToken cancellationToken)
         {
             Trainer? trainer = await manageFitDbContext

@@ -3,6 +3,7 @@
     using Entities.Common;
     using Entities.TrainerClient.Model;
     using Entities.WorkoutPlan.Model;
+    using Entities.WorkoutPlanClient.Model;
 
     public class Client : Entity
     {
@@ -16,6 +17,6 @@
 
         public virtual ICollection<TrainerClient> TrainerClients { get; set; } = [];
 
-        public virtual ICollection<WorkoutPlan> Workouts { get; set; } = [];
+        public virtual ICollection<WorkoutPlanClient> WorkoutPlanClients { get; } = [];
     }
 }

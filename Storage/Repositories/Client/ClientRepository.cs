@@ -124,5 +124,10 @@
                 isSuccess: true,
                 message: "Client deleted");
         }
+
+        public Task<bool> CheckIfClientsExist(IEnumerable<Guid> clientsId, CancellationToken cancellationToken)
+        {
+            return manageFitDbContext.Client.AnyAsync(x => !clientsId.Contains(x.Id));
+        }
     }
 }

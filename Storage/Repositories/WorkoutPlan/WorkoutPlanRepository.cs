@@ -23,7 +23,7 @@
             catch (Exception e)
             {
                 Result<WorkoutPlan> workoutPlanOrError = new(
-                    value: new WorkoutPlan { TrainerId = Guid.Empty, ClientId = Guid.Empty, Id = Guid.Empty },
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -45,7 +45,7 @@
             if (workoutPlan == null)
             {
                 Result<WorkoutPlan> workoutPlanOrError = new(
-                    value: new WorkoutPlan { ClientId = Guid.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
                     isSuccess: false,
                     message: "Workout Plan Not Found");
 
@@ -61,7 +61,7 @@
             catch (Exception e)
             {
                 Result<WorkoutPlan> workoutPlanOrError = new(
-                    value: new WorkoutPlan { ClientId = Guid.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 
@@ -83,7 +83,7 @@
             if (workoutPlan == null)
             {
                 Result<WorkoutPlan> workoutPlanOrError = new(
-                    value: new WorkoutPlan { ClientId = Guid.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
                     isSuccess: false,
                     message: "Workout Plan Not Found");
 
@@ -96,10 +96,10 @@
                 message: "Valid Data");
         }
 
-        public async Task<Result<IEnumerable<WorkoutPlan>>> GetWorkoutPlansByTrainerIdAndClientId(Guid trainerId, Guid clientId, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<WorkoutPlan>>> GetWorkoutPlansByTrainerId(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<WorkoutPlan> workoutPlans = await manageFitDbContext.WorkoutPlan
-                .Where(workoutPlan => workoutPlan.TrainerId == trainerId && workoutPlan.ClientId == clientId)
+                .Where(workoutPlan => workoutPlan.TrainerId == trainerId)
                 .ToListAsync(cancellationToken);
 
             return new Result<IEnumerable<WorkoutPlan>>(value: workoutPlans, isSuccess: true, message: "Valid Data");
@@ -116,7 +116,7 @@
             catch (Exception e)
             {
                 Result<WorkoutPlan> workoutPlanOrError = new(
-                    value: new WorkoutPlan { ClientId = Guid.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
                     isSuccess: false,
                     message: e.Message);
 

@@ -10,5 +10,7 @@
         public Task<Result<Trainer>> AddTrainer(Trainer trainer, CancellationToken cancellationToken);
 
         public Task<Result<Trainer>> GetTrainerByEmail(string email, CancellationToken cancellationToken);
+
+        public Task<bool> CheckIfTrainerExists(Guid trainerId, CancellationToken cancellationToken);
     }
 }

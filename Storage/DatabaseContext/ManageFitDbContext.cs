@@ -7,6 +7,7 @@
     using Entities.MealIngredient.Model;
     using Entities.Trainer.Model;
     using Entities.WorkoutPlan.Model;
+    using Entities.WorkoutPlanClient.Model;
     using Entities.WorkoutPlanExercise.Model;
     using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,9 @@
 
         public DbSet<WorkoutPlan> WorkoutPlan { get; set; }
 
-        public DbSet<WorkoutPlanExercise> WorkoutPlanExercises { get; set; }
+        public DbSet<WorkoutPlanExercise> WorkoutPlanExercise { get; set; }
+
+        public DbSet<WorkoutPlanClient> WorkoutPlanClients { get; set; }
 
         public DbSet<Meal> Meal { get; set; }
 
@@ -31,6 +34,12 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<WorkoutPlanExercise>()
+                .HasKey(x => new { x.ExercisesId, x.WorkoutPlansId });
+
+            modelBuilder.Entity<WorkoutPlanClient>()
+                .HasKey(x => new { x.ClientsId, x.WorkoutPlansId });
         }
     }
 

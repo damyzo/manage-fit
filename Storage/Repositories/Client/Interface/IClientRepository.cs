@@ -9,6 +9,8 @@
 
         public Task<Result<IEnumerable<Client>>> GetClients(Guid trainerId, CancellationToken cancellationToken);
 
+        public Task<bool> CheckIfClientsExist(IEnumerable<Guid> clientsId, CancellationToken cancellationToken);
+
         public Task<Result<Client>> AddClient(Client client, CancellationToken cancellationToken);
 
         public Task<Result<Client>> UpdateClient(Client client, CancellationToken cancellationToken);

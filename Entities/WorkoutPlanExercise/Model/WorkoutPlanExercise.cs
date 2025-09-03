@@ -4,15 +4,15 @@
     using Entities.Exercise.Model;
     using Entities.WorkoutPlan.Model;
 
-    public class WorkoutPlanExercise : Entity
+    public class WorkoutPlanExercise
     {
         public Guid WorkoutPlansId { get; set; }
         
         public Guid ExercisesId { get; set; }
 
-        public virtual WorkoutPlan WorkoutPlan { get; set; } = null!;
+        public virtual WorkoutPlan WorkoutPlans { get; set; } = null!;
 
-        public virtual Exercise Exercise { get; set; } = null!;
+        public virtual Exercise Exercises { get; set; } = null!;
 
         public int Set {  get; set; }
 

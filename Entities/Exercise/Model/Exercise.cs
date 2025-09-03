@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.Trainer.Model;
+    using Entities.WorkoutPlan.Model;
     using Entities.WorkoutPlanExercise.Model;
 
     public class Exercise : Entity
@@ -16,6 +17,7 @@
         
         public virtual Trainer Trainer { get; set; } = null!;
 
-        public virtual ICollection<WorkoutPlanExercise> WorkoutPlanExercises { get; } = [];
+        public virtual ICollection<WorkoutPlanExercise> WorkoutPlanExercise { get; } = [];
+
     }
 }
