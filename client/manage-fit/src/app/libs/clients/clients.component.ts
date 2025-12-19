@@ -52,7 +52,7 @@ export class ClientsComponent implements OnInit {
   ngOnInit(): void {
     this.subject
       .pipe(switchMap(() => {
-        return this.clientsService.getClients('0D913FF2-7D78-4B07-993B-12D21D570A54');
+        return this.clientsService.getClients('3B161710-B6AD-4F9D-ADF4-6DA489156044');
       }),
       tap((data: GetClientResponse[]) => {
         this.clients = data;

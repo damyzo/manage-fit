@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>Exercise details</h1>
+    <form [formGroup]="form" class="form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter a name." />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Video URL</mat-label>
+          <input type="videoUrl" matInput formControlName="videoUrl" placeholder="Ex: exampleUrl.com" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input type="description" matInput formControlName="description" placeholder="Ex: This is a description" />
+        </mat-form-field>
+    </form>
+    <div class="buttons">
+        <button mat-fab extended (click)="back()">
+            <mat-icon>arrow_back </mat-icon>
+            Back
+        </button>
+        <button mat-fab extended (click)="save()">
+            <mat-icon>save</mat-icon>
+            Save
+        </button>
+    </div>
+
+</div>

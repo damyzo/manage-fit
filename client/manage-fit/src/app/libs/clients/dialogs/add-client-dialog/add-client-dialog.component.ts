@@ -56,7 +56,7 @@ export class AddClientDialogComponent implements OnInit {
       email: this.form.get('email')?.value,
       weight: this.form.get('weight')?.value,
       height: this.form.get('height')?.value,
-      trainerId: '0D913FF2-7D78-4B07-993B-12D21D570A54'
+      trainerId: '3B161710-B6AD-4F9D-ADF4-6DA489156044'
     };
 
     this.clientsService.addClient(request).subscribe({
