@@ -23,7 +23,7 @@
 
         public DbSet<WorkoutPlanExercise> WorkoutPlanExercise { get; set; }
 
-        public DbSet<WorkoutPlanClient> WorkoutPlanClients { get; set; }
+        public DbSet<WorkoutPlanClient> WorkoutPlanClient { get; set; }
 
         public DbSet<Meal> Meal { get; set; }
 

@@ -16,7 +16,7 @@
 
         public virtual ICollection<WorkoutPlanExercise> WorkoutPlanExercise { get; set; } = [];
 
-        public virtual ICollection<WorkoutPlanClient> WorkoutPlanClients { get; set; } = [];
+        public virtual ICollection<WorkoutPlanClient> WorkoutPlanClient { get; set; } = [];
 
     }
 }

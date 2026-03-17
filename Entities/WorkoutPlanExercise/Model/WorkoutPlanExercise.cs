@@ -18,6 +18,6 @@
 
         public int Repetition { get; set; }
 
-        public float Time { get; set; }
+        public double Time { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AddClientDialogInterface } from '../../../entites/clients/add-client-dialog-interface';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -16,6 +16,7 @@ import { ClientsService } from '../../../services/clients/clients.service';
 import { AddClientRequest } from '../../../entites/requests/client-request';
 import { DialogStatics, ErrorMessages } from '../../../statics/statics';
 import { NotificationService } from '../../../services/notification/notification.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-add-client-dialog',
   standalone: true,
@@ -25,7 +26,6 @@ import { NotificationService } from '../../../services/notification/notification
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatButtonModule,
     MatDialogActions,
     MatDialogContent,
     MatDialogTitle
@@ -34,6 +34,7 @@ import { NotificationService } from '../../../services/notification/notification
   styleUrl: './add-client-dialog.component.scss'
 })
 export class AddClientDialogComponent implements OnInit {
+    private readonly destroyRef = inject(DestroyRef);
   
   readonly dialogRef = inject(MatDialogRef<AddClientDialogComponent>);
   readonly data = inject<AddClientDialogInterface>(MAT_DIALOG_DATA);
@@ -59,7 +60,9 @@ export class AddClientDialogComponent implements OnInit {
       trainerId: '3B161710-B6AD-4F9D-ADF4-6DA489156044'
     };
 
-    this.clientsService.addClient(request).subscribe({
+    this.clientsService.addClient(request)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe({
         error: (err) => {
           this.notificationService.error(ErrorMessages.InsertError + err.status);
         },

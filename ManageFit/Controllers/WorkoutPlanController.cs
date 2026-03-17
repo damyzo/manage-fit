@@ -5,8 +5,8 @@ using MediatR;
 using Entities.WorkoutPlan.Model;
 using Entities.Common;
 using Services.Commands.WorkoutPlan;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Services.Queries.WorkoutPlan;
+using Contracts.Responses.Client;
 
 namespace ManageFit.Controllers
 {
@@ -14,7 +14,6 @@ namespace ManageFit.Controllers
     [ApiController]
     public class WorkoutPlanController(IMediator mediator) : ControllerBase
     {
-        // GET: api/<WorkoutPlanController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -22,13 +21,28 @@ namespace ManageFit.Controllers
         }
 
         // GET api/<WorkoutPlanController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("trainer/{trainerId}")]
+        public async Task<IEnumerable<GetWorkoutPlanByTrainerIdResponse>> GetForTrainer(Guid trainerId)
         {
-            return "value";
+            Result<IEnumerable<WorkoutPlan>> result = await mediator.Send(new GetWorkoutPlansForTrainerQuery(trainerId: trainerId));
+            IEnumerable<GetWorkoutPlanByTrainerIdResponse> results = result.Value.Select(x => new GetWorkoutPlanByTrainerIdResponse(
+                name: x.Name,
+                id: x.Id,
+                exercises: x.WorkoutPlanExercise.Select(y => new GetWorkoutPlanExerciseResponse(name: y.Exercises.Name,
+                                                                                                description: y.Exercises.Description,
+                                                                                                videoUrl: y.Exercises.VideoUrl,
+                                                                                                id: y.Exercises.Id,
+                                                                                                set: y.Set,
+                                                                                                repetition: y.Repetition,
+                                                                                                time: y.Time)),
+                clients: x.WorkoutPlanClient.Select(y => new GetClientResponse(name: y.Clients.Name,
+                                                                               weight: y.Clients.Weight,
+                                                                               height: y.Clients.Height,
+                                                                               email: y.Clients.Email,
+                                                                               id: y.Clients.Id))));
+            return results;
         }
 
-        // POST api/<WorkoutPlanController>
         [HttpPost]
         public async Task<AddWorkoutPlanResponse>AddWorkoutPlan([FromBody] AddWorkoutPlanRequest request)
         {
@@ -41,16 +55,25 @@ namespace ManageFit.Controllers
             return new AddWorkoutPlanResponse();
         }
 
-        // PUT api/<WorkoutPlanController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{workoutPlanId}")]
+        public async Task<AddWorkoutPlanResponse> PutAsync(Guid workoutPlanId, [FromBody] EditWorkoutPlanRequest request)
         {
+            Result<WorkoutPlan> wokroutPlanResult = await mediator.Send(new EditWorkoutPlanCommand(
+                name: request.Name,
+                clientIds: request.ClientUids,
+                trainerId: request.TrainerUid,
+                workoutPlanExercises: request.exercises,
+                workoutPlanId: workoutPlanId));
+
+            return new AddWorkoutPlanResponse();
         }
 
-        // DELETE api/<WorkoutPlanController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{workoutPlanId}")]
+        public async Task<DeleteWorkoutPlanResponse>Delete(Guid workoutPlanId)
         {
+            Result<WorkoutPlan> result = await mediator.Send(new DeleteWorkoutPlanExerciseCommand(workoutPlanId));
+
+            return new DeleteWorkoutPlanResponse(name: result.Value.Name);
         }
     }
 }

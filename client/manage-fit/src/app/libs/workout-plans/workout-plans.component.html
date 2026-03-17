@@ -6,17 +6,16 @@
 @for (workout of filteredWorkouts; track $index) {
     <mat-card appearance="outlined" class="card">
         <mat-card-header>
-            <mat-card-title>{{ workout }}</mat-card-title>
-            <mat-card-subtitle>{{ workout }}</mat-card-subtitle>
+            <mat-card-title>{{ workout.name }}</mat-card-title>
+            <mat-card-subtitle>{{ workout.id }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            {{ workout }}
-            {{ workout }}
-            {{ workout }} 
+            <div *ngFor="let client of workout.clients">{{ client.name }} - {{ client.id }} - {{ client.email }}</div>
+            <div *ngFor="let exercise of workout.exercises">{{ exercise.name }} - {{ exercise.id }} - {{ exercise.videoUrl }} </div>
         </mat-card-content>
         <mat-card-actions>
             <button mat-button [routerLink]="['/workouts', workout]"><mat-icon>edit</mat-icon>Edit</button>
-            <button mat-button (click)="deleteWorkoutDialog(workout)"><mat-icon>delete</mat-icon>Remove</button>
+            <button mat-button (click)="deleteWorkoutDialog(workout.id)"><mat-icon>delete</mat-icon>Remove</button>
         </mat-card-actions>
     </mat-card>
 }@empty {

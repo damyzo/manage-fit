@@ -99,6 +99,10 @@
         public async Task<Result<IEnumerable<WorkoutPlan>>> GetWorkoutPlansByTrainerId(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<WorkoutPlan> workoutPlans = await manageFitDbContext.WorkoutPlan
+                .Include(x => x.WorkoutPlanClient)
+                .ThenInclude(x => x.Clients)
+                .Include(x => x.WorkoutPlanExercise)
+                .ThenInclude(x => x.Exercises)
                 .Where(workoutPlan => workoutPlan.TrainerId == trainerId)
                 .ToListAsync(cancellationToken);
 

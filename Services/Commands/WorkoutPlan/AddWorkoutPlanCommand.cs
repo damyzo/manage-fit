@@ -51,7 +51,7 @@
                 new Result<WorkoutPlan>(
                         value: new WorkoutPlan() { Name = string.Empty },
                         isSuccess: false,
-                        message: "You can not add a workout to a deleted client"
+                        message: "Cannot add a workout plan to a user that does not exits."
                     );
             }
 
@@ -97,7 +97,7 @@
                 Name = request.Name,
                 TrainerId = request.TrainerId,
                 WorkoutPlanExercise = exerciseUids.Select(x => new WorkoutPlanExercise() { ExercisesId = x }).ToList(),
-                WorkoutPlanClients = request.ClientIds.Select(x => new WorkoutPlanClient { ClientsId = x }).ToList(),
+                WorkoutPlanClient = request.ClientIds.Select(x => new WorkoutPlanClient { ClientsId = x }).ToList(),
             };
 
             Result<WorkoutPlan> workoutPlanResult = await workoutPlanRepository.AddWorkoutPlan(workoutPlan, cancellationToken);
