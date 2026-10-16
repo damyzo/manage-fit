@@ -7,8 +7,11 @@
         Guid id,
         int set,
         int repetition,
-        double time)
+        double time,
+        int order)
     {
+        public int Order { get; } = order;
+
         public string Name { get; } = name;
 
         public string Description { get; } = description;

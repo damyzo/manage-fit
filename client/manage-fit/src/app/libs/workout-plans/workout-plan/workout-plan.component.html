@@ -1,0 +1,44 @@
+@if (workoutPlan) {
+<div class="container">
+    <h1>{{ workoutPlan.name }}</h1>
+
+    <h2>Exercises</h2>
+    <ul cdkDropList (cdkDropListDropped)="drop($event)">
+        @for (exercise of workoutPlan.exercises; track exercise.id) {
+        <li cdkDrag>
+            <mat-icon>fitness_center</mat-icon>
+            <span class="exercise-order">{{ exercise.order }}</span>
+            <div class="exercise">
+                <span class="exercise-name">{{ exercise.name }}</span>
+                <span>{{ exercise.description }}</span>
+                <span>Sets: {{ exercise.set }} | Repetitions: {{ exercise.repetition }} | Time: {{ exercise.time }}</span>
+                @if (exercise.videoUrl) {
+                <a [href]="exercise.videoUrl" target="_blank" rel="noopener noreferrer">Watch video</a>
+                }
+            </div>
+        </li>
+        } @empty {
+        <li>No exercises.</li>
+        }
+    </ul>
+
+    <h2>Clients</h2>
+    <ul>
+        @for (client of workoutPlan.clients; track client.id) {
+        <li>
+            <mat-icon>person</mat-icon>
+            <span>{{ client.name }}</span>
+        </li>
+        } @empty {
+        <li>No clients.</li>
+        }
+    </ul>
+
+    <div class="buttons">
+        <button mat-fab extended (click)="back()">
+            <mat-icon>arrow_back </mat-icon>
+            Back
+        </button>
+    </div>
+</div>
+}

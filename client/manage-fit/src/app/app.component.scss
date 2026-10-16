@@ -65,6 +65,20 @@
   backdrop-filter: blur(8px);
 }
 
+.nav-mobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .nav-mobile {
+    display: flex;
+  }
+}
+
 @media (max-width: 480px) {
   .container {
     padding-inline: 12px;

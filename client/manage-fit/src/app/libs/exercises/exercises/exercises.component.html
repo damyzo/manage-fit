@@ -7,16 +7,19 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<div class="cards">
-@for (exercise of filteredExercises; track $index) {
+<div class="cards mobile-only">
+@for (exercise of filteredExercises.data; track $index) {
     <mat-card appearance="outlined" class="card">
         <mat-card-header>
             <mat-card-title>{{ exercise.name }}</mat-card-title>
-            <mat-card-subtitle>{{ exercise.videoUrl }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            {{ exercise.description }}
-            {{ exercise.id }} 
+            <p class="description">{{ exercise.description || 'No description.' }}</p>
+            @if (exercise.videoUrl) {
+            <a class="card-link" [href]="exercise.videoUrl" target="_blank" rel="noopener noreferrer">
+                <mat-icon>play_circle</mat-icon>Watch video
+            </a>
+            }
         </mat-card-content>
         <mat-card-actions>
             <button mat-button [routerLink]="['/exercises', exercise.id]"><mat-icon>edit</mat-icon>Edit</button>
@@ -24,6 +27,40 @@
         </mat-card-actions>
     </mat-card>
 }@empty {
-    <h1>There are no clients. Add clients to display them.</h1>
+    <h1>There are no exercises. Add exercises to display them.</h1>
 }
+</div>
+<div class="table desktop-only">
+<table mat-table matSort [dataSource]="filteredExercises" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="video">
+    <th mat-header-cell *matHeaderCellDef> Video </th>
+    <td mat-cell *matCellDef="let element">
+      @if (element.videoUrl) {
+      <a class="card-link" [href]="element.videoUrl" target="_blank" rel="noopener noreferrer">Watch video</a>
+      }
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+        <button mat-button [routerLink]="['/exercises', element.id]"><mat-icon>edit</mat-icon>Edit</button>
+        <button mat-button (click)="deleteExerciseDialog(element.id)"><mat-icon>delete</mat-icon>Remove</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 </div>

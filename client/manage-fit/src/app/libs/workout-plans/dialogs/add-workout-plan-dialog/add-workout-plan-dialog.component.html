@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Add Workout Plan</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" class="form">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter a name." />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-button (click)="save()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

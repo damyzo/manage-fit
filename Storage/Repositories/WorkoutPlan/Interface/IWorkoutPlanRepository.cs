@@ -9,6 +9,10 @@
             Guid workoutPlanId,
             CancellationToken cancellationToken);
 
+        public Task<Result<WorkoutPlan>> GetWorkoutPlanWithDetails(
+            Guid workoutPlanId,
+            CancellationToken cancellationToken);
+
         public Task<Result<IEnumerable<WorkoutPlan>>> GetWorkoutPlansByTrainerId(
             Guid trainerId,
             CancellationToken cancellationToken);

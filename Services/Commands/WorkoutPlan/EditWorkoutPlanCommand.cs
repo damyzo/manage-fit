@@ -66,14 +66,21 @@
                     );
             }
 
-            IEnumerable<Guid> exerciseUids = [];
+            List<WorkoutPlanExercise> workoutPlanExercises = [];
             IEnumerable<Exercise> exercisesToAdd = [];
 
             foreach (EditWorkoutPlanExerciseRequest exercise in request.workoutPlanExercises)
             {
                 if (exercise.Id != null)
                 {
-                    exerciseUids = exerciseUids.Append((Guid)exercise.Id);
+                    workoutPlanExercises.Add(new WorkoutPlanExercise()
+                    {
+                        ExercisesId = (Guid)exercise.Id,
+                        Order = exercise.Order,
+                        Set = exercise.Set,
+                        Repetition = exercise.Repetition,
+                        Time = exercise.Time,
+                    });
                 }
                 else
                 {
@@ -87,7 +94,14 @@
                         TrainerId = request.TrainerId,
                         VideoUrl = exercise.VideoUrl,
                     });
-                    exerciseUids = exerciseUids.Append(exerciseUid);
+                    workoutPlanExercises.Add(new WorkoutPlanExercise()
+                    {
+                        ExercisesId = exerciseUid,
+                        Order = exercise.Order,
+                        Set = exercise.Set,
+                        Repetition = exercise.Repetition,
+                        Time = exercise.Time,
+                    });
                 }
             }
 
@@ -107,7 +121,7 @@
 
             workoutPlan.Value.Name = request.Name;
             workoutPlan.Value.TrainerId = request.TrainerId;
-            workoutPlan.Value.WorkoutPlanExercise = exerciseUids.Select(x => new WorkoutPlanExercise() { ExercisesId = x }).ToList();
+            workoutPlan.Value.WorkoutPlanExercise = workoutPlanExercises;
             workoutPlan.Value.WorkoutPlanClient = request.ClientIds.Select(x => new WorkoutPlanClient { ClientsId = x }).ToList();
 
             Result<WorkoutPlan> workoutPlanResult = await workoutPlanRepository.UpdateWorkoutPlan(workoutPlan.Value, cancellationToken);

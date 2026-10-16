@@ -14,7 +14,8 @@ export interface GetWorkoutPlanExerciseResponse {
     set: 0,
     time: 0,
     repetition: 0,
-    id: string
+    id: string,
+    order: number
 }
 
 export interface AddWorkoutPlanResponse {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,6 +10,8 @@ import {
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { BehaviorSubject, switchMap, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,20 +32,26 @@ import { AddExerciseDialogComponent } from '../dialog/add-exercise-dialog/add-ex
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatSortModule
   ],
   templateUrl: './exercises.component.html',
   styleUrl: './exercises.component.scss'
 })
-export class ExercisesComponent implements OnInit {
+export class ExercisesComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   readonly dialog = inject(MatDialog);
   private dialogRef: any;
   public exercises: GetExerciseResponse[] = [];
-  public filteredExercises: GetExerciseResponse[] = [];
+  public filteredExercises: MatTableDataSource<GetExerciseResponse> = new MatTableDataSource<GetExerciseResponse>([]);
   private subject = new BehaviorSubject(null);
 
   searchFormControl = new FormControl('', []);
+
+  displayedColumns: string[] = ['name', 'description', 'video', 'actions'];
 
   constructor(
     public exercisesService: ExercisesService,
@@ -56,15 +64,19 @@ export class ExercisesComponent implements OnInit {
       }),
       tap((data: GetExerciseResponse[]) => {
         this.exercises = data;
-        this.filteredExercises = data;
+        this.filteredExercises.data = data;
       })
     ).subscribe();
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
-      this.filteredExercises = this.exercises.filter(exercise => {
+      this.filteredExercises.data = this.exercises.filter(exercise => {
         return exercise.name.match(value??'') || exercise.description.match(value??''); 
       })
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.filteredExercises.sort = this.sort;
   }
 
   public openAddExerciseDialog(){

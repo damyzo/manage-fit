@@ -64,6 +64,70 @@
   color: white;
 }
 
+.section + .section {
+  margin-top: 16px;
+}
+
+.section h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c4b5fd;
+}
+
+.section h3 .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.items li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.items li.empty {
+  background: none;
+  border: none;
+  padding: 0;
+  font-style: italic;
+  color: rgba(226, 232, 240, 0.55);
+}
+
+.item-name {
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.item-meta {
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.65);
+}
+
+.item-link {
+  font-size: 0.85rem;
+  color: #c4b5fd;
+}
+
 .add-button {
   flex-shrink: 0;
   background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;

@@ -15,6 +15,10 @@ export class WorkoutPlansService {
     return this.http.get<GetWorkoutPlanByTrainerIdResponse[]>(`https://localhost:7003/api/workout-plans/trainer/${trainerId}`);
   }
 
+  public getWorkoutPlan(id: string): Observable<GetWorkoutPlanByTrainerIdResponse>{
+    return this.http.get<GetWorkoutPlanByTrainerIdResponse>(`https://localhost:7003/api/workout-plans/${id}`);
+  }
+
   // public getClient(clientId: string): Observable<GetClientResponse>{
   //   return this.http.get<GetClientResponse>(`https://localhost:7003/api/clients/${clientId}`);
   // }

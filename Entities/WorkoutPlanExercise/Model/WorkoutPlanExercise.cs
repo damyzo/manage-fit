@@ -10,6 +10,8 @@
         
         public Guid ExercisesId { get; set; }
 
+        public int Order { get; set; }
+
         public virtual WorkoutPlan WorkoutPlans { get; set; } = null!;
 
         public virtual Exercise Exercises { get; set; } = null!;

@@ -55,14 +55,21 @@
                     );
             }
 
-            IEnumerable<Guid> exerciseUids = [];
+            List<WorkoutPlanExercise> workoutPlanExercises = [];
             IEnumerable<Exercise> exercisesToAdd = [];
 
             foreach (AddWorkoutPlanExerciseRequest exercise in request.workoutPlanExercises)
             {
                 if(exercise.Id != null)
                 {
-                    exerciseUids = exerciseUids.Append((Guid)exercise.Id);
+                    workoutPlanExercises.Add(new WorkoutPlanExercise()
+                    {
+                        ExercisesId = (Guid)exercise.Id,
+                        Order = exercise.Order,
+                        Set = exercise.Set,
+                        Repetition = exercise.Repetition,
+                        Time = exercise.Time,
+                    });
                 }
                 else
                 {
@@ -75,7 +82,14 @@
                         TrainerId = request.TrainerId,
                         VideoUrl = exercise.VideoUrl,
                     });
-                    exerciseUids = exerciseUids.Append(exerciseUid);
+                    workoutPlanExercises.Add(new WorkoutPlanExercise()
+                    {
+                        ExercisesId = exerciseUid,
+                        Order = exercise.Order,
+                        Set = exercise.Set,
+                        Repetition = exercise.Repetition,
+                        Time = exercise.Time,
+                    });
                 }
             }
 
@@ -96,7 +110,7 @@
             WorkoutPlan workoutPlan = new WorkoutPlan() {
                 Name = request.Name,
                 TrainerId = request.TrainerId,
-                WorkoutPlanExercise = exerciseUids.Select(x => new WorkoutPlanExercise() { ExercisesId = x }).ToList(),
+                WorkoutPlanExercise = workoutPlanExercises,
                 WorkoutPlanClient = request.ClientIds.Select(x => new WorkoutPlanClient { ClientsId = x }).ToList(),
             };
 

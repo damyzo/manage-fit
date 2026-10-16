@@ -36,7 +36,7 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<WorkoutPlanExercise>()
-                .HasKey(x => new { x.ExercisesId, x.WorkoutPlansId });
+                .HasKey(x => new { x.WorkoutPlansId, x.ExercisesId, x.Order });
 
             modelBuilder.Entity<WorkoutPlanClient>()
                 .HasKey(x => new { x.ClientsId, x.WorkoutPlansId });

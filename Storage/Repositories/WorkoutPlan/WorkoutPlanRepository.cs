@@ -101,6 +101,32 @@
                 message: "Valid Data");
         }
 
+        public async Task<Result<WorkoutPlan>> GetWorkoutPlanWithDetails(Guid workoutPlanId, CancellationToken cancellationToken)
+        {
+            WorkoutPlan? workoutPlan = await manageFitDbContext.WorkoutPlan
+                .Include(x => x.WorkoutPlanClient)
+                .ThenInclude(x => x.Clients)
+                .Include(x => x.WorkoutPlanExercise)
+                .ThenInclude(x => x.Exercises)
+                .Where(workoutPlan => workoutPlan.Id == workoutPlanId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (workoutPlan == null)
+            {
+                Result<WorkoutPlan> workoutPlanOrError = new(
+                    value: new WorkoutPlan { Name = string.Empty, TrainerId = Guid.Empty, Id = Guid.Empty },
+                    isSuccess: false,
+                    message: "Workout Plan Not Found");
+
+                return workoutPlanOrError;
+            }
+
+            return new Result<WorkoutPlan>(
+                value: workoutPlan,
+                isSuccess: true,
+                message: "Valid Data");
+        }
+
         public async Task<Result<IEnumerable<WorkoutPlan>>> GetWorkoutPlansByTrainerId(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<WorkoutPlan> workoutPlans = await manageFitDbContext.WorkoutPlan

@@ -1,6 +1,8 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { WarningDialogData } from '../common/dialogs/warning-dialog-component/interface/warning-dialog-models';
 import { WarningDialogComponentComponent } from '../common/dialogs/warning-dialog-component/warning-dialog-component.component';
 import { DialogStatics, ErrorMessages } from '../statics/statics';
+import { AddWorkoutPlanDialogComponent } from './dialogs/add-workout-plan-dialog/add-workout-plan-dialog.component';
 @Component({
   selector: 'app-workout-plans',
   standalone: true,
@@ -29,15 +32,19 @@ import { DialogStatics, ErrorMessages } from '../statics/statics';
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
+    MatTableModule,
+    MatSortModule,
     CommonModule
 ],
   templateUrl: './workout-plans.component.html',
   styleUrl: './workout-plans.component.scss'
 })
-export class WorkoutPlansComponent implements OnInit{
+export class WorkoutPlansComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSort) sort!: MatSort;
   searchFormControl = new FormControl('', []);
+  displayedColumns: string[] = ['name', 'exercises', 'clients', 'actions'];
   public workouts: GetWorkoutPlanByTrainerIdResponse[] = [];
-  public filteredWorkouts: GetWorkoutPlanByTrainerIdResponse[] = [];
+  public filteredWorkouts: MatTableDataSource<GetWorkoutPlanByTrainerIdResponse> = new MatTableDataSource<GetWorkoutPlanByTrainerIdResponse>([]);
   private subject = new BehaviorSubject(null);
   private readonly destroyRef = inject(DestroyRef);
   readonly dialog = inject(MatDialog);
@@ -54,15 +61,26 @@ export class WorkoutPlansComponent implements OnInit{
       }),
       tap((data: GetWorkoutPlanByTrainerIdResponse[]) => {
         this.workouts = data;
-        this.filteredWorkouts = data;
+        this.filteredWorkouts.data = data;
       })
     ).subscribe();
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
-      this.filteredWorkouts = this.workouts.filter(workout => {
+      this.filteredWorkouts.data = this.workouts.filter(workout => {
         return workout.name.match(value??''); 
       })
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.filteredWorkouts.sortingDataAccessor = (workout, column) => {
+      switch (column) {
+        case 'exercises': return workout.exercises.length;
+        case 'clients': return workout.clients.length;
+        default: return (workout as any)[column];
+      }
+    };
+    this.filteredWorkouts.sort = this.sort;
   }
 
   public deleteWorkoutDialog(id: string){
@@ -97,5 +115,15 @@ export class WorkoutPlansComponent implements OnInit{
     });
   }
 
-  public openAddWorkoutDialog(){}
+  public openAddWorkoutDialog(){
+    this.dialogRef = this.dialog.open(AddWorkoutPlanDialogComponent, {});
+
+    this.dialogRef.afterClosed()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe((message: string) => {
+      if(message === DialogStatics.SUCCESS){
+        this.subject.next(null);
+      }
+    });
+  }
 }

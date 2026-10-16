@@ -22,9 +22,21 @@
         Guid? id,
         string name,
         string description,
-        string videoUrl)
+        string videoUrl,
+        int set,
+        int repetition,
+        double time,
+        int order)
     {
+        public int Order { get; } = order;
+
         public Guid? Id { get; } = id;
+
+        public int Set { get; } = set;
+
+        public int Repetition { get; } = repetition;
+
+        public double Time { get; } = time;
 
         public string Name { get; } = name;
 

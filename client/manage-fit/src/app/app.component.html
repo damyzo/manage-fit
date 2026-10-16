@@ -1,17 +1,20 @@
 <div class="container">
-    <nav *ngIf="isLoggedIn" class="nav" mat-primary>
-        <button mat-raised-button routerLink="/clients">
-            Clients
+    <nav *ngIf="isLoggedIn" class="nav nav-desktop" mat-primary>
+        <button mat-raised-button *ngFor="let item of navItems" [routerLink]="item.path">
+            {{ item.label }}
         </button>
-        <button mat-raised-button routerLink="/nutritions">
-            Nutrition
+    </nav>
+
+    <nav *ngIf="isLoggedIn" class="nav nav-mobile" mat-primary>
+        <button mat-raised-button [matMenuTriggerFor]="navMenu">
+            {{ currentItem?.label ?? 'Menu' }}
+            <mat-icon iconPositionEnd>arrow_drop_down</mat-icon>
         </button>
-        <button mat-raised-button routerLink="/workouts">
-            Workouts
-        </button>
-        <button mat-raised-button routerLink="/exercises">
-            Exrcises
-        </button>
+        <mat-menu #navMenu="matMenu" class="nav-menu">
+            <button mat-menu-item *ngFor="let item of navItems" [routerLink]="item.path">
+                {{ item.label }}
+            </button>
+        </mat-menu>
     </nav>
 
     <div class="router-outlet">

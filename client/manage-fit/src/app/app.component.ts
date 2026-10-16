@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { EventMessage, EventType } from '@azure/msal-browser';
 import { MsalService } from '@azure/msal-angular';
 
@@ -19,6 +20,7 @@ import { MsalService } from '@azure/msal-angular';
     RouterLink,
     RouterLinkActive,
     MatButtonModule,
+    MatMenuModule,
     MatDividerModule,
     MatIconModule
   ],
@@ -28,6 +30,17 @@ import { MsalService } from '@azure/msal-angular';
 export class AppComponent implements OnInit {
   title = 'manage-fit';
   isLoggedIn = false;
+
+  readonly navItems = [
+    { label: 'Clients', path: '/clients' },
+    { label: 'Nutrition', path: '/nutritions' },
+    { label: 'Workouts', path: '/workouts' },
+    { label: 'Exercises', path: '/exercises' }
+  ];
+
+  get currentItem() {
+    return this.navItems.find(item => this.router.url.startsWith(item.path));
+  }
 
   constructor(public http: HttpClient, private msalService: MsalService, private router: Router) {}
 
