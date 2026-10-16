@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.WorkoutPlan.Model;
+    using Entities.WorkoutPlanExercise.Model;
     using Microsoft.EntityFrameworkCore;
     using Storage.DatabaseContext;
     using Storage.Repositories.WorkoutPlan.Interface;
@@ -39,6 +40,8 @@
         public async Task<Result<WorkoutPlan>> DeleteWorkoutPlan(Guid workoutPlanId, CancellationToken cancellationToken)
         {
             WorkoutPlan? workoutPlan = await manageFitDbContext.WorkoutPlan
+                .Include(x => x.WorkoutPlanClient)
+                .Include(x => x.WorkoutPlanExercise)
                 .Where(workoutPlan => workoutPlan.Id == workoutPlanId)
                 .FirstOrDefaultAsync(cancellationToken);
 
@@ -52,6 +55,8 @@
                 return workoutPlanOrError;
             }
 
+            manageFitDbContext.WorkoutPlanExercise.RemoveRange(workoutPlan.WorkoutPlanExercise);
+            manageFitDbContext.WorkoutPlanClient.RemoveRange(workoutPlan.WorkoutPlanClient);
             manageFitDbContext.WorkoutPlan.Remove(workoutPlan);
 
             try

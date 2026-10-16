@@ -6,6 +6,7 @@ using Services.Commands.Client;
 using Entities.Common;
 using Services.Queries.Client;
 using Contracts.Responses.Client;
+using Microsoft.AspNetCore.Authorization;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,6 +18,7 @@ namespace ManageFit.Controllers
     public class ClientController(
         IMediator mediator) : ControllerBase
     {
+        //[Authorize]
         // GET: api/<ValuesController>
         [HttpGet("trainer/{trainerId}")]
         public async Task<IEnumerable<GetClientsResponse>> GetClients(Guid trainerId)

@@ -1,9 +1,9 @@
 
-<h2 mat-dialog-title>Add Client</h2>
+<h2 mat-dialog-title>{{data.title}}</h2>
 <mat-dialog-content>
-<h3>Are you sure you want to delete this client?</h3>
+<h3>{{data.message}}</h3>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button (click)="close()">{{data.noButtonText}}</button>
+    <button mat-button (click)="no()">{{data.noButtonText}}</button>
     <button mat-button (click)="yes()" cdkFocusInitial>{{data.yesButtonText}}</button>
 </mat-dialog-actions>

@@ -23,7 +23,8 @@ export class WarningDialogComponentComponent {
   readonly dialogRef = inject(MatDialogRef<WarningDialogComponentComponent>);
   
   constructor( @Inject(MAT_DIALOG_DATA) public data: WarningDialogData) {}
-  close(): void {
+
+  no(): void {
     this.dialogRef.close(DialogStatics.CLOSED);
   }
 

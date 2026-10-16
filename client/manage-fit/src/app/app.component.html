@@ -1,9 +1,8 @@
 <div class="container">
-    <nav class="nav" mat-primary>
-
+    <nav *ngIf="isLoggedIn" class="nav" mat-primary>
         <button mat-raised-button routerLink="/clients">
             Clients
-        </button>    
+        </button>
         <button mat-raised-button routerLink="/nutritions">
             Nutrition
         </button>
@@ -18,5 +17,4 @@
     <div class="router-outlet">
         <router-outlet />
     </div>
-
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +12,11 @@ import { BehaviorSubject, switchMap, tap } from 'rxjs';
 import { GetWorkoutPlanByTrainerIdResponse } from '../entites/responses/workout-plan-response';
 // import { NgForOf } from "@angular/common/index";
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
+import { WarningDialogData } from '../common/dialogs/warning-dialog-component/interface/warning-dialog-models';
+import { WarningDialogComponentComponent } from '../common/dialogs/warning-dialog-component/warning-dialog-component.component';
+import { DialogStatics, ErrorMessages } from '../statics/statics';
 @Component({
   selector: 'app-workout-plans',
   standalone: true,
@@ -34,7 +39,10 @@ export class WorkoutPlansComponent implements OnInit{
   public workouts: GetWorkoutPlanByTrainerIdResponse[] = [];
   public filteredWorkouts: GetWorkoutPlanByTrainerIdResponse[] = [];
   private subject = new BehaviorSubject(null);
-
+  private readonly destroyRef = inject(DestroyRef);
+  readonly dialog = inject(MatDialog);
+  
+  private dialogRef: any;
   constructor(
     public workoutPlansService: WorkoutPlansService,
     private notificationService: NotificationService){}
@@ -47,7 +55,6 @@ export class WorkoutPlansComponent implements OnInit{
       tap((data: GetWorkoutPlanByTrainerIdResponse[]) => {
         this.workouts = data;
         this.filteredWorkouts = data;
-        console.log(this.workouts);
       })
     ).subscribe();
 
@@ -58,7 +65,37 @@ export class WorkoutPlansComponent implements OnInit{
     })
   }
 
-  public deleteWorkoutDialog(id: string){}
+  public deleteWorkoutDialog(id: string){
+    let warningDialogData: WarningDialogData = {
+      title: 'Delete Workout Plan',
+      message: 'Are you sure you want to delete this workout plan?',
+      yesButtonText: 'Yes',
+      noButtonText: 'No'
+    };
+
+    this.dialogRef = this.dialog.open(WarningDialogComponentComponent, {data: warningDialogData});
+
+    this.dialogRef.afterClosed()
+    .pipe(
+      switchMap((message: string) => {
+        if(message === DialogStatics.SUCCESS){
+          return this.workoutPlansService.deleteWorkoutPlan(id);
+        }
+        return [];
+      }),
+      takeUntilDestroyed(this.destroyRef))
+    .subscribe({
+      error: (err: any) => {
+        this.notificationService.error(ErrorMessages.DeleteError + err.status);
+      },
+      next: (message: any) => {
+        if(typeof(message) !== 'string'){
+          this.notificationService.success(ErrorMessages.DeleteSuccess);
+          this.subject.next(null);
+        }
+      }
+    });
+  }
 
   public openAddWorkoutDialog(){}
 }

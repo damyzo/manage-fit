@@ -106,6 +106,7 @@ export class ClientsComponent implements OnInit {
 
   public deleteClientDialog(id: string){
     let warningDialogData: WarningDialogData = {
+      title: 'Delete Client',
       message: 'Are you sure you want to delete this client?',
       yesButtonText: 'Yes',
       noButtonText: 'No'

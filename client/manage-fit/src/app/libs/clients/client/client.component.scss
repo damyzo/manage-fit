@@ -1,24 +1,49 @@
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+:host {
+  display: block;
+  width: 100%;
 }
 
-.form{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.container {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  padding: 28px 22px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 28px;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
 }
 
-.buttons{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-    width: 40%;
+h1 {
+  margin: 0;
+  text-align: center;
+  color: #f8fafc;
+  font-size: clamp(1.8rem, 2vw, 2.4rem);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.buttons button {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-radius: 12px;
+  box-shadow: 0 12px 22px rgba(139, 92, 246, 0.3);
 }
