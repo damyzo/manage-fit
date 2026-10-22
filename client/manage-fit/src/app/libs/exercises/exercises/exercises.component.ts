@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, AfterViewInit, DestroyRef } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -20,6 +20,7 @@ import { NotificationService } from '../../services/notification/notification.se
 import { ExercisesService } from '../../services/exercises/exercises.service';
 import { GetExerciseResponse } from '../../entites/responses/exercise-response';
 import { AddExerciseDialogComponent } from '../dialog/add-exercise-dialog/add-exercise-dialog.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-exercises',
@@ -53,6 +54,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['name', 'description', 'video', 'actions'];
 
+  private readonly destroyRef = inject(DestroyRef);
   constructor(
     public exercisesService: ExercisesService,
     private notificationService: NotificationService){}
@@ -70,7 +72,8 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
       this.filteredExercises.data = this.exercises.filter(exercise => {
-        return exercise.name.match(value??'') || exercise.description.match(value??''); 
+        return exercise.name.toLocaleLowerCase().match(value?.toLocaleLowerCase()??'')
+        || exercise.description.toLocaleLowerCase().match(value?.toLocaleLowerCase()??''); 
       })
     })
   }
@@ -83,6 +86,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
     this.dialogRef = this.dialog.open(AddExerciseDialogComponent, {});
 
     this.dialogRef.afterClosed()
+    .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe((message: string) => {
       if(message === DialogStatics.SUCCESS)
       {
@@ -93,6 +97,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
 
   public deleteExerciseDialog(id: string){
     this.exercisesService.deleteExercise(id)
+    .pipe(takeUntilDestroyed(this.destroyRef)) 
     .subscribe({
       error: (err) => {
         this.notificationService.error(ErrorMessages.DeleteError + err.status);

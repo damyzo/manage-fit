@@ -80,7 +80,8 @@ export class ClientsComponent implements OnInit {
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
       this.filteredClients.data = this.clients.filter(client => {
-        return client.email.match(value??'') || client.name.match(value??''); 
+        return client.email.toLocaleLowerCase().match(value?.toLocaleLowerCase()??'')
+        || client.name.toLocaleLowerCase().match(value?.toLocaleLowerCase()??''); 
       })
     })
   }

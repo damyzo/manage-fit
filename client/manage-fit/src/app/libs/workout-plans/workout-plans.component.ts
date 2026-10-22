@@ -67,7 +67,7 @@ export class WorkoutPlansComponent implements OnInit, AfterViewInit {
 
     this.searchFormControl.valueChanges.subscribe((value) => { 
       this.filteredWorkouts.data = this.workouts.filter(workout => {
-        return workout.name.match(value??''); 
+        return workout.name.toLocaleLowerCase().match(value?.toLocaleLowerCase()??''); 
       })
     })
   }

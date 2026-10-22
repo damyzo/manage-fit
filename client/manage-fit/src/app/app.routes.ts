@@ -7,6 +7,7 @@ import { ExerciseComponent } from './libs/exercises/exercise/exercise.component'
 import { WorkoutPlansComponent } from './libs/workout-plans/workout-plans.component';
 import { WorkoutPlanComponent } from './libs/workout-plans/workout-plan/workout-plan.component';
 import { SinginPageComponent } from './libs/singin-page/singin-page.component';
+import { loggedOutGuard } from './libs/guards/logged-out.guard';
 
 export const routes: Routes = [
     { path: 'clients', component: ClientsComponent },
@@ -16,6 +17,6 @@ export const routes: Routes = [
     { path: 'workouts/:id', component: WorkoutPlanComponent },
     { path: 'exercises', component: ExercisesComponent },
     { path: 'exercises/:id', component: ExerciseComponent },
-    { path: 'login', component: SinginPageComponent },
+    { path: 'login', component:     SinginPageComponent, canActivate: [loggedOutGuard] },
     { path: '**',   redirectTo: 'login'}
 ];
