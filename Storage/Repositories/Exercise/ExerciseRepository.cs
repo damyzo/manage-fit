@@ -2,6 +2,7 @@
 {
     using Entities.Common;
     using Entities.Exercise.Model;
+    using Entities.WorkoutPlanExercise.Model;
     using Microsoft.EntityFrameworkCore;
     using Storage.DatabaseContext;
     using Storage.Repositories.Exercise.Interface;
@@ -69,7 +70,12 @@
 
                 return exerciseError;
             }
+            //List<WorkoutPlanExercise> workoutPlanExercises = await manageFitDbContext
+            //    .WorkoutPlanExercise
+            //   .Where(x => x.ExercisesId == exerciseId)
+            //   .ToListAsync(cancellationToken);
 
+            //manageFitDbContext.WorkoutPlanExercise.RemoveRange(workoutPlanExercises);
             manageFitDbContext.Exercise.Remove(exercise);
 
             try

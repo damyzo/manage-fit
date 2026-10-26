@@ -19,10 +19,6 @@ export class WorkoutPlansService {
     return this.http.get<GetWorkoutPlanByTrainerIdResponse>(`https://localhost:7003/api/workout-plans/${id}`);
   }
 
-  // public getClient(clientId: string): Observable<GetClientResponse>{
-  //   return this.http.get<GetClientResponse>(`https://localhost:7003/api/clients/${clientId}`);
-  // }
-
   public deleteWorkoutPlan(id: string): Observable<DeleteWorkoutPlanResponse>{
     return this.http.delete<DeleteWorkoutPlanResponse>(`https://localhost:7003/api/workout-plans/${id}`);
   }
@@ -30,8 +26,4 @@ export class WorkoutPlansService {
   public addWorkoutPlan(clientRequest: AddWorkoutPlanRequest): Observable<AddWorkoutPlanResponse>{
     return this.http.post<AddWorkoutPlanResponse>(`https://localhost:7003/api/workout-plans`, clientRequest);
   }
-
-  // public editClient(id: number, editClientRequest: EditClientRequest): Observable<EditClientResponse>{
-  //   return this.http.put<GetClientResponse>(`https://localhost:7003/api/clients/${id}`, editClientRequest);
-  // }
 }

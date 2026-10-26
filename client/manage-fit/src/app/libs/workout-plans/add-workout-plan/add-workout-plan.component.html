@@ -1,13 +1,106 @@
-<h2 mat-dialog-title>Add Workout Plan</h2>
-<mat-dialog-content>
+<div class="page">
+<h2 class="title">Add Workout Plan</h2>
+<div class="content">
     <form [formGroup]="form" class="form">
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name" placeholder="Enter a name." />
+          <input matInput formControlName="name" placeholder="Enter a name." required />
+          <mat-error>Name is required.</mat-error>
         </mat-form-field>
     </form>
-</mat-dialog-content>
-<mat-dialog-actions>
+
+    <mat-form-field>
+      <mat-label>Clients</mat-label>
+      <mat-select multiple [(value)]="selectedClientIds" (openedChange)="clientSearch = ''">
+        <div class="select-search" (keydown)="$event.stopPropagation()">
+          <input type="text" placeholder="Search by name or email" [(ngModel)]="clientSearch" />
+        </div>
+        @for (client of clients; track client.id) {
+          <mat-option [value]="client.id" [class.hidden-option]="!isClientVisible(client)">
+            <div class="client-option">
+              <span>{{ client.name }}</span>
+              <small>{{ client.email }}</small>
+            </div>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="exercise-picker">
+      <section class="library">
+        <h3>Exercise library</h3>
+        <input class="search" type="text" placeholder="Search exercises" [(ngModel)]="exerciseSearch" />
+        <ul>
+          @for (exercise of filteredExercises; track exercise.id) {
+            <li>
+              <span class="name">{{ exercise.name }}</span>
+              @if (countOf(exercise.id); as count) {
+                <span class="count" title="Times added to the plan">×{{ count }}</span>
+              }
+              <button mat-icon-button type="button" (click)="addExercise(exercise)" aria-label="Add to plan">
+                <mat-icon>add</mat-icon>
+              </button>
+            </li>
+          } @empty {
+            <li class="empty">No exercises found.</li>
+          }
+        </ul>
+      </section>
+
+      <section class="plan">
+        <h3>Plan ({{ planExercises.length }})</h3>
+        @if (!planExercises.length) {
+          <p class="empty">Add exercises from the library.</p>
+        }
+        <ol class="exercise-order">
+        @for (item of planExercises; track item.key; let i = $index; let first = $first; let last = $last) {
+          <li>
+            <span class="name">{{ i + 1 }}. {{ item.exercise.name }}</span>
+            <input class="num" type="number" min="0" title="Sets" placeholder="Sets"
+              [(ngModel)]="item.set" />
+            <input class="num" type="number" min="0" title="Repetitions" placeholder="Reps"
+              [(ngModel)]="item.repetitions" />
+            <input class="num" type="number" min="0" title="Time (seconds)" placeholder="Time"
+              [(ngModel)]="item.time" />
+            <button mat-icon-button type="button" [disabled]="first" (click)="move(i, -1)" aria-label="Move up">
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            <button mat-icon-button type="button" [disabled]="last" (click)="move(i, 1)" aria-label="Move down">
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="remove(i)" aria-label="Remove">
+              <mat-icon>close</mat-icon>
+            </button>
+          </li>
+        }
+        </ol>
+      </section>
+    </div>
+
+    <button mat-button type="button" (click)="toggleNewExercise()">
+      {{ showNewExercise ? 'Cancel new exercise' : 'New exercise' }}
+    </button>
+
+    @if (showNewExercise) {
+      <form [formGroup]="newExerciseForm" class="form" (ngSubmit)="createExercise()">
+        <mat-form-field>
+          <mat-label>Exercise name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Video URL</mat-label>
+          <input matInput formControlName="videoUrl" />
+        </mat-form-field>
+        <button mat-button type="submit" [disabled]="newExerciseForm.invalid">Create exercise</button>
+      </form>
+    }
+</div>
+<div class="actions">
     <button mat-button (click)="close()">Cancel</button>
-    <button mat-button (click)="save()" cdkFocusInitial>Save</button>
-</mat-dialog-actions>
+    <button mat-button (click)="save()">Save</button>
+</div>
+</div>

@@ -19,7 +19,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { WarningDialogData } from '../common/dialogs/warning-dialog-component/interface/warning-dialog-models';
 import { WarningDialogComponentComponent } from '../common/dialogs/warning-dialog-component/warning-dialog-component.component';
 import { DialogStatics, ErrorMessages } from '../statics/statics';
-import { AddWorkoutPlanDialogComponent } from './dialogs/add-workout-plan-dialog/add-workout-plan-dialog.component';
 @Component({
   selector: 'app-workout-plans',
   standalone: true,
@@ -111,18 +110,6 @@ export class WorkoutPlansComponent implements OnInit, AfterViewInit {
           this.notificationService.success(ErrorMessages.DeleteSuccess);
           this.subject.next(null);
         }
-      }
-    });
-  }
-
-  public openAddWorkoutDialog(){
-    this.dialogRef = this.dialog.open(AddWorkoutPlanDialogComponent, {});
-
-    this.dialogRef.afterClosed()
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe((message: string) => {
-      if(message === DialogStatics.SUCCESS){
-        this.subject.next(null);
       }
     });
   }

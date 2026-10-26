@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { MatDialogRef } from '@angular/material/dialog';
+import { provideRouter } from '@angular/router';
 
-import { AddWorkoutPlanDialogComponent } from './add-workout-plan-dialog.component';
+import { AddWorkoutPlanComponent } from './add-workout-plan.component';
 
-describe('AddWorkoutPlanDialogComponent', () => {
-  let component: AddWorkoutPlanDialogComponent;
-  let fixture: ComponentFixture<AddWorkoutPlanDialogComponent>;
+describe('AddWorkoutPlanComponent', () => {
+  let component: AddWorkoutPlanComponent;
+  let fixture: ComponentFixture<AddWorkoutPlanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddWorkoutPlanDialogComponent],
+      imports: [AddWorkoutPlanComponent],
       providers: [
         provideHttpClient(),
-        { provide: MatDialogRef, useValue: { close: () => {} } }
+        provideRouter([])
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddWorkoutPlanDialogComponent);
+    fixture = TestBed.createComponent(AddWorkoutPlanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

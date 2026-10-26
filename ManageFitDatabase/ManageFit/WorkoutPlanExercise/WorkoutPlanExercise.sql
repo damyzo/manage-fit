@@ -7,6 +7,6 @@
     [Repetition] INTEGER,
     [Time] FLOAT,
     CONSTRAINT [PK_WorkoutPlanExerciese] PRIMARY KEY ([WorkoutPlansId], [ExercisesId], [Order]),
-    CONSTRAINT [FK_WorkoutPlanExerciese_WorkourPlans] FOREIGN KEY ([WorkoutPlansId]) REFERENCES [dbo].[WorkoutPlan] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_WorkoutPlanExerciese_ExerciesesId] FOREIGN KEY ([ExercisesId]) REFERENCES [dbo].[Exercise] ([Id]) ON DELETE NO ACTION
+    CONSTRAINT [FK_WorkoutPlanExerciese_WorkourPlans] FOREIGN KEY ([WorkoutPlansId]) REFERENCES [dbo].[WorkoutPlan] ([Id]),
+    CONSTRAINT [FK_WorkoutPlanExerciese_ExerciesesId] FOREIGN KEY ([ExercisesId]) REFERENCES [dbo].[Exercise] ([Id]) ON DELETE CASCADE
 )

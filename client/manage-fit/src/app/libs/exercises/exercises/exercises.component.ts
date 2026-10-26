@@ -12,7 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { BehaviorSubject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, switchMap, tap } from 'rxjs';
+import { WarningDialogData } from '../../common/dialogs/warning-dialog-component/interface/warning-dialog-models';
+import { WarningDialogComponentComponent } from '../../common/dialogs/warning-dialog-component/warning-dialog-component.component';
 import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogStatics, ErrorMessages } from '../../statics/statics';
@@ -96,8 +98,24 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
   }
 
   public deleteExerciseDialog(id: string){
-    this.exercisesService.deleteExercise(id)
-    .pipe(takeUntilDestroyed(this.destroyRef)) 
+    const warningDialogData: WarningDialogData = {
+      title: 'Delete Exercise',
+      message: 'Are you sure you want to delete this exercise?',
+      yesButtonText: 'Yes',
+      noButtonText: 'No'
+    };
+    this.dialog.open(WarningDialogComponentComponent, {data: warningDialogData})
+    .afterClosed()
+    .pipe(
+      switchMap((message: string) => {
+        if(message === DialogStatics.SUCCESS){
+              console.log('Deleting exercise with id:', id);
+
+          return this.exercisesService.deleteExercise(id);
+        }
+        return EMPTY;
+      }),
+      takeUntilDestroyed(this.destroyRef))
     .subscribe({
       error: (err) => {
         this.notificationService.error(ErrorMessages.DeleteError + err.status);
