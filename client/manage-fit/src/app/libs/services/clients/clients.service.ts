@@ -11,8 +11,8 @@ export class ClientsService {
 
   constructor(public http: HttpClient) { }
 
-  public getClients(trainerId: string): Observable<GetClientResponse[]>{
-    return this.http.get<GetClientResponse[]>(`https://localhost:7003/api/clients/trainer/${trainerId}`);
+  public getClients(): Observable<GetClientResponse[]>{
+    return this.http.get<GetClientResponse[]>(`https://localhost:7003/api/clients/trainer`);
   }
 
   public getClient(clientId: string): Observable<GetClientResponse>{

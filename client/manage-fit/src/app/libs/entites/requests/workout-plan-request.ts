@@ -1,6 +1,5 @@
 export interface AddWorkoutPlanRequest {
     name: string,
-    trainerUid: string,
     exercises: AddWorkoutPlanExerciseRequest[],
     clientUids: string[]
 }

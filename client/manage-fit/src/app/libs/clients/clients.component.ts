@@ -70,7 +70,7 @@ export class ClientsComponent implements OnInit {
     this.subject.pipe(
       takeUntilDestroyed(this.destroyRef),
       switchMap(() => {
-        return this.clientsService.getClients('3B161710-B6AD-4F9D-ADF4-6DA489156044');
+        return this.clientsService.getClients();
       }),
       tap((data: GetClientResponse[]) => {
         this.clients = data;

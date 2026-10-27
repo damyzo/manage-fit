@@ -5,8 +5,7 @@ namespace Contracts.Requests.Client
         string name,
         float weight,
         float height,
-        string email,
-        Guid trainerId)
+        string email)
     {
         public required string Name { get; set; } = name;
 
@@ -15,7 +14,5 @@ namespace Contracts.Requests.Client
         public float Height { get; set; } = height;
 
         public required string Email { get; set; } = email;
-
-        public Guid TrainerId { get; set; } = trainerId;
     }
 }

@@ -43,7 +43,6 @@ interface PlanExercise {
 export class AddWorkoutPlanComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
-  private readonly trainerId = '3B161710-B6AD-4F9D-ADF4-6DA489156044';
 
   public form: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required)
@@ -87,13 +86,13 @@ export class AddWorkoutPlanComponent implements OnInit {
     private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.clientsService.getClients(this.trainerId)
+    this.clientsService.getClients()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (clients) => this.clients = clients,
         error: (err) => this.notificationService.error(ErrorMessages.InsertError + err.status)
       });
-    this.exercisesService.getExercises(this.trainerId)
+    this.exercisesService.getExercises()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (exercises) => this.exercises = exercises,
@@ -143,8 +142,7 @@ export class AddWorkoutPlanComponent implements OnInit {
     this.exercisesService.addExercise({
       name: value.name,
       description: value.description ?? '',
-      videoUrl: value.videoUrl ?? '',
-      trainerId: this.trainerId
+      videoUrl: value.videoUrl ?? ''
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
@@ -168,7 +166,6 @@ export class AddWorkoutPlanComponent implements OnInit {
 
     const request: AddWorkoutPlanRequest = {
       name: this.form.get('name')?.value,
-      trainerUid: this.trainerId,
       exercises: this.planExercises.map((p, i): AddWorkoutPlanExerciseRequest => ({
         id: p.exercise.id,
         name: p.exercise.name,

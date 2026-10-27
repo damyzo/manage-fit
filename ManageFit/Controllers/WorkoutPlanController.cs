@@ -7,13 +7,15 @@ using Entities.Common;
 using Services.Commands.WorkoutPlan;
 using Services.Queries.WorkoutPlan;
 using Contracts.Responses.Client;
-
+using ManageFit.Extensions;
+using System.Security.Claims;
 namespace ManageFit.Controllers
 {
     [Route("api/workout-plans")]
     [ApiController]
     public class WorkoutPlanController(IMediator mediator) : ControllerBase
     {
+
         [HttpGet("{workoutPlanId}")]
         public async Task<GetWorkoutPlanByTrainerIdResponse> Get(Guid workoutPlanId)
         {
@@ -39,10 +41,10 @@ namespace ManageFit.Controllers
                                                                                                         }
 
         // GET api/<WorkoutPlanController>/5
-        [HttpGet("trainer/{trainerId}")]
-        public async Task<IEnumerable<GetWorkoutPlanByTrainerIdResponse>> GetForTrainer(Guid trainerId)
+        [HttpGet("trainer")]
+        public async Task<IEnumerable<GetWorkoutPlanByTrainerIdResponse>> GetForTrainer()
         {
-            Result<IEnumerable<WorkoutPlan>> result = await mediator.Send(new GetWorkoutPlansForTrainerQuery(trainerId: trainerId));
+            Result<IEnumerable<WorkoutPlan>> result = await mediator.Send(new GetWorkoutPlansForTrainerQuery(trainerEmail: User.GetUserEmail()));
             IEnumerable<GetWorkoutPlanByTrainerIdResponse> results = result.Value.Select(x => new GetWorkoutPlanByTrainerIdResponse(
                 name: x.Name,
                 id: x.Id,
@@ -68,7 +70,7 @@ namespace ManageFit.Controllers
             Result<WorkoutPlan> wokroutPlanResult = await mediator.Send(new AddWorkoutPlanCommand(
                 name: request.Name,
                 clientIds: request.ClientUids,
-                trainerId: request.TrainerUid,
+                trainerEmail: User.GetUserEmail(),
                 workoutPlanExercises: request.exercises));
 
             return new AddWorkoutPlanResponse();
@@ -80,7 +82,7 @@ namespace ManageFit.Controllers
             Result<WorkoutPlan> wokroutPlanResult = await mediator.Send(new EditWorkoutPlanCommand(
                 name: request.Name,
                 clientIds: request.ClientUids,
-                trainerId: request.TrainerUid,
+                trainerEmail: User.GetUserEmail(),
                 workoutPlanExercises: request.exercises,
                 workoutPlanId: workoutPlanId));
 

@@ -13,7 +13,7 @@ namespace ManageFit.Controllers
     public class TrainerController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task<AddTrainerResponse> AddClient([FromBody] AddTrainerRequest request)
+        public async Task<AddTrainerResponse> AddTrainer([FromBody] AddTrainerRequest request)
         {
             Result<Trainer> trainerResult =
                 await mediator.Send(request: new AddTrainerCommand(

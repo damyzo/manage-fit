@@ -8,16 +8,17 @@
     using MediatR;
     using Services.Commands.Exercise;
     using Services.Queries.Exercise;
+    using ManageFit.Extensions;
 
     [ApiController]
     [Route("api/exercises")]
     public class ExerciseController(IMediator mediator) : ControllerBase
     {
         // GET: api/<ExerciseController>
-        [HttpGet("trainer/{trainerId}")]
-        public async Task<IEnumerable<GetExercisesResponse>> GetExercises(Guid trainerId)
+        [HttpGet("trainer")]
+        public async Task<IEnumerable<GetExercisesResponse>> GetExercises()
         {
-            Result<IEnumerable<Exercise>> result = await mediator.Send(new GetExercisesQuery(trainerId));
+            Result<IEnumerable<Exercise>> result = await mediator.Send(new GetExercisesQuery(User.GetUserEmail()));
 
             return result.Value.Select(x => new GetExercisesResponse(
                 name: x.Name,
@@ -47,7 +48,7 @@
                 description: exerciseRequest.Description,
                 name: exerciseRequest.Name,
                 videoUrl: exerciseRequest.VideoUrl, 
-                trainerId: exerciseRequest.TrainerId
+                trainerEmail: User.GetUserEmail()
             ), default);
 
             return new AddExerciseResponse(

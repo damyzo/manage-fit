@@ -11,20 +11,21 @@
     using Storage.Repositories.Client.Interface;
     using Storage.Repositories.Exercise.Interface;
     using Entities.Exercise.Model;
+    using Entities.Trainer.Model;
     using Entities.WorkoutPlanExercise.Model;
     using Entities.WorkoutPlanClient.Model;
 
     public class AddWorkoutPlanCommand(
         string name,
         IEnumerable<Guid> clientIds,
-        Guid trainerId,
+        string trainerEmail,
         IEnumerable<AddWorkoutPlanExerciseRequest> workoutPlanExercises) : IRequest<Result<WorkoutPlan>>
     {
         public string Name { get; set; } = name;
 
         public IEnumerable<Guid> ClientIds { get; set; } = clientIds;
 
-        public Guid TrainerId { get; set; } = trainerId;
+        public string TrainerEmail { get; set; } = trainerEmail;
 
         public IEnumerable<AddWorkoutPlanExerciseRequest> workoutPlanExercises { get; set; } =  workoutPlanExercises;
     }
@@ -37,14 +38,18 @@
     {
         public async Task<Result<WorkoutPlan>> Handle(AddWorkoutPlanCommand request, CancellationToken cancellationToken)
         {
-            if (!await trainerRepository.CheckIfTrainerExists(request.TrainerId, cancellationToken))
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainerByEmail(request.TrainerEmail, cancellationToken);
+
+            if (!trainerResult.IsSuccess)
             {
                 return new Result<WorkoutPlan>(
                         value: new WorkoutPlan() { Name = string.Empty },
                         isSuccess: false,
-                        message: $"Trainer with ID {request.TrainerId} does not exist."
+                        message: $"Trainer with email {request.TrainerEmail} does not exist."
                     );
             }
+
+            Guid trainerId = trainerResult.Value.Id;
 
             if(!await clientRepository.CheckIfClientsExist(request.ClientIds, cancellationToken) && request.ClientIds.Any())
             {
@@ -79,8 +84,8 @@
                         Id = exerciseUid,
                         Description = exercise.Description,
                         Name = exercise.Name,
-                        TrainerId = request.TrainerId,
-                        VideoUrl = exercise.VideoUrl,
+                        TrainerId = trainerId,
+                        VideoUrl = exercise.VideoUrl
                     });
                     workoutPlanExercises.Add(new WorkoutPlanExercise()
                     {
@@ -109,7 +114,7 @@
 
             WorkoutPlan workoutPlan = new WorkoutPlan() {
                 Name = request.Name,
-                TrainerId = request.TrainerId,
+                TrainerId = trainerId,
                 WorkoutPlanExercise = workoutPlanExercises,
                 WorkoutPlanClient = request.ClientIds.Select(x => new WorkoutPlanClient { ClientsId = x }).ToList(),
             };

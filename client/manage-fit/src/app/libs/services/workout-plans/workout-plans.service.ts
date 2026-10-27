@@ -11,8 +11,8 @@ export class WorkoutPlansService {
 
   constructor(public http: HttpClient) { }
 
-  public getWorkoutPlansByTrainerId(trainerId: string): Observable<GetWorkoutPlanByTrainerIdResponse[]>{
-    return this.http.get<GetWorkoutPlanByTrainerIdResponse[]>(`https://localhost:7003/api/workout-plans/trainer/${trainerId}`);
+  public getWorkoutPlansByTrainerId(): Observable<GetWorkoutPlanByTrainerIdResponse[]>{
+    return this.http.get<GetWorkoutPlanByTrainerIdResponse[]>(`https://localhost:7003/api/workout-plans/trainer`);
   }
 
   public getWorkoutPlan(id: string): Observable<GetWorkoutPlanByTrainerIdResponse>{

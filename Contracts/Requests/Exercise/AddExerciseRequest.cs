@@ -3,15 +3,12 @@
     public class AddExerciseRequest(
         string name,
         string description,
-        string videoUrl,
-        Guid trainerId)
+        string videoUrl)
     {
         public string Name { get; } = name;
 
         public string Description { get; } = description;
 
         public string VideoUrl { get; } = videoUrl;
-
-        public Guid TrainerId { get; } = trainerId;
     }
 }

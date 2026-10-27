@@ -3,8 +3,7 @@ export interface AddClientRequest
     name: string;
     weight: number,
     height: number,
-    email: string,
-    trainerId: string
+    email: string
 }
 
 export interface EditClientRequest{

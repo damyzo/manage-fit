@@ -64,7 +64,7 @@ export class ExercisesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.subject
       .pipe(switchMap(() => {
-        return this.exercisesService.getExercises('3B161710-B6AD-4F9D-ADF4-6DA489156044');
+        return this.exercisesService.getExercises();
       }),
       tap((data: GetExerciseResponse[]) => {
         this.exercises = data;

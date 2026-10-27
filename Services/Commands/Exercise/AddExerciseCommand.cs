@@ -13,7 +13,7 @@
         string name,
         string description,
         string videoUrl,
-        Guid trainerId) : IRequest<Result<Exercise>>
+        string trainerEmail) : IRequest<Result<Exercise>>
     {
         public string Name { get; } = name;
 
@@ -21,7 +21,7 @@
 
         public string VideoUrl { get; } = videoUrl;
 
-        public Guid trainerId { get; } = trainerId;
+        public string TrainerEmail { get; } = trainerEmail;
     }
 
     public class AddExerciseCommandHandler(
@@ -30,7 +30,7 @@
     {
         public async Task<Result<Exercise>> Handle(AddExerciseCommand request, CancellationToken cancellationToken)
         {
-            Result<Trainer> trainerResult = await trainerRepository.GetTrainer(request.trainerId, cancellationToken);
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainerByEmail(request.TrainerEmail, cancellationToken);
 
             if (!trainerResult.IsSuccess)
             {
@@ -50,7 +50,7 @@
                 Description = request.Description,
                 Name = request.Name,
                 VideoUrl = request.VideoUrl,
-                TrainerId = request.trainerId,
+                TrainerId = trainerResult.Value.Id,
                 Id = Guid.NewGuid()
             };
 

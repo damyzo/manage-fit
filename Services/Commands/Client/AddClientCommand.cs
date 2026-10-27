@@ -12,7 +12,7 @@
         float weight,
         float height,
         string email,
-        Guid trainerId) : IRequest<Result<Client>>
+        string trainerEmail) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
 
@@ -22,7 +22,7 @@
 
         public string Email { get; set; } = email;
 
-        public Guid TrainerId { get; set; } = trainerId;
+        public string TrainerEmail { get; set; } = trainerEmail;
     }
 
     public class AddClientCommandHandler(
@@ -31,7 +31,7 @@
     {
         public async Task<Result<Client>> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
-            Result<Trainer> trainerResult = await trainerRepository.GetTrainer(request.TrainerId, cancellationToken);
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainerByEmail(request.TrainerEmail, cancellationToken);
 
             if (!trainerResult.IsSuccess)
             {

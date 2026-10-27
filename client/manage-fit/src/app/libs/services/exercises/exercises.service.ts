@@ -11,8 +11,8 @@ export class ExercisesService {
 
   constructor(public http: HttpClient) { }
 
-  public getExercises(trainerId: string): Observable<GetExerciseResponse[]>{
-    return this.http.get<GetExerciseResponse[]>(`https://localhost:7003/api/exercises/trainer/${trainerId}`);
+  public getExercises(): Observable<GetExerciseResponse[]>{
+    return this.http.get<GetExerciseResponse[]>(`https://localhost:7003/api/exercises/trainer`);
   }
 
   public getExercise(exerciseId: string): Observable<GetExerciseResponse>{

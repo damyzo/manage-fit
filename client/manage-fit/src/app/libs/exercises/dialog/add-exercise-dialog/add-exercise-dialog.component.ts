@@ -41,7 +41,7 @@ export class AddExerciseDialogComponent  implements OnInit {
   public form: FormGroup = new FormGroup({
     name: new FormControl(''),
     videoUrl: new FormControl(''),
-    descritpion: new FormControl(''),
+    description: new FormControl(''),
   });
   constructor(
     private fb: FormBuilder,
@@ -53,8 +53,7 @@ export class AddExerciseDialogComponent  implements OnInit {
     let request: AddExerciseRequest = {
       name: this.form.get('name')?.value,
       videoUrl: this.form.get('videoUrl')?.value,
-      description: this.form.get('description')?.value,
-      trainerId: '3B161710-B6AD-4F9D-ADF4-6DA489156044'
+      description: this.form.get('description')?.value
     };
 
     this.exercisesService.addExercise(request).subscribe({

@@ -5,12 +5,10 @@
 
     public class AddWorkoutPlanRequest(
         string name,
-        Guid trainerUid,
         IEnumerable<AddWorkoutPlanExerciseRequest> exercises,
         IEnumerable<Guid> clientUids)
     {
         public string Name { get; } = name;
-        public Guid TrainerUid { get; } = trainerUid;
 
         public IEnumerable<AddWorkoutPlanExerciseRequest> exercises {  get; } = exercises;
 

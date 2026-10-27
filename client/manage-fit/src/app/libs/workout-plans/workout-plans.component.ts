@@ -56,7 +56,7 @@ export class WorkoutPlansComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.subject
       .pipe(switchMap(() => {
-        return this.workoutPlansService.getWorkoutPlansByTrainerId('3B161710-B6AD-4F9D-ADF4-6DA489156044');
+        return this.workoutPlansService.getWorkoutPlansByTrainerId();
       }),
       tap((data: GetWorkoutPlanByTrainerIdResponse[]) => {
         this.workouts = data;

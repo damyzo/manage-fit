@@ -7,6 +7,7 @@ using Entities.Common;
 using Services.Queries.Client;
 using Contracts.Responses.Client;
 using Microsoft.AspNetCore.Authorization;
+using ManageFit.Extensions;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,12 +21,12 @@ namespace ManageFit.Controllers
     {
         //[Authorize]
         // GET: api/<ValuesController>
-        [HttpGet("trainer/{trainerId}")]
-        public async Task<IEnumerable<GetClientsResponse>> GetClients(Guid trainerId)
+        [HttpGet("trainer")]
+        public async Task<IEnumerable<GetClientsResponse>> GetClients()
         {
             Result<IEnumerable<Client>> result = await mediator.Send(request: 
                 new GetClientsQuery(
-                    trainerId: trainerId));
+                    trainerEmail: User.GetUserEmail()));
 
             return result.Value.Select(x => 
                 new GetClientsResponse(
@@ -59,7 +60,7 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
-                trainerId: client.TrainerId));
+                trainerEmail: User.GetUserEmail()));
 
             return new AddClientResponse(
                 name: result.Value.Name,

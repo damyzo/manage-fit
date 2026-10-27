@@ -4,19 +4,30 @@
     using Entities.Exercise.Model;
     using MediatR;
     using Storage.Repositories.Exercise.Interface;
+    using Storage.Repositories.Trainer.Interface;
+    using Entities.Trainer.Model;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetExercisesQuery(Guid trainerId) : IRequest<Result<IEnumerable<Exercise>>>
+    public class GetExercisesQuery(string trainerEmail) : IRequest<Result<IEnumerable<Exercise>>>
     {
-        public Guid TrainerId { get; } = trainerId;
+        public string TrainerEmail { get; } = trainerEmail;
     }
 
-    public class GetExercisesQueryHandler(IExerciseRepository exerciseRepository) : IRequestHandler<GetExercisesQuery, Result<IEnumerable<Exercise>>>
+    public class GetExercisesQueryHandler(
+        IExerciseRepository exerciseRepository,
+        ITrainerRepository trainerRepository) : IRequestHandler<GetExercisesQuery, Result<IEnumerable<Exercise>>>
     {
         public async Task<Result<IEnumerable<Exercise>>> Handle(GetExercisesQuery request, CancellationToken cancellationToken)
         {
-            Result<IEnumerable<Exercise>> result = await exerciseRepository.GetExercises(request.TrainerId, cancellationToken);
+            Result<Trainer> trainerResult = await trainerRepository.GetTrainerByEmail(request.TrainerEmail, cancellationToken);
+
+            if (!trainerResult.IsSuccess)
+            {
+                return new Result<IEnumerable<Exercise>>(value: [], isSuccess: false, message: trainerResult.Message);
+            }
+
+            Result<IEnumerable<Exercise>> result = await exerciseRepository.GetExercises(trainerResult.Value.Id, cancellationToken);
 
             return result;
         }
