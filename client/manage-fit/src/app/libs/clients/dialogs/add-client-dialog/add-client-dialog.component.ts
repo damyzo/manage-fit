@@ -12,7 +12,10 @@ import {
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import { ClientsService } from '../../../services/clients/clients.service';
+import { GymsService } from '../../../services/gyms/gyms.service';
+import { GymLocationResponse } from '../../../entites/responses/gym-response';
 import { AddClientRequest } from '../../../entites/requests/client-request';
 import { DialogStatics, ErrorMessages } from '../../../statics/statics';
 import { NotificationService } from '../../../services/notification/notification.service';
@@ -23,6 +26,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -43,11 +47,15 @@ export class AddClientDialogComponent implements OnInit {
     name: new FormControl(''),
     email: new FormControl(''),
     weight: new FormControl(''),
-    height: new FormControl('')
+    height: new FormControl(''),
+    gymLocationIds: new FormControl([])
   });
+  public gymLocations: GymLocationResponse[] = [];
+
   constructor(
     private fb: FormBuilder,
     public clientsService: ClientsService,
+    private gymsService: GymsService,
     private notificationService: NotificationService) {}
   
   save():void
@@ -56,7 +64,8 @@ export class AddClientDialogComponent implements OnInit {
       name: this.form.get('name')?.value,
       email: this.form.get('email')?.value,
       weight: this.form.get('weight')?.value,
-      height: this.form.get('height')?.value
+      height: this.form.get('height')?.value,
+      gymLocationIds: this.form.get('gymLocationIds')?.value ?? []
     };
 
     this.clientsService.addClient(request)
@@ -87,8 +96,17 @@ export class AddClientDialogComponent implements OnInit {
 
       weight: [null, [Validators.required, Validators.min(0)]],
 
-      height: [null, [Validators.required, Validators.min(0)]]
+      height: [null, [Validators.required, Validators.min(0)]],
+
+      gymLocationIds: [[]]
 
     });
+
+    this.gymsService.getGymForTrainer()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (gym) => this.gymLocations = gym.locations,
+        error: (err) => this.notificationService.error(ErrorMessages.InsertError + err.status)
+      });
   }
 }

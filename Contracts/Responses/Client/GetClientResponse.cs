@@ -1,11 +1,13 @@
-﻿namespace Contracts.Responses.Client
+namespace Contracts.Responses.Client
 {
     public class GetClientResponse(
         string name,
         double weight,
         double height,
         string email,
-        Guid id)
+        Guid id,
+        Guid? gymId = null,
+        IEnumerable<Contracts.Responses.Gym.GymLocationResponse>? gymLocations = null)
     {
         public string Name { get; } = name;
 
@@ -16,5 +18,9 @@
         public string Email { get; } = email;
 
         public string Id { get; } = id.ToString();
+
+        public Guid? GymId { get; } = gymId;
+
+        public IEnumerable<Contracts.Responses.Gym.GymLocationResponse> GymLocations { get; } = gymLocations ?? [];
     }
 }

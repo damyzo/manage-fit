@@ -62,7 +62,9 @@
 
         public async Task<Result<Client>> GetClient(Guid clientId, CancellationToken cancellationToken)
         {
-            Client? client = await manageFitDbContext.Client.Where(client => client.Id == clientId).FirstOrDefaultAsync(cancellationToken);
+            Client? client = await manageFitDbContext.Client
+                .Include(x => x.ClientGymLocations).ThenInclude(x => x.GymLocation)
+                .Where(client => client.Id == clientId).FirstOrDefaultAsync(cancellationToken);
 
             if (client == null)
             {
@@ -83,6 +85,7 @@
         public async Task<Result<IEnumerable<Client>>> GetClients(Guid trainerId, CancellationToken cancellationToken)
         {
             IEnumerable<Client> clients = await manageFitDbContext.Client
+                .Include(x => x.ClientGymLocations).ThenInclude(x => x.GymLocation)
                 .Where(client => client.TrainerClients.Any(trainerClient => trainerClient.Trainer.Id == trainerId))
                 .ToListAsync(cancellationToken);
 

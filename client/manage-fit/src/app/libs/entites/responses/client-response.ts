@@ -1,9 +1,13 @@
+import { GymLocationResponse } from './gym-response';
+
 export interface GetClientResponse{
     name: string;
     weight: number,
     height: number,
     email: string,
-    id: string
+    id: string,
+    gymId?: string | null,
+    gymLocations: GymLocationResponse[]
 }
 
 export interface GetClientsResponse{
@@ -11,7 +15,9 @@ export interface GetClientsResponse{
     weight: number,
     height: number,
     email: string,
-    id: string
+    id: string,
+    gymId?: string | null,
+    gymLocations: GymLocationResponse[]
 }
 
 export interface AddClientResponse{

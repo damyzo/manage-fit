@@ -262,6 +262,42 @@ body {
   color: #f8fafc !important;
 }
 
+.mat-mdc-select,
+.mat-mdc-select-value,
+.mat-mdc-select-value-text,
+.mat-mdc-select-min-line,
+.mat-mdc-select-arrow,
+.mat-mdc-option .mdc-list-item__primary-text,
+.mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text,
+.mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple) {
+  color: #f8fafc !important;
+}
+
+.mat-mdc-select,
+.mat-mdc-option {
+  --mat-select-enabled-trigger-text-color: #f8fafc;
+  --mat-select-enabled-arrow-color: #f8fafc;
+  --mat-select-placeholder-text-color: rgba(226, 232, 240, 0.7);
+  --mat-option-label-text-color: #f8fafc;
+  --mat-option-selected-state-label-text-color: #f8fafc;
+  --mat-option-hover-state-layer-color: rgba(139, 92, 246, 0.2);
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-subhead-color: #f8fafc;
+  --mdc-dialog-supporting-text-color: #f8fafc;
+  --mat-dialog-subhead-color: #f8fafc;
+  --mat-dialog-supporting-text-color: #f8fafc;
+}
+
+.mat-mdc-dialog-title,
+.mat-mdc-dialog-content,
+.mat-mdc-dialog-container .mat-mdc-dialog-title,
+.mat-mdc-dialog-container .mat-mdc-dialog-content,
+.mat-mdc-dialog-container p {
+  color: #f8fafc !important;
+}
+
 .mat-mdc-option:hover,
 .mat-mdc-option.mdc-list-item--selected {
   background: rgba(139, 92, 246, 0.2) !important;

@@ -3,6 +3,7 @@ using Contracts.Responses.Gym;
 using Entities.Common;
 using Entities.Gym.Model;
 using MediatR;
+using ManageFit.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Services.Commands.Gym;
 using Services.Queries.Gym;
@@ -24,6 +25,17 @@ namespace ManageFit.Controllers
                     name: x.Name,
                     locations: x.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList(),
                     id: x.Id));
+        }
+
+        [HttpGet("trainer")]
+        public async Task<GetGymResponse> GetGymForTrainer()
+        {
+            Result<Gym> result = await mediator.Send(request: new GetGymByTrainerQuery(trainerEmail: User.GetUserEmail()));
+
+            return new GetGymResponse(
+                name: result.Value.Name,
+                locations: result.Value.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList(),
+                id: result.Value.Id);
         }
 
         [HttpGet("{id}")]

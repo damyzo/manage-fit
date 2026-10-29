@@ -57,7 +57,7 @@ export class ClientsComponent implements OnInit {
   
   searchFormControl = new FormControl('', []);
 
-  displayedColumns: string[] = ['name', 'weight', 'height', 'email', 'actions'];
+  displayedColumns: string[] = ['name', 'weight', 'height', 'email', 'gymAddresses', 'actions'];
 
   public clients: GetClientResponse[] = [];
   public filteredClients: MatTableDataSource<GetClientResponse> = new MatTableDataSource<GetClientResponse>([]);
@@ -88,6 +88,10 @@ export class ClientsComponent implements OnInit {
 
   ngAfterViewInit() {
     this.filteredClients.sort = this.sort;
+  }
+
+  public gymAddresses(client: GetClientResponse): string {
+    return (client.gymLocations ?? []).map(l => l.address).join(', ') || '-';
   }
 
   public openAddClientDialog(){

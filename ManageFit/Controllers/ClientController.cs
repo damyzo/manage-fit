@@ -1,4 +1,4 @@
-﻿using Contracts.Requests.Client;
+using Contracts.Requests.Client;
 using Entities.Client.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,9 @@ namespace ManageFit.Controllers
                     weight: x.Weight,
                     height: x.Height,
                     email: x.Email,
-                    id: x.Id));;
+                    id: x.Id,
+                    gymId: x.GymId,
+                    gymLocations: x.ClientGymLocations.Select(l => new Contracts.Responses.Gym.GymLocationResponse(l.GymLocation.Id, l.GymLocation.Address)).ToList()));
         }
 
         // GET api/<ValuesController>/5
@@ -48,7 +50,9 @@ namespace ManageFit.Controllers
                 weight: result.Value.Weight,
                 height: result.Value.Height,
                 email: result.Value.Email,
-                id: result.Value.Id);
+                id: result.Value.Id,
+                gymId: result.Value.GymId,
+                gymLocations: result.Value.ClientGymLocations.Select(l => new Contracts.Responses.Gym.GymLocationResponse(l.GymLocation.Id, l.GymLocation.Address)).ToList());
         }
 
         // POST api/<ValuesController>
@@ -60,7 +64,8 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
-                trainerEmail: User.GetUserEmail()));
+                trainerEmail: User.GetUserEmail(),
+                gymLocationIds: client.GymLocationIds));
 
             return new AddClientResponse(
                 name: result.Value.Name,
@@ -78,7 +83,8 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
-                id: id));
+                id: id,
+                gymLocationIds: client.GymLocationIds));
 
             return new EditClientResponse(
                 name: result.Value.Name,

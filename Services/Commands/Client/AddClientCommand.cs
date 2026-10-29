@@ -6,13 +6,17 @@
     using Storage.Repositories.Client.Interface;
     using Storage.Repositories.Trainer.Interface;
     using Entities.Trainer.Model;
+    using Entities.Gym.Model;
+    using Entities.ClientGymLocation.Model;
+    using Storage.Repositories.Gym.Interface;
 
     public class AddClientCommand(
         string name,
         float weight,
         float height,
         string email,
-        string trainerEmail) : IRequest<Result<Client>>
+        string trainerEmail,
+        IEnumerable<Guid>? gymLocationIds = null) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
 
@@ -23,11 +27,14 @@
         public string Email { get; set; } = email;
 
         public string TrainerEmail { get; set; } = trainerEmail;
+
+        public IEnumerable<Guid> GymLocationIds { get; set; } = gymLocationIds ?? [];
     }
 
     public class AddClientCommandHandler(
         IClientRepository clientRepository,
-        ITrainerRepository trainerRepository) : IRequestHandler<AddClientCommand, Result<Client>>
+        ITrainerRepository trainerRepository,
+        IGymRepository gymRepository) : IRequestHandler<AddClientCommand, Result<Client>>
     {
         public async Task<Result<Client>> Handle(AddClientCommand request, CancellationToken cancellationToken)
         {
@@ -47,8 +54,58 @@
                 Weight = request.Weight,
                 Height = request.Height,
                 Email = request.Email,
+                GymId = trainerResult.Value.GymId,
                 Id = Guid.NewGuid()
             };
+
+            List<Guid> locationIds = request.GymLocationIds.Distinct().ToList();
+
+            if (locationIds.Count > 0)
+            {
+                string? error = null;
+                Gym? gym = null;
+
+                if (trainerResult.Value.GymId == null)
+                {
+                    error = "Trainer that is not part of a gym cannot assign gym locations.";
+                }
+                else
+                {
+                    Result<Gym> gymResult = await gymRepository.GetGym(trainerResult.Value.GymId.Value, cancellationToken);
+
+                    if (!gymResult.IsSuccess)
+                    {
+                        error = gymResult.Message;
+                    }
+                    else
+                    {
+                        gym = gymResult.Value;
+
+                        if (locationIds.Any(id => !gym.Locations.Any(l => l.Id == id)))
+                        {
+                            error = "All gym locations should belong to the trainer's gym.";
+                        }
+                    }
+                }
+
+                if (error != null)
+                {
+                    return new Result<Client>(
+                        value: new Client() { Name = "", Email = "", Height = 0, Weight = 0, Id = Guid.Empty },
+                        isSuccess: false,
+                        message: error);
+                }
+
+                foreach (Guid locationId in locationIds)
+                {
+                    client.ClientGymLocations.Add(new ClientGymLocation()
+                    {
+                        Id = Guid.NewGuid(),
+                        ClientId = client.Id,
+                        GymLocationId = locationId
+                    });
+                }
+            }
 
             client.TrainerClients.Add(
                 new Entities.TrainerClient.Model.TrainerClient() { 

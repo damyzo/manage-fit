@@ -17,6 +17,14 @@
           <mat-label>Height (in cm)</mat-label>
           <input type="number" matInput formControlName="height" placeholder="Ex: 182 (in cm)" min="0" />
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Gym addresses</mat-label>
+          <mat-select formControlName="gymLocationIds" multiple>
+            @for (location of gymLocations; track location.id) {
+              <mat-option [value]="location.id">{{ location.address }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
     </form>
     <div class="buttons">
         <button mat-fab extended (click)="back()">

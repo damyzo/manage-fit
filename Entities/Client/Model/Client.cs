@@ -1,6 +1,7 @@
 ﻿namespace Entities.Client.Model
 {
     using Entities.Common;
+    using Entities.ClientGymLocation.Model;
     using Entities.TrainerClient.Model;
     using Entities.WorkoutPlan.Model;
     using Entities.WorkoutPlanClient.Model;
@@ -18,6 +19,8 @@
         public Guid? GymId { get; set; }
 
         public virtual Gym.Model.Gym? Gym { get; set; }
+
+        public virtual ICollection<ClientGymLocation> ClientGymLocations { get; set; } = [];
 
         public virtual ICollection<TrainerClient> TrainerClients { get; set; } = [];
 
