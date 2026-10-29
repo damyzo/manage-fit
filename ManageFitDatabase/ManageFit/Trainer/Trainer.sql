@@ -4,6 +4,11 @@
 	[Name] NVARCHAR(100) NOT NULL,
 	[Email] NVARCHAR(320) NOT NULL,
 	[GymId] UNIQUEIDENTIFIER NULL,
+	[Type] INT NOT NULL DEFAULT 0,
+
+	CONSTRAINT [CK_Trainer_Type_Gym] CHECK (
+		([Type] = 0 AND [GymId] IS NULL)
+		OR ([Type] IN (1, 2) AND [GymId] IS NOT NULL)),
 
 	CONSTRAINT [FK_Trainer_Gym] FOREIGN KEY ([GymId]) REFERENCES [dbo].[Gym] ([Id]),
 	CONSTRAINT [Unique_Email] UNIQUE ([Email])

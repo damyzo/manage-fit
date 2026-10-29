@@ -1,11 +1,18 @@
 namespace Contracts.Requests.Gym
 {
+    public class GymLocationRequest
+    {
+        public Guid? Id { get; set; }
+
+        public required string Address { get; set; }
+    }
+
     public class EditGymRequest(
         string name,
-        string location)
+        IEnumerable<GymLocationRequest> locations)
     {
         public required string Name { get; set; } = name;
 
-        public required string Location { get; set; } = location;
+        public required IEnumerable<GymLocationRequest> Locations { get; set; } = locations;
     }
 }

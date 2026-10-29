@@ -69,6 +69,7 @@
     <Folder Include="ManageFit\WorkoutPlanExercise" />
     <Folder Include="ManageFit\NutritionPlanMeal" />
     <Folder Include="ManageFit\Gym" />
+    <Folder Include="ManageFit\GymLocation" />
     <Folder Include="ManageFit\Ingredient" />
     <Folder Include="ManageFit\MealIngredient" />
     <Folder Include="ManageFit\WorkoutPlanClient" />
@@ -90,5 +91,6 @@
     <Build Include="ManageFit\MealIngredient\MealIngredient.sql" />
     <Build Include="ManageFit\WorkoutPlanClient\WorkoutPlanClient.sql" />
     <Build Include="ManageFit\Gym\Gym.sql" />
+    <Build Include="ManageFit\GymLocation\GymLocation.sql" />
   </ItemGroup>
 </Project>

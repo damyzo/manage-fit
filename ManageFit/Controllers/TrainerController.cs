@@ -18,11 +18,16 @@ namespace ManageFit.Controllers
             Result<Trainer> trainerResult =
                 await mediator.Send(request: new AddTrainerCommand(
                     name: request.Name,
-                    email: request.Email));
+                    email: request.Email,
+                    type: (TrainerType)request.Type,
+                    gymName: request.GymName,
+                    gymLocations: request.GymLocations));
 
             return new AddTrainerResponse(
                 name: trainerResult.Value.Name,
-                email: trainerResult.Value.Email);
+                email: trainerResult.Value.Email,
+                type: (int)trainerResult.Value.Type,
+                gymId: trainerResult.Value.GymId);
         }
     }
 }

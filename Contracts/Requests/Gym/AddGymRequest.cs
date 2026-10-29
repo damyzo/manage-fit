@@ -2,10 +2,10 @@ namespace Contracts.Requests.Gym
 {
     public class AddGymRequest(
         string name,
-        string location)
+        IEnumerable<string> locations)
     {
         public required string Name { get; set; } = name;
 
-        public required string Location { get; set; } = location;
+        public required IEnumerable<string> Locations { get; set; } = locations;
     }
 }

@@ -2,17 +2,20 @@ namespace Services.Commands.Gym
 {
     using Entities.Common;
     using Entities.Gym.Model;
+    using Entities.GymLocation.Model;
     using MediatR;
     using Storage.Repositories.Gym.Interface;
 
+    public record EditGymLocation(Guid? Id, string Address);
+
     public class EditGymCommand(
         string name,
-        string location,
+        IEnumerable<EditGymLocation> locations,
         Guid id) : IRequest<Result<Gym>>
     {
         public string Name { get; set; } = name;
 
-        public string Location { get; set; } = location;
+        public IEnumerable<EditGymLocation> Locations { get; set; } = locations;
 
         public Guid Id { get; set; } = id;
     }
@@ -24,9 +27,12 @@ namespace Services.Commands.Gym
             Gym gym = new()
             {
                 Name = request.Name,
-                Location = request.Location,
                 Id = request.Id
             };
+
+            gym.Locations = request.Locations
+                .Select(x => new GymLocation { Id = x.Id ?? Guid.Empty, Address = x.Address, GymId = gym.Id })
+                .ToList();
 
             Result<Gym> gymResult = Validators.GymValidator.Validate(gym);
 

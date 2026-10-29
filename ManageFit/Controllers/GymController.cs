@@ -22,7 +22,7 @@ namespace ManageFit.Controllers
             return result.Value.Select(x =>
                 new GetGymsResponse(
                     name: x.Name,
-                    location: x.Location,
+                    locations: x.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList(),
                     id: x.Id));
         }
 
@@ -33,7 +33,7 @@ namespace ManageFit.Controllers
 
             return new GetGymResponse(
                 name: result.Value.Name,
-                location: result.Value.Location,
+                locations: result.Value.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList(),
                 id: result.Value.Id);
         }
 
@@ -42,11 +42,11 @@ namespace ManageFit.Controllers
         {
             Result<Gym> result = await mediator.Send(request: new AddGymCommand(
                 name: gym.Name,
-                location: gym.Location));
+                locations: gym.Locations));
 
             return new AddGymResponse(
                 name: result.Value.Name,
-                location: result.Value.Location);
+                locations: result.Value.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList());
         }
 
         [HttpPut("{id}")]
@@ -54,12 +54,12 @@ namespace ManageFit.Controllers
         {
             Result<Gym> result = await mediator.Send(request: new EditGymCommand(
                 name: gym.Name,
-                location: gym.Location,
+                locations: gym.Locations.Select(l => new EditGymLocation(l.Id, l.Address)).ToList(),
                 id: id));
 
             return new EditGymResponse(
                 name: result.Value.Name,
-                location: result.Value.Location);
+                locations: result.Value.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList());
         }
 
         [HttpDelete("{id}")]
@@ -69,7 +69,7 @@ namespace ManageFit.Controllers
 
             return new DeleteGymResponse(
                 name: result.Value.Name,
-                location: result.Value.Location);
+                locations: result.Value.Locations.Select(l => new GymLocationResponse(l.Id, l.Address)).ToList());
         }
     }
 }

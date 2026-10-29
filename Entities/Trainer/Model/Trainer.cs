@@ -13,6 +13,8 @@
 
         public required string Email { get; set; }
 
+        public TrainerType Type { get; set; } = TrainerType.Individual;
+
         public Guid? GymId { get; set; }
 
         public virtual Gym.Model.Gym? Gym { get; set; }
