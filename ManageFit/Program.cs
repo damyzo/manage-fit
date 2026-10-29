@@ -9,6 +9,8 @@ using Storage.Repositories.Client;
 using Storage.Repositories.Client.Interface;
 using Storage.Repositories.Exercise;
 using Storage.Repositories.Exercise.Interface;
+using Storage.Repositories.Gym;
+using Storage.Repositories.Gym.Interface;
 using Storage.Repositories.Ingredient;
 using Storage.Repositories.Ingredient.Interface;
 using Storage.Repositories.Meal;
@@ -37,6 +39,7 @@ builder.Services.AddEndpointsApiExplorer();
 // Register repositories
 builder.Services.AddTransient<IClientRepository, ClientRepository>();
 builder.Services.AddTransient<ITrainerRepository, TrainerRepository>();
+builder.Services.AddTransient<IGymRepository, GymRepository>();
 builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddTransient<IWorkoutPlanRepository, WorkoutPlanRepository>();
 builder.Services.AddTransient<IIngredientRepository, IngredientRepository>();

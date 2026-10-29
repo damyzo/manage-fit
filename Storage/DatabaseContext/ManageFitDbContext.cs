@@ -2,6 +2,7 @@
 {
     using Entities.Client.Model;
     using Entities.Exercise.Model;
+    using Entities.Gym.Model;
     using Entities.Ingredient.Model;
     using Entities.Meal.Model;
     using Entities.MealIngredient.Model;
@@ -16,6 +17,8 @@
         public DbSet<Client> Client { get; set; }
 
         public DbSet<Trainer> Trainer { get; set; }
+
+        public DbSet<Gym> Gym { get; set; }
 
         public DbSet<Exercise> Exercise { get; set; }
 

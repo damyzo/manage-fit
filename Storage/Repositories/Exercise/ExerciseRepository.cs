@@ -70,17 +70,51 @@
 
                 return exerciseError;
             }
-            //List<WorkoutPlanExercise> workoutPlanExercises = await manageFitDbContext
-            //    .WorkoutPlanExercise
-            //   .Where(x => x.ExercisesId == exerciseId)
-            //   .ToListAsync(cancellationToken);
+            List<WorkoutPlanExercise> workoutPlanExercises = await manageFitDbContext.WorkoutPlanExercise
+                .Where(x => x.ExercisesId == exerciseId)
+                .ToListAsync(cancellationToken);
 
-            //manageFitDbContext.WorkoutPlanExercise.RemoveRange(workoutPlanExercises);
+            List<Guid> affectedWorkoutPlanIds = workoutPlanExercises
+                .Select(x => x.WorkoutPlansId)
+                .Distinct()
+                .ToList();
+
+            manageFitDbContext.WorkoutPlanExercise.RemoveRange(workoutPlanExercises);
             manageFitDbContext.Exercise.Remove(exercise);
 
             try
             {
+                await using var transaction = await manageFitDbContext.Database.BeginTransactionAsync(cancellationToken);
+
                 await manageFitDbContext.SaveChangesAsync(cancellationToken);
+
+                foreach (Guid workoutPlanId in affectedWorkoutPlanIds)
+                {
+                    List<WorkoutPlanExercise> remaining = await manageFitDbContext.WorkoutPlanExercise
+                        .AsNoTracking()
+                        .Where(x => x.WorkoutPlansId == workoutPlanId)
+                        .OrderBy(x => x.Order)
+                        .ToListAsync(cancellationToken);
+
+                    for (int i = 0; i < remaining.Count; i++)
+                    {
+                        WorkoutPlanExercise current = remaining[i];
+                        int newOrder = i + 1;
+
+                        if (current.Order == newOrder)
+                        {
+                            continue;
+                        }
+
+                        await manageFitDbContext.WorkoutPlanExercise
+                            .Where(x => x.WorkoutPlansId == current.WorkoutPlansId
+                                && x.ExercisesId == current.ExercisesId
+                                && x.Order == current.Order)
+                            .ExecuteUpdateAsync(x => x.SetProperty(y => y.Order, newOrder), cancellationToken);
+                    }
+                }
+
+                await transaction.CommitAsync(cancellationToken);
             }
             catch (Exception e)
             {

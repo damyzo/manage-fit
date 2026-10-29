@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -68,6 +68,7 @@
     <Folder Include="ManageFit\WorkoutPlan" />
     <Folder Include="ManageFit\WorkoutPlanExercise" />
     <Folder Include="ManageFit\NutritionPlanMeal" />
+    <Folder Include="ManageFit\Gym" />
     <Folder Include="ManageFit\Ingredient" />
     <Folder Include="ManageFit\MealIngredient" />
     <Folder Include="ManageFit\WorkoutPlanClient" />
@@ -88,5 +89,6 @@
     <Build Include="ManageFit\Ingredient\Ingredient.sql" />
     <Build Include="ManageFit\MealIngredient\MealIngredient.sql" />
     <Build Include="ManageFit\WorkoutPlanClient\WorkoutPlanClient.sql" />
+    <Build Include="ManageFit\Gym\Gym.sql" />
   </ItemGroup>
 </Project>

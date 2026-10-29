@@ -15,6 +15,10 @@
 
         public required string Email { get; set; }
 
+        public Guid? GymId { get; set; }
+
+        public virtual Gym.Model.Gym? Gym { get; set; }
+
         public virtual ICollection<TrainerClient> TrainerClients { get; set; } = [];
 
         public virtual ICollection<WorkoutPlanClient> WorkoutPlanClients { get; } = [];
