@@ -16,6 +16,8 @@
 
         public required string Email { get; set; }
 
+        public DateOnly? DateOfBirth { get; set; }
+
         public Guid? GymId { get; set; }
 
         public virtual Gym.Model.Gym? Gym { get; set; }

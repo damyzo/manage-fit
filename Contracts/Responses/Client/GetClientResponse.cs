@@ -5,6 +5,7 @@ namespace Contracts.Responses.Client
         double weight,
         double height,
         string email,
+        DateOnly? dateOfBirth,
         Guid id,
         Guid? gymId = null,
         IEnumerable<Contracts.Responses.Gym.GymLocationResponse>? gymLocations = null)
@@ -16,6 +17,8 @@ namespace Contracts.Responses.Client
         public double Height { get; } = height;
 
         public string Email { get; } = email;
+
+        public DateOnly? DateOfBirth { get; } = dateOfBirth;
 
         public string Id { get; } = id.ToString();
 

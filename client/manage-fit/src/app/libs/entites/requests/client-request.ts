@@ -4,6 +4,7 @@ export interface AddClientRequest
     weight: number,
     height: number,
     email: string,
+    dateOfBirth?: string | null,
     gymLocationIds?: string[]
 }
 
@@ -12,5 +13,6 @@ export interface EditClientRequest{
     weight: number,
     height: number,
     email: string,
+    dateOfBirth?: string | null,
     gymLocationIds?: string[]
 }

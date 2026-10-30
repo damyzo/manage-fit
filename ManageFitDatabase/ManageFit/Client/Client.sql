@@ -5,6 +5,7 @@
 	[Email] NVARCHAR(320) NOT NULL,
 	[Weight] FLOAT NOT NULL,
 	[Height] FLOAT NOT NULL,
+	[DateOfBirth] DATE NULL,
 	[GymId] UNIQUEIDENTIFIER NULL,
 
 	CONSTRAINT [FK_Client_Gym] FOREIGN KEY ([GymId]) REFERENCES [dbo].[Gym] ([Id])

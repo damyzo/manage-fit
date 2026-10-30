@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace Contracts.Requests.Client
 {
     public class AddClientRequest(
@@ -6,6 +6,7 @@ namespace Contracts.Requests.Client
         float weight,
         float height,
         string email,
+        DateOnly? dateOfBirth = null,
         IEnumerable<Guid>? gymLocationIds = null)
     {
         public required string Name { get; set; } = name;
@@ -15,6 +16,8 @@ namespace Contracts.Requests.Client
         public float Height { get; set; } = height;
 
         public required string Email { get; set; } = email;
+
+        public DateOnly? DateOfBirth { get; set; } = dateOfBirth;
 
         public IEnumerable<Guid>? GymLocationIds { get; set; } = gymLocationIds;
     }

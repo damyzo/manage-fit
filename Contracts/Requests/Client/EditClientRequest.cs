@@ -1,10 +1,11 @@
-﻿namespace Contracts.Requests.Client
+namespace Contracts.Requests.Client
 {
     public class EditClientRequest(
         string name,
         float weight,
         float height,
         string email,
+        DateOnly? dateOfBirth = null,
         IEnumerable<Guid>? gymLocationIds = null)
     {
         public required string Name { get; set; } = name;
@@ -14,6 +15,8 @@
         public float Height { get; set; } = height;
 
         public required string Email { get; set; } = email;
+
+        public DateOnly? DateOfBirth { get; set; } = dateOfBirth;
 
         public IEnumerable<Guid>? GymLocationIds { get; set; } = gymLocationIds;
     }

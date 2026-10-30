@@ -34,6 +34,7 @@ namespace ManageFit.Controllers
                     weight: x.Weight,
                     height: x.Height,
                     email: x.Email,
+                    dateOfBirth: x.DateOfBirth,
                     id: x.Id,
                     gymId: x.GymId,
                     gymLocations: x.ClientGymLocations.Select(l => new Contracts.Responses.Gym.GymLocationResponse(l.GymLocation.Id, l.GymLocation.Address)).ToList()));
@@ -50,6 +51,7 @@ namespace ManageFit.Controllers
                 weight: result.Value.Weight,
                 height: result.Value.Height,
                 email: result.Value.Email,
+                dateOfBirth: result.Value.DateOfBirth,
                 id: result.Value.Id,
                 gymId: result.Value.GymId,
                 gymLocations: result.Value.ClientGymLocations.Select(l => new Contracts.Responses.Gym.GymLocationResponse(l.GymLocation.Id, l.GymLocation.Address)).ToList());
@@ -64,6 +66,7 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
+                dateOfBirth: client.DateOfBirth,
                 trainerEmail: User.GetUserEmail(),
                 gymLocationIds: client.GymLocationIds));
 
@@ -71,7 +74,8 @@ namespace ManageFit.Controllers
                 name: result.Value.Name,
                 weight: result.Value.Weight,
                 height: result.Value.Height,
-                email: result.Value.Email);
+                email: result.Value.Email,
+                dateOfBirth: result.Value.DateOfBirth);
         }
 
         // PUT api/<ValuesController>/5
@@ -83,6 +87,7 @@ namespace ManageFit.Controllers
                 weight: client.Weight,
                 height: client.Height,
                 email: client.Email,
+                dateOfBirth: client.DateOfBirth,
                 id: id,
                 gymLocationIds: client.GymLocationIds));
 
@@ -90,7 +95,8 @@ namespace ManageFit.Controllers
                 name: result.Value.Name,
                 weight: result.Value.Weight,
                 height: result.Value.Height,
-                email: result.Value.Email);
+                email: result.Value.Email,
+                dateOfBirth: result.Value.DateOfBirth);
         }
 
         // DELETE api/<ValuesController>/5
@@ -103,7 +109,8 @@ namespace ManageFit.Controllers
                 name: result.Value.Name,
                 weight: result.Value.Weight,
                 height: result.Value.Height,
-                email: result.Value.Email);
+                email: result.Value.Email,
+                dateOfBirth: result.Value.DateOfBirth);
         }
     }
 }

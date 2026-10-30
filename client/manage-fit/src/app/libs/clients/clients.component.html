@@ -17,6 +17,10 @@
         <mat-card-content>
             <dl class="details">
                 <div class="detail">
+                    <dt><mat-icon>cake</mat-icon>Date of birth</dt>
+                    <dd>{{ client.dateOfBirth ? (client.dateOfBirth | date) : '-' }}</dd>
+                </div>
+                <div class="detail">
                     <dt><mat-icon>monitor_weight</mat-icon>Weight</dt>
                     <dd>{{ client.weight }} kg</dd>
                 </div>
@@ -64,6 +68,12 @@
   <ng-container matColumnDef="email">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Email </th>
     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <!-- Date of Birth Column -->
+  <ng-container matColumnDef="dateOfBirth">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date of birth </th>
+    <td mat-cell *matCellDef="let element"> {{element.dateOfBirth ? (element.dateOfBirth | date) : '-'}} </td>
   </ng-container>
 
   <!-- Gym Addresses Column -->

@@ -5,6 +5,7 @@ export interface GetClientResponse{
     weight: number,
     height: number,
     email: string,
+    dateOfBirth?: string | null,
     id: string,
     gymId?: string | null,
     gymLocations: GymLocationResponse[]
@@ -15,6 +16,7 @@ export interface GetClientsResponse{
     weight: number,
     height: number,
     email: string,
+    dateOfBirth?: string | null,
     id: string,
     gymId?: string | null,
     gymLocations: GymLocationResponse[]

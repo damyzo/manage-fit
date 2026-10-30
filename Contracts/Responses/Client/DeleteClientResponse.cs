@@ -1,10 +1,11 @@
-﻿namespace Contracts.Responses.Client
+namespace Contracts.Responses.Client
 {
     public class DeleteClientResponse(
         string name,
         double weight,
         double height,
-        string email)
+        string email,
+        DateOnly? dateOfBirth = null)
     {
         public string Name { get; } = name;
 
@@ -13,5 +14,7 @@
         public double Height { get; } = height;
 
         public string Email { get; } = email;
+
+        public DateOnly? DateOfBirth { get; } = dateOfBirth;
     }
 }

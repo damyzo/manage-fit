@@ -1,4 +1,4 @@
-﻿namespace Services.Commands.Client
+namespace Services.Commands.Client
 {
     using Entities.Client.Model;
     using MediatR;
@@ -14,6 +14,7 @@
         float height,
         string email,
         Guid id,
+        DateOnly? dateOfBirth = null,
         IEnumerable<Guid>? gymLocationIds = null) : IRequest<Result<Client>>
     {
         public string Name { get; set; } = name;
@@ -23,6 +24,8 @@
         public float Height { get; set; } = height;
 
         public string Email { get; set; } = email;
+
+        public DateOnly? DateOfBirth { get; set; } = dateOfBirth;
         
         public Guid Id { get; set; } = id;
 
@@ -47,6 +50,7 @@
             client.Weight = request.Weight;
             client.Height = request.Height;
             client.Email = request.Email;
+            client.DateOfBirth = request.DateOfBirth;
 
             Result<Client> clientResult = Validators.ClientValidator.Validate(client);
 

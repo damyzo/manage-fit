@@ -1,5 +1,6 @@
-import { Component, DestroyRef, inject, OnInit, Signal, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { GetClientResponse } from '../entites/responses/client-response';
+import { DatePipe } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -37,7 +38,8 @@ import { WarningDialogData } from '../common/dialogs/warning-dialog-component/in
     MatIconModule,
     MatButtonModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    DatePipe
   ],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.scss'
@@ -57,7 +59,7 @@ export class ClientsComponent implements OnInit {
   
   searchFormControl = new FormControl('', []);
 
-  displayedColumns: string[] = ['name', 'weight', 'height', 'email', 'gymAddresses', 'actions'];
+  displayedColumns: string[] = ['name', 'weight', 'height', 'email', 'dateOfBirth', 'gymAddresses', 'actions'];
 
   public clients: GetClientResponse[] = [];
   public filteredClients: MatTableDataSource<GetClientResponse> = new MatTableDataSource<GetClientResponse>([]);

@@ -1,4 +1,4 @@
-﻿using Contracts.Requests.WorkoutPlan;
+using Contracts.Requests.WorkoutPlan;
 using Microsoft.AspNetCore.Mvc;
 using Contracts.Responses.WorkoutPlan;
 using MediatR;
@@ -37,6 +37,7 @@ namespace ManageFit.Controllers
                                                                                                                                                                                weight: y.Clients.Weight,
                                                                                                                                                                                height: y.Clients.Height,
                                                                                                                                                                                email: y.Clients.Email,
+                                                                                                                                                                               dateOfBirth: y.Clients.DateOfBirth,
                                                                                                                                                                                id: y.Clients.Id)));
                                                                                                         }
 
@@ -60,6 +61,7 @@ namespace ManageFit.Controllers
                                                                                                                                                                                weight: y.Clients.Weight,
                                                                                                                                                                                height: y.Clients.Height,
                                                                                                                                                                                email: y.Clients.Email,
+                                                                                                                                                                               dateOfBirth: y.Clients.DateOfBirth,
                                                                                                                                                                                id: y.Clients.Id))));
             return results;
         }

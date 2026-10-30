@@ -46,6 +46,7 @@ export class AddClientDialogComponent implements OnInit {
   public form: FormGroup = new FormGroup({
     name: new FormControl(''),
     email: new FormControl(''),
+    dateOfBirth: new FormControl(''),
     weight: new FormControl(''),
     height: new FormControl(''),
     gymLocationIds: new FormControl([])
@@ -63,6 +64,7 @@ export class AddClientDialogComponent implements OnInit {
     let request: AddClientRequest = {
       name: this.form.get('name')?.value,
       email: this.form.get('email')?.value,
+      dateOfBirth: this.form.get('dateOfBirth')?.value || null,
       weight: this.form.get('weight')?.value,
       height: this.form.get('height')?.value,
       gymLocationIds: this.form.get('gymLocationIds')?.value ?? []
@@ -93,6 +95,8 @@ export class AddClientDialogComponent implements OnInit {
       name: ['', Validators.required],
 
       email: ['', [Validators.required, Validators.email]],
+
+      dateOfBirth: [''],
 
       weight: [null, [Validators.required, Validators.min(0)]],
 
